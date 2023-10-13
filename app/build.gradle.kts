@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -30,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -66,4 +68,43 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+
+    //hilt di
+    implementation ("com.google.dagger:hilt-android:2.44")
+    kapt ("com.google.dagger:hilt-compiler:2.44")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+
+    //compose navigation
+    implementation ("androidx.navigation:navigation-compose:2.6.0")
+
+    //animation
+    implementation ("com.airbnb.android:lottie-compose:5.2.0")
+
+    //coil - load image from url
+    implementation ("io.coil-kt:coil-compose:2.2.2")
+
+    //swipe refresh
+    implementation( "com.google.accompanist:accompanist-swiperefresh:0.30.0")
+
+    //system ui controller
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+
+    //datastore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    //pager
+    implementation ("com.google.accompanist:accompanist-pager:0.29.0-alpha")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.29.0-alpha")
+
+    //room
+    implementation ("androidx.room:room-runtime:2.3.0")
+    kapt ("androidx.room:room-compiler:2.3.0")
+    implementation ("androidx.room:room-ktx:2.3.0")
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">IMDB</string>
+    <string name="home">خانه</string>
+    <string name="search">جست‌وجو</string>
+    <string name="video">فیلم</string>
+    <string name="you">شما</string>
 </resources>
