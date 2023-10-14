@@ -1,9 +1,15 @@
 package com.farzin.imdb.ui.home
 
+import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,70 +17,87 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingTVShowsForWeek
+import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), navController: NavController) {
 
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         getAllApiCalls(homeViewModel)
     }
 
 
 
-    Home(homeViewModel)
+    Home(homeViewModel, navController)
 
 }
 
 @Composable
-fun Home(homeViewModel: HomeViewModel) {
+fun Home(homeViewModel: HomeViewModel, navController: NavController) {
 
 
-    var trendingTVShowsForWeek by remember { mutableStateOf<TrendingTVShowsForWeek>(TrendingTVShowsForWeek()) }
-
-    var loading by remember { mutableStateOf(false) }
-
-    val result by homeViewModel.trendingTVShowsForWeek.collectAsState()
-    when(result){
-        is NetworkResult.Success->{
-            trendingTVShowsForWeek = result.data!!
-            loading = false
-        }
-        is NetworkResult.Error->{
-            loading = false
-        }
-        is NetworkResult.Loading->{
-            loading = true
-        }
-    }
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 60.dp)
-    ){
-
-        items(trendingTVShowsForWeek.results){
-            Text(text = it.name)
-        }
-
-
-    }
+    SwipeRefreshSection(homeViewModel = homeViewModel, navController = navController)
 
 }
 
 
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: NavController) {
+
+    val onRefresh = rememberCoroutineScope()
+    val swipeRefreshState = rememberPullRefreshState(refreshing = false, onRefresh = {
+        onRefresh.launch {
+
+            getAllApiCalls(homeViewModel)
+            Log.e("TAG", "Refresh")
+        }
+    })
+
+    Box(
+        Modifier.pullRefresh(swipeRefreshState)
+    ) {
 
 
-private fun getAllApiCalls(homeViewModel: HomeViewModel){
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 60.dp)
+        ) {
+
+            item { TrendingTVShowsForDaySection() }
+
+
+        }
+
+
+        PullRefreshIndicator(
+            refreshing = false,
+            state = swipeRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
+        )
+
+    }
+
+
+}
+
+
+private fun getAllApiCalls(homeViewModel: HomeViewModel) {
     homeViewModel.getAllApiCallsForHome()
 }
 

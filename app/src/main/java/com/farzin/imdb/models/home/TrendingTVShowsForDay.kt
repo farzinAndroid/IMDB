@@ -1,6 +1,6 @@
 package com.farzin.imdb.models.home
 
-data class TrendingTVShowsForWeek(
+data class TrendingTVShowsForDay(
     val page: Int = 0,
     val results: List<Result> = emptyList(),
     val total_pages: Int = 0,

@@ -30,3 +30,17 @@ val ColorScheme.normalText: Color
 val ColorScheme.imdbYellow: Color
     @Composable
     get() = Color(0xFFf3ce13 )
+
+
+val ColorScheme.saveButtonBackground: Color
+    @Composable
+    get() = Color(0x9A7C7C7C)
+
+val ColorScheme.addBackground: Color
+    @Composable
+    get() = Color(0xDAFFFFFF)
+
+
+val ColorScheme.starColor: Color
+    @Composable
+    get() = Color(0xB9005BFF)

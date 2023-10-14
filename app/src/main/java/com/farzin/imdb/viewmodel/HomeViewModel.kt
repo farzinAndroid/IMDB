@@ -3,7 +3,7 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingTVShowsForWeek
+import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.repository.HomeRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel() {
 
-    var trendingTVShowsForWeek = MutableStateFlow<NetworkResult<TrendingTVShowsForWeek>>(NetworkResult.Loading())
+    var trendingTVShowsForDay = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
 
 
     fun getAllApiCallsForHome(){
@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
         viewModelScope.launch {
 
             launch {
-                trendingTVShowsForWeek.emit(repo.getTVShowsForWeek())
+                trendingTVShowsForDay.emit(repo.getTVShowsForDay())
             }
 
         }
