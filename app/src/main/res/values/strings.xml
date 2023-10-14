@@ -9,4 +9,6 @@
     <string name="name">نام</string>
     <string name="password">رمز</string>
     <string name="login">ورود</string>
+    <string name="popular_section">محبوب‌‌ترین ها</string>
+    <string name="popular_among_watchers">محبوب بین بیننده ها</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.farzin.imdb.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -31,7 +31,8 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.ui.theme.addBackground
-import com.farzin.imdb.utils.ImageHelper
+import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.Utils
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -53,7 +54,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
     val result by homeViewModel.trendingTVShowsForDay.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            trendingTVShowsForDay = result.data!!
+            trendingTVShowsForDay = result.data ?: TrendingTVShowsForDay()
             loading = false
         }
 
@@ -71,6 +72,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
         modifier = Modifier
             .fillMaxWidth()
             .height(320.dp)
+            .background(MaterialTheme.colorScheme.sectionContainerBackground)
     ) {
         Column(
             modifier = Modifier
@@ -113,7 +115,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                     ) {
                         val painter = rememberAsyncImagePainter(
                             ImageRequest.Builder(LocalContext.current)
-                                .data(data = ImageHelper.appendImage(backdropPath))
+                                .data(data = Utils.appendImage(backdropPath))
                                 .scale(Scale.FIT)
                                 .build()
                         )

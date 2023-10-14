@@ -1,5 +1,6 @@
 package com.farzin.imdb.data.remote
 
+import com.farzin.imdb.models.home.PopularTVModel
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
@@ -13,6 +14,12 @@ interface HomeApiInterface {
     suspend fun getTVShowsForDay(
         @Query("api_key") apiKey : String = Constants.API_KEY
     ) : Response<TrendingTVShowsForDay>
+
+
+    @GET("tv/popular")
+    suspend fun getPopularTV(
+        @Query("api_key") apiKey : String = Constants.API_KEY,
+    ) : Response<PopularTVModel>
 
 
 

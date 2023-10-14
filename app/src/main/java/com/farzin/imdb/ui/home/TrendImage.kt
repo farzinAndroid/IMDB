@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.farzin.imdb.utils.ImageHelper
+import com.farzin.imdb.utils.Utils
 
 @Composable
 fun TrendImage(backDropPath:String) {
@@ -28,7 +28,7 @@ fun TrendImage(backDropPath:String) {
     ){
 
         Image(
-            painter = rememberAsyncImagePainter(ImageHelper.appendImage(backDropPath)),
+            painter = rememberAsyncImagePainter(Utils.appendImage(backDropPath)),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxSize(),
