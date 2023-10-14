@@ -2,18 +2,25 @@ package com.farzin.imdb
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
 import com.farzin.imdb.ui.theme.IMDBTheme
+import com.farzin.imdb.utils.AppConfig
+import com.farzin.imdb.utils.Constants
+import com.farzin.imdb.utils.InitialRequestToken
+import com.farzin.imdb.viewmodel.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +38,13 @@ class MainActivity : ComponentActivity() {
                 ) {
 
                     val navController = rememberNavController()
+                    val vm = viewModels<DataStoreViewModel>()
+
+                    InitialRequestToken()
+                    AppConfig()
+
+                    Log.e("TAG","session id ${vm.value.getSessionId()}")
+                    Log.e("TAG","is logged in  ${vm.value.getLoginState()}")
 
 
                     Scaffold(
@@ -48,7 +62,6 @@ class MainActivity : ComponentActivity() {
                             SetUpNavGraph(navController = navController)
                         }
                     )
-
 
 
                 }

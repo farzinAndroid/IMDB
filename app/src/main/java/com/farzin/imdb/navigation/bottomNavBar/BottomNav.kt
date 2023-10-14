@@ -48,6 +48,13 @@ fun BottomNav(
             deSelectedColor = Color.Gray,
             icon = painterResource(R.drawable.search)
         ),
+        BottomNavItem(
+            name = stringResource(R.string.you),
+            route = Screens.Profile.route,
+            selectedColor = MaterialTheme.colorScheme.selectedColor,
+            deSelectedColor = Color.Gray,
+            icon = painterResource(R.drawable.profile)
+        ),
     )
 
 

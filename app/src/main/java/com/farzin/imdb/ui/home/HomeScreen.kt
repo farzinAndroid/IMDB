@@ -62,7 +62,9 @@ fun Home(homeViewModel: HomeViewModel) {
             .padding(bottom = 60.dp)
     ){
 
-
+        items(trendingTVShowsForWeek.results){
+            Text(text = it.name)
+        }
 
 
     }

@@ -4,4 +4,9 @@
     <string name="search">جست‌وجو</string>
     <string name="video">فیلم</string>
     <string name="you">شما</string>
+    <string name="sign_in">ثبت نام</string>
+    <string name="unlock_all_that_imdb_has_to_offer">تمام آنچه IMDB ارائه میدهد را باز کنید</string>
+    <string name="name">نام</string>
+    <string name="password">رمز</string>
+    <string name="login">ورود</string>
 </resources>

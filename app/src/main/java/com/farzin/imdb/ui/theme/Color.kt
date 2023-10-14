@@ -16,8 +16,17 @@ val Pink40 = Color(0xFF7D5260)
 
 val ColorScheme.selectedColor: Color
     @Composable
-    get() = if (isSystemInDarkTheme()) Color(0xFFC59C00) else Color(0xFF000000)
+    get() = if (isSystemInDarkTheme()) Color(0xFFf3ce13) else Color(0xFF000000)
 
 val ColorScheme.appBackGround: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color(0xFF1F1F1F) else Color(0xFFFFFFFF)
+
+
+val ColorScheme.normalText: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) Color(0xFFC9C9C9) else Color(0xFF000000)
+
+val ColorScheme.imdbYellow: Color
+    @Composable
+    get() = Color(0xFFf3ce13 )
