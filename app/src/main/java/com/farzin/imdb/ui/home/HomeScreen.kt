@@ -69,10 +69,12 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 60.dp)
+                .background(MaterialTheme.colorScheme.appBackGround)
 
         ) {
 
             item { TrendingTVShowsForDaySection() }
+            item { WhatToWatchSection(navController) }
             item { PopularTVSection() }
             item { TrendingMoviesForWeekSection() }
 

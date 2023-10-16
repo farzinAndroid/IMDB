@@ -14,4 +14,18 @@
     <string name="popular_among_watchers">Popular among IMDB members</string>
     <string name="movies_of_the_week">Movies of the week</string>
     <string name="movies">Movies</string>
+    <string name="what_to_watch">What to watch</string>
+    <string name="add_service">Add your services</string>
+    <string name="service_desc">Select our preferred streaming services to personalize your experience</string>
+    <string name="add_service_preffered">Add your preferred services</string>
+    <string name="add_service_preffered_desc">Select you streaming services and get recommendations for what to watch</string>
+    <string name="bbc">BBC</string>
+    <string name="nbc">NBC</string>
+    <string name="abc">ABC</string>
+    <string name="fox">Fox</string>
+    <string name="hbo">HBO</string>
+    <string name="cn">CN</string>
+    <string name="cbc">CBC</string>
+    <string name="cnbc">CNBC</string>
+    <string name="netflix">Netflix</string>
 </resources>

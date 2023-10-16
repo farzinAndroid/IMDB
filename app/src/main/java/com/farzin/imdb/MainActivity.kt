@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
                     AppConfig()
 
                     Log.e("TAG","session id ${vm.value.getSessionId()}")
-                    Log.e("TAG","is logged in  ${vm.value.getLoginState()}")
 
 
                     Scaffold(

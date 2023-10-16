@@ -8,6 +8,7 @@ import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.home.HomeScreen
 import com.farzin.imdb.ui.search.SearchScreen
 import com.farzin.imdb.ui.profile.ProfileScreen
+import com.farzin.imdb.ui.service.ServiceScreen
 
 
 @Composable
@@ -32,6 +33,11 @@ fun SetUpNavGraph(
 
         composable(Screens.Profile.route){
             ProfileScreen(navController)
+        }
+
+
+        composable(Screens.Service.route){
+            ServiceScreen(navController)
         }
 
     }

@@ -14,7 +14,7 @@ class DataStoreViewModel @Inject constructor(private val repo: DataStoreRepoImpl
 
     companion object {
         const val SESSION_ID = "SESSION_ID"
-        const val IS_LOGGED_IN = "IS_LOGGED_IN"
+        const val SERVICE_ID = "SERVICE_ID"
     }
 
 
@@ -24,9 +24,10 @@ class DataStoreViewModel @Inject constructor(private val repo: DataStoreRepoImpl
         }
     }
 
-    fun saveLoginState(value: Boolean) {
+
+    fun saveServiceId(value: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.putBoolean(value, IS_LOGGED_IN)
+            repo.putInt(value, SERVICE_ID)
         }
     }
 
@@ -34,8 +35,9 @@ class DataStoreViewModel @Inject constructor(private val repo: DataStoreRepoImpl
         repo.getString(SESSION_ID)
     }
 
-    fun getLoginState(): Boolean? = runBlocking {
-        repo.getBoolean(IS_LOGGED_IN)
+
+    fun getServiceId(): Int? = runBlocking {
+        repo.getInt(SERVICE_ID)
     }
 
 }

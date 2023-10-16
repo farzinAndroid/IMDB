@@ -56,7 +56,6 @@ fun LoginSection(
             sessionResult.data?.session_id?.let {
                 sessionId = it
                 dataStoreViewModel.saveSessionId(it)
-                dataStoreViewModel.saveLoginState(true)
                 Constants.SESSION_ID = it
                 profileViewModel.logginState =ProfileState.LOGGED
             }
