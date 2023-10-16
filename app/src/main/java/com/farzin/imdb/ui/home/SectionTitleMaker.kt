@@ -25,7 +25,7 @@ fun SectionTitleMaker(title: String) {
             textAlign = TextAlign.Start,
             color = MaterialTheme.colorScheme.normalText,
             modifier = Modifier
-                .padding(start = 16.dp)
+                .padding(start = 20.dp)
         )
 
 

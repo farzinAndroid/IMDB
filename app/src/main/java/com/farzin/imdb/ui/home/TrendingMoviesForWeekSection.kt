@@ -1,7 +1,6 @@
 package com.farzin.imdb.ui.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,27 +23,27 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.PopularTVModel
-import com.farzin.imdb.ui.theme.appBackGround
+import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
-fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 
-    var popularTV by remember {
-        mutableStateOf<PopularTVModel>(
-            PopularTVModel()
+    var trendingMoviesList by remember {
+        mutableStateOf<TrendingMoviesForWeek>(
+            TrendingMoviesForWeek()
         )
     }
 
     var loading by remember { mutableStateOf(false) }
 
-    val result by homeViewModel.popularTV.collectAsState()
+    val result by homeViewModel.trendingMoviesForWeek.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            popularTV = result.data ?: PopularTVModel()
+            trendingMoviesList = result.data ?: TrendingMoviesForWeek()
             loading = false
         }
 
@@ -67,18 +65,22 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
 
         MySpacerHeight(height = 20.dp)
 
-        SectionTitleMaker(title = stringResource(R.string.popular_section))
+        SectionTitleMaker(title = stringResource(R.string.movies))
 
         MySpacerHeight(height = 16.dp)
+
+
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp),
+                .height(450.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.sectionContainerBackground
+            ),
             shape = MaterialTheme.shapes.extraSmall
         ) {
 
@@ -88,7 +90,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                 horizontalAlignment = Alignment.Start
             ) {
 
-                SectionStickyHeader(stringResource(R.string.popular_among_watchers))
+                SectionStickyHeader(stringResource(R.string.movies_of_the_week))
 
                 MySpacerHeight(height = 8.dp)
 
@@ -96,7 +98,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                     modifier = Modifier
                         .fillMaxSize()
                 ){
-                    items(popularTV.results){
+                    items(trendingMoviesList.results){
                         MovieItem(it)
                     }
                 }
@@ -106,9 +108,8 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
 
         }
 
+
+
     }
-
-
-
 
 }

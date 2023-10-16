@@ -11,4 +11,6 @@
     <string name="login">ورود</string>
     <string name="popular_section">محبوب‌‌ترین ها</string>
     <string name="popular_among_watchers">محبوب بین بیننده ها</string>
+    <string name="movies_of_the_week">فیلم های هفته</string>
+    <string name="movies">فیلم‌ها</string>
 </resources>

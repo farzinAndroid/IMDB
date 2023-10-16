@@ -12,4 +12,6 @@
     <string name="login">Login</string>
     <string name="popular_section">Popular</string>
     <string name="popular_among_watchers">Popular among IMDB members</string>
+    <string name="movies_of_the_week">Movies of the week</string>
+    <string name="movies">Movies</string>
 </resources>

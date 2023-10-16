@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
@@ -73,6 +74,7 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
 
             item { TrendingTVShowsForDaySection() }
             item { PopularTVSection() }
+            item { TrendingMoviesForWeekSection() }
 
 
         }
