@@ -38,7 +38,7 @@ fun WhatToWatchSection(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         dataStoreViewModel.getServiceId()?.let {
             homeViewModel.getTvBasedOnNetwork(it)
         }
@@ -55,15 +55,17 @@ fun WhatToWatchSection(
 
 
     val result by homeViewModel.tVBasedOnNetwork.collectAsState()
-    when(result){
-        is NetworkResult.Success->{
+    when (result) {
+        is NetworkResult.Success -> {
             loading = false
             tvBasedOnNetworkList = result.data ?: TVBasedOnNetwork()
         }
-        is NetworkResult.Error->{
+
+        is NetworkResult.Error -> {
             loading = false
         }
-        is NetworkResult.Loading->{
+
+        is NetworkResult.Loading -> {
             loading = false
         }
     }
@@ -80,10 +82,14 @@ fun WhatToWatchSection(
 
         MySpacerHeight(height = 16.dp)
 
+        val height = if (dataStoreViewModel.getServiceId() == null ||
+            dataStoreViewModel.getServiceId() == 0
+        ) 350.dp else 480.dp
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(480.dp),
+                .height(height),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
@@ -92,35 +98,43 @@ fun WhatToWatchSection(
         ) {
 
 
-            if (dataStoreViewModel.getServiceId() == null) {
-                EmptyWatchList { navController.navigate(Screens.Service.route) }
+            if (
+                dataStoreViewModel.getServiceId() == null ||
+                dataStoreViewModel.getServiceId() == 0
+            ) {
+                EmptySection(
+                    onClick = { navController.navigate(Screens.Service.route) },
+                    title = stringResource(R.string.add_service_preffered),
+                    subtitle = stringResource(R.string.add_service_preffered_desc),
+                    buttonText = stringResource(R.string.add_service)
+                )
             } else {
                 Column(
-                            modifier = Modifier
-                                .fillMaxSize(),
-                            horizontalAlignment = Alignment.Start
-                        ) {
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.Start
+                ) {
 
-                            SectionStickyHeader(
-                                stringResource(R.string.trending_on_service),
-                                isHaveAnotherText = true,
-                                headerSubtitle = stringResource(R.string.edit_services),
-                                headerOnClick = {
-                                    navController.navigate(Screens.Service.route)
-                                }
-                            )
-
-                            MySpacerHeight(height = 8.dp)
-
-                            LazyRow(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            ){
-                                items(tvBasedOnNetworkList.results){item->
-                                    MovieItem(item = item)
-                                }
-                            }
+                    SectionStickyHeader(
+                        stringResource(R.string.trending_on_service),
+                        isHaveAnotherText = true,
+                        headerSubtitle = stringResource(R.string.edit_services),
+                        headerOnClick = {
+                            navController.navigate(Screens.Service.route)
                         }
+                    )
+
+                    MySpacerHeight(height = 8.dp)
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        items(tvBasedOnNetworkList.results) { item ->
+                            MovieItem(item = item)
+                        }
+                    }
+                }
 
             }
 

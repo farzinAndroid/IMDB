@@ -20,7 +20,7 @@ val ColorScheme.selectedColor: Color
 
 val ColorScheme.appBackGround: Color
     @Composable
-    get() = if (isSystemInDarkTheme()) Color(0xFF1F1F1F) else Color(0xFFEEEEEE)
+    get() = if (isSystemInDarkTheme()) Color(0xFF313131) else Color(0xFFEEEEEE)
 
 
 val ColorScheme.sectionContainerBackground: Color

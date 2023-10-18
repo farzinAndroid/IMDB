@@ -47,13 +47,15 @@ fun ServiceItem(
 
             MySpacerWidth(width = 8.dp)
 
-            Image(
-                painter = item.logo,
-                contentDescription ="",
-                modifier = Modifier
-                    .size(26.dp),
-                contentScale = ContentScale.FillBounds
-            )
+            item.logo?.let {
+                Image(
+                    painter = it,
+                    contentDescription ="",
+                    modifier = Modifier
+                        .size(26.dp),
+                    contentScale = ContentScale.FillBounds
+                )
+            }
 
             MySpacerWidth(width = 8.dp)
 

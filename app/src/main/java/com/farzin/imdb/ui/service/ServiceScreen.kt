@@ -81,13 +81,21 @@ fun Service(
             logo = painterResource(R.drawable.cn),
             id = 56
         ),
-
-
-        )
+        ServiceModel(
+            name = stringResource(R.string.amc),
+            logo = painterResource(R.drawable.amc),
+            id = 174
+        ),
+        ServiceModel(
+            name = stringResource(R.string.none),
+            logo = null,
+            id = 0
+        ),
+    )
 
     var selectedService by remember { mutableStateOf<ServiceModel?>(null) }
 
-    dataStoreViewModel.getServiceId()?.let {id->
+    dataStoreViewModel.getServiceId()?.let { id ->
         selectedService = serviceList.find { it.id == id }
     }
 

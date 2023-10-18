@@ -27,8 +27,15 @@
     <string name="cn">CN</string>
     <string name="cbc">CBC</string>
     <string name="cnbc">CNBC</string>
+    <string name="amc">AMC</string>
     <string name="netflix">Netflix</string>
     <string name="trending_on_service">Trending on your services</string>
     <string name="edit_services">Edit your preferred services</string>
     <string name="now_playing">Now Playing</string>
+    <string name="your_watch_list_tv">Your TV watchlist</string>
+    <string name="empty_watchlist_title">Your watchlist is empty</string>
+    <string name="empty_watchlist_subtitle">Save movies and TV shows to keep track of what to watch</string>
+    <string name="empty_watchlist_button_text">Add</string>
+    <string name="none">None</string>
+    <string name="refresh">Refresh</string>
 </resources>

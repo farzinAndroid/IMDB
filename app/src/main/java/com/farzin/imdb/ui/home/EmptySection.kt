@@ -23,7 +23,12 @@ import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
 
 @Composable
-fun EmptyWatchList(onClick:()->Unit) {
+fun EmptySection(
+    onClick:()->Unit,
+    title:String,
+    subtitle:String,
+    buttonText:String
+) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -32,14 +37,14 @@ fun EmptyWatchList(onClick:()->Unit) {
     ) {
 
         Text(
-            text = stringResource(R.string.add_service_preffered),
+            text = title,
             style = MaterialTheme.typography.displayMedium,
             color = MaterialTheme.colorScheme.normalText,
             fontWeight = FontWeight.SemiBold
         )
 
         Text(
-            text = stringResource(R.string.add_service_preffered_desc),
+            text = subtitle,
             style = MaterialTheme.typography.titleLarge,
             color = Color.Gray,
             fontWeight = FontWeight.Normal,
@@ -61,7 +66,7 @@ fun EmptyWatchList(onClick:()->Unit) {
                 .padding(top = 12.dp),
         ) {
             Text(
-                text = stringResource(R.string.add_service),
+                text = buttonText,
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.White,
                 fontWeight = FontWeight.Normal,

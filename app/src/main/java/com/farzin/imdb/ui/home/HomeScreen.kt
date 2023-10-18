@@ -75,6 +75,7 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
             item { TrendingTVShowsForDaySection() }
             item { WhatToWatchSection(navController) }
             item { PopularTVSection() }
+            item { WatchListTVSection() }
             item { TrendingMoviesForWeekSection() }
             item { NowPlayingSection() }
 
@@ -96,5 +97,6 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
 
 private fun getAllApiCalls(homeViewModel: HomeViewModel) {
     homeViewModel.getAllApiCallsForHome()
+    homeViewModel.getWatchListTV()
 }
 

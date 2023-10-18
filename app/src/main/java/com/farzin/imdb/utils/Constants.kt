@@ -9,6 +9,7 @@ object Constants {
     var REQUEST_TOKEN = ""
     var SESSION_ID = ""
     const val IMAGE_APPEND = "https://image.tmdb.org/t/p/original"
+    const val ACC_ID = 20362118
 
 
 }

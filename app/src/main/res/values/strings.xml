@@ -26,8 +26,15 @@
     <string name="cn">CN</string>
     <string name="cbc">CBC</string>
     <string name="cnbc">CNBC</string>
+    <string name="amc">AMC</string>
     <string name="netflix">Netflix</string>
     <string name="trending_on_service">پر طرفدار در سرویس شما</string>
     <string name="edit_services">ویرایش سرویس‌ها</string>
     <string name="now_playing">در حال پخش</string>
+    <string name="your_watch_list_tv">لیست تماشای سریال</string>
+    <string name="empty_watchlist_title">لیست تماشای شما خالیست</string>
+    <string name="empty_watchlist_subtitle">فیلم‌ها و برنامه‌های تلویزیونی را ذخیره کنید تا ببینید چه چیزی را باید تماشا کنید</string>
+    <string name="empty_watchlist_button_text">اضافه کردن</string>
+    <string name="none">هیچکدام</string>
+    <string name="refresh">دوباره بارگیری کن</string>
 </resources>
