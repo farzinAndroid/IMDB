@@ -3,6 +3,7 @@ package com.farzin.imdb.ui.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -24,10 +25,12 @@ fun SaveButton(onClick: () -> Unit) {
 
     Box(
         modifier = Modifier
+            .padding(6.dp)
             .size(30.dp)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.saveButtonBackground)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            ,
         contentAlignment = Alignment.Center,
     ){
 

@@ -41,6 +41,11 @@ val ColorScheme.imdbYellow: Color
     get() = Color(0xFFf3ce13 )
 
 
+val ColorScheme.Cyan: Color
+    @Composable
+    get() = Color(0xFF00DBC3)
+
+
 val ColorScheme.saveButtonBackground: Color
     @Composable
     get() = Color(0x9A7C7C7C)

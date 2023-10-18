@@ -1,8 +1,10 @@
 package com.farzin.imdb.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,45 +21,83 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
+import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
+import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
-fun SectionStickyHeader(headerTitle:String) {
+fun SectionStickyHeader(
+    headerTitle:String,
+    isHaveAnotherText : Boolean = false,
+    headerSubtitle:String = "",
+    headerOnClick:()->Unit = {}
+) {
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
+    Column {
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp)
+                .padding(top = 8.dp)
+                .padding(bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
 
 
-            Text(
-                text = headerTitle,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Normal,
-                color = MaterialTheme.colorScheme.normalText
-            )
+                Box(
+                    modifier = Modifier
+                        .width(5.dp)
+                        .height(50.dp)
+                        .padding(vertical = 4.dp)
+                        .clip(Shapes().small)
+                        .background(MaterialTheme.colorScheme.imdbYellow)
 
-            MySpacerWidth(width = 12.dp)
+                )
 
-            Box(
-                modifier = Modifier
-                    .width(2.dp)
-                    .height(50.dp)
-                    .padding(vertical = 4.dp)
-                    .clip(Shapes().small)
-                    .background(MaterialTheme.colorScheme.imdbYellow)
+                MySpacerWidth(width = 12.dp)
 
-            )
+                Text(
+                    text = headerTitle,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.normalText
+                )
 
-        }
 
+
+
+
+            }
+
+            if (isHaveAnotherText){
+
+                Text(
+                    text = headerSubtitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Thin,
+                    color = MaterialTheme.colorScheme.Cyan,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .clickable { headerOnClick() }
+                )
+
+            }
+
+
+        } 
+        
+        
+
+        
     }
+    
+  
 
 }

@@ -27,4 +27,6 @@
     <string name="cbc">CBC</string>
     <string name="cnbc">CNBC</string>
     <string name="netflix">Netflix</string>
+    <string name="trending_on_service">پر طرفدار در سرویس شما</string>
+    <string name="edit_services">ویرایش سرویس‌ها</string>
 </resources>

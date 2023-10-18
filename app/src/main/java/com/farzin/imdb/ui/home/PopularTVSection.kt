@@ -74,7 +74,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp),
+                .height(480.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),

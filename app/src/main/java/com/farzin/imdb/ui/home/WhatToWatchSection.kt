@@ -19,6 +19,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,18 +37,53 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
+import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.TVBasedOnNetwork
+import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
+import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
 fun WhatToWatchSection(
     navController: NavController,
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
+
+    LaunchedEffect(true){
+        dataStoreViewModel.getServiceId()?.let {
+            homeViewModel.getTvBasedOnNetwork(it)
+        }
+    }
+
+
+    var tvBasedOnNetworkList by remember {
+        mutableStateOf<TVBasedOnNetwork>(
+            TVBasedOnNetwork()
+        )
+    }
+
+    var loading by remember { mutableStateOf(false) }
+
+
+    val result by homeViewModel.tVBasedOnNetwork.collectAsState()
+    when(result){
+        is NetworkResult.Success->{
+            loading = false
+            tvBasedOnNetworkList = result.data ?: TVBasedOnNetwork()
+        }
+        is NetworkResult.Error->{
+            loading = false
+        }
+        is NetworkResult.Loading->{
+            loading = false
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -59,7 +100,7 @@ fun WhatToWatchSection(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp),
+                .height(480.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
@@ -71,9 +112,32 @@ fun WhatToWatchSection(
             if (dataStoreViewModel.getServiceId() == null) {
                 EmptyWatchList { navController.navigate(Screens.Service.route) }
             } else {
-                Text(text = dataStoreViewModel.getServiceId().toString(), modifier =
-                Modifier.clickable { navController.navigate(Screens.Service.route) }
-                )
+                Column(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            horizontalAlignment = Alignment.Start
+                        ) {
+
+                            SectionStickyHeader(
+                                stringResource(R.string.trending_on_service),
+                                isHaveAnotherText = true,
+                                headerSubtitle = stringResource(R.string.edit_services),
+                                headerOnClick = {
+                                    navController.navigate(Screens.Service.route)
+                                }
+                            )
+
+                            MySpacerHeight(height = 8.dp)
+
+                            LazyRow(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                            ){
+                                items(tvBasedOnNetworkList.results){item->
+                                    MovieItem(item = item)
+                                }
+                            }
+                        }
 
             }
 
@@ -85,25 +149,7 @@ fun WhatToWatchSection(
 }
 
 
-/*Column(
-                           modifier = Modifier
-                               .fillMaxSize(),
-                           horizontalAlignment = Alignment.Start
-                       ) {
 
-                           SectionStickyHeader(stringResource(R.string.popular_among_watchers))
-
-                           MySpacerHeight(height = 8.dp)
-
-                           LazyRow(
-                               modifier = Modifier
-                                   .fillMaxSize()
-                           ){
-                               items(6){
-
-                               }
-                           }
-                       }*/
 
 
 

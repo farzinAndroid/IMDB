@@ -74,7 +74,7 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp),
+                .height(480.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
