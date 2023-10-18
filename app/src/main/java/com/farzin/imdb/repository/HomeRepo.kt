@@ -3,9 +3,9 @@ package com.farzin.imdb.repository
 import com.farzin.imdb.data.remote.BaseApiResponse
 import com.farzin.imdb.data.remote.HomeApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.models.home.PopularTVModel
 import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import javax.inject.Inject
@@ -33,6 +33,12 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
     suspend fun getTVBasedOnNetwork(netWorkId:Int): NetworkResult<TVBasedOnNetwork> =
         safeApiCall {
             api.getTVBasedOnNetwork(withNetworks = netWorkId)
+        }
+
+
+    suspend fun getNowPlaying(): NetworkResult<NowPlayingModel> =
+        safeApiCall {
+            api.getNowPlaying()
         }
 
 }

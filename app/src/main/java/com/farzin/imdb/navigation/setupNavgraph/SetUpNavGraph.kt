@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.home.HomeScreen
-import com.farzin.imdb.ui.search.SearchScreen
 import com.farzin.imdb.ui.profile.ProfileScreen
+import com.farzin.imdb.ui.search.SearchScreen
 import com.farzin.imdb.ui.service.ServiceScreen
 
 

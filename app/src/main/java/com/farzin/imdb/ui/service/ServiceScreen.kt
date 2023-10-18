@@ -3,7 +3,6 @@ package com.farzin.imdb.ui.service
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,6 @@ import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.viewmodel.DataStoreViewModel
-import kotlin.math.log
 
 @Composable
 fun ServiceScreen(navController: NavController) {

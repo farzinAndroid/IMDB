@@ -11,14 +11,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
 import com.farzin.imdb.ui.theme.IMDBTheme
 import com.farzin.imdb.utils.AppConfig
-import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.InitialRequestToken
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint

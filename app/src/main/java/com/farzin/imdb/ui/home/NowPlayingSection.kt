@@ -22,27 +22,29 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.PopularTVModel
+import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
-fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun NowPlayingSection(
+    homeViewModel: HomeViewModel = hiltViewModel()
+) {
 
 
-    var popularTV by remember {
-        mutableStateOf<PopularTVModel>(
-            PopularTVModel()
+    var nowPlayingMoviesList by remember {
+        mutableStateOf<NowPlayingModel>(
+            NowPlayingModel()
         )
     }
 
     var loading by remember { mutableStateOf(false) }
 
-    val result by homeViewModel.popularTV.collectAsState()
+    val result by homeViewModel.nowPlaying.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            popularTV = result.data ?: PopularTVModel()
+            nowPlayingMoviesList = result.data ?: NowPlayingModel()
             loading = false
         }
 
@@ -56,6 +58,10 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
     }
 
 
+
+
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -63,10 +69,6 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
     ) {
 
         MySpacerHeight(height = 20.dp)
-
-        SectionTitleMaker(title = stringResource(R.string.popular_section))
-
-        MySpacerHeight(height = 16.dp)
 
         Card(
             modifier = Modifier
@@ -85,27 +87,25 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                 horizontalAlignment = Alignment.Start
             ) {
 
-                SectionStickyHeader(stringResource(R.string.popular_among_watchers))
+                SectionStickyHeader(stringResource(R.string.now_playing))
 
                 MySpacerHeight(height = 8.dp)
 
                 LazyRow(
                     modifier = Modifier
                         .fillMaxSize()
-                ){
-                    items(popularTV.results){
-                        MovieItem(it)
+                ) {
+
+                    items(nowPlayingMoviesList.results){item->
+                        MovieItem(item = item)
                     }
+
                 }
             }
-
 
 
         }
 
     }
-
-
-
 
 }

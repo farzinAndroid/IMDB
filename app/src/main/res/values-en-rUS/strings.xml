@@ -30,4 +30,5 @@
     <string name="netflix">Netflix</string>
     <string name="trending_on_service">Trending on your services</string>
     <string name="edit_services">Edit your preferred services</string>
+    <string name="now_playing">Now Playing</string>
 </resources>

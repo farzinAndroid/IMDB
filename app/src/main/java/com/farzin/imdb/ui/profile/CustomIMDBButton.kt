@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
-import java.sql.Ref
 
 @Composable
 fun CustomIMDBButton(

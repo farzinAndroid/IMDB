@@ -1,8 +1,8 @@
 package com.farzin.imdb.data.remote
 
+import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.models.home.PopularTVModel
 import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.utils.Constants
@@ -38,6 +38,13 @@ interface HomeApiInterface {
         @Query("api_key") apiKey : String = Constants.API_KEY,
         @Query("with_networks") withNetworks : Int
     ) : Response<TVBasedOnNetwork>
+
+
+
+    @GET("movie/now_playing")
+    suspend fun getNowPlaying(
+        @Query("api_key") apiKey : String = Constants.API_KEY,
+    ) : Response<NowPlayingModel>
 
 
 

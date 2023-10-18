@@ -15,7 +15,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.utils.Utils
 
 @Composable
-fun TrendImage(backDropPath:String) {
+fun PosterImage(backDropPath:String) {
 
 
     Box(

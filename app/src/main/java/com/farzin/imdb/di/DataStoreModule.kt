@@ -1,7 +1,6 @@
 package com.farzin.imdb.di
 
 import android.content.Context
-import com.farzin.imdb.data.datastore.DataStoreRepo
 import com.farzin.imdb.data.datastore.DataStoreRepoImpl
 import dagger.Module
 import dagger.Provides

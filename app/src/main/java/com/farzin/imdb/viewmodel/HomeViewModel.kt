@@ -3,9 +3,9 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.models.home.PopularTVModel
 import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.repository.HomeRepo
@@ -21,6 +21,7 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
     var popularTV = MutableStateFlow<NetworkResult<PopularTVModel>>(NetworkResult.Loading())
     var trendingMoviesForWeek = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     var tVBasedOnNetwork = MutableStateFlow<NetworkResult<TVBasedOnNetwork>>(NetworkResult.Loading())
+    var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
 
 
     fun getAllApiCallsForHome(){
@@ -40,6 +41,12 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
             launch {
                 trendingMoviesForWeek.emit(repo.getTrendingMoviesForWeek())
             }
+
+
+            launch {
+                nowPlaying.emit(repo.getNowPlaying())
+            }
+
 
         }
 

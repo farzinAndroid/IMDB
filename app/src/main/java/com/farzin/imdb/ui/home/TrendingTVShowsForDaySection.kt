@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -71,7 +72,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(320.dp)
+            .height(350.dp)
             .background(MaterialTheme.colorScheme.sectionContainerBackground)
     ) {
         Column(
@@ -160,12 +161,13 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.BottomStart
                         ) {
-                            TrendImage(posterPath)
+                            PosterImage(posterPath)
                         }
 
                         Box(
                             modifier = Modifier
-                                .align(Alignment.BottomCenter),
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 16.dp),
                             contentAlignment = Alignment.BottomCenter
                         ) {
 
