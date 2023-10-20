@@ -25,9 +25,11 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.NowPlayingModel
+import com.farzin.imdb.models.home.NowPlayingResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,8 +41,8 @@ fun NowPlayingSection(
     val scope = rememberCoroutineScope()
 
     var nowPlayingMoviesList by remember {
-        mutableStateOf<NowPlayingModel>(
-            NowPlayingModel()
+        mutableStateOf<List<NowPlayingResult>>(
+            emptyList()
         )
     }
 
@@ -49,7 +51,7 @@ fun NowPlayingSection(
     val result by homeViewModel.nowPlaying.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            nowPlayingMoviesList = result.data ?: NowPlayingModel()
+            nowPlayingMoviesList = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -101,7 +103,7 @@ fun NowPlayingSection(
                         .fillMaxSize()
                 ) {
 
-                    items(nowPlayingMoviesList.results){item->
+                    items(nowPlayingMoviesList){item->
                         MovieItem(
                             item = item,
                             onClick ={
@@ -113,7 +115,8 @@ fun NowPlayingSection(
                                     )
                                 )
                                 scope.launch {
-                                    homeViewModel.getWatchListTV()
+                                    delay(100)
+
                                 }
                             }
                         )

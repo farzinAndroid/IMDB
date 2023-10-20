@@ -33,6 +33,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
+import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
 import com.farzin.imdb.ui.theme.addBackground
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.Utils
@@ -40,6 +41,7 @@ import com.farzin.imdb.viewmodel.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
@@ -50,8 +52,8 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
     val scope = rememberCoroutineScope()
 
     var trendingTVShowsForDay by remember {
-        mutableStateOf<TrendingTVShowsForDay>(
-            TrendingTVShowsForDay()
+        mutableStateOf<List<TrendingTVShowsForDayResult>>(
+            emptyList()
         )
     }
 
@@ -60,7 +62,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
     val result by homeViewModel.trendingTVShowsForDay.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            trendingTVShowsForDay = result.data ?: TrendingTVShowsForDay()
+            trendingTVShowsForDay = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -109,17 +111,17 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
             Box {
 
                 HorizontalPager(
-                    count = trendingTVShowsForDay.results.size,
+                    count = trendingTVShowsForDay.size,
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxSize()
                 ) { index ->
-                    backdropPath = trendingTVShowsForDay.results[index].backdrop_path
-                    posterPath = trendingTVShowsForDay.results[index].poster_path
-                    title = trendingTVShowsForDay.results[index].name
-                    val voteNumber = trendingTVShowsForDay.results[index].vote_average
+                    backdropPath = trendingTVShowsForDay[index].backdrop_path
+                    posterPath = trendingTVShowsForDay[index].poster_path
+                    title = trendingTVShowsForDay[index].name
+                    val voteNumber = trendingTVShowsForDay[index].vote_average
                     voteAvg = String.format("%.1f",voteNumber)
-                    id = trendingTVShowsForDay.results[index].id
+                    id = trendingTVShowsForDay[index].id
 
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -180,6 +182,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                                     )
                                 )
                                 scope.launch {
+                                    delay(100)
                                     homeViewModel.getWatchListTV()
                                 }
                             }

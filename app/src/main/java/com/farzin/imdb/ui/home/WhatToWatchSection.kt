@@ -27,11 +27,13 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TVBasedOnNetwork
+import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,8 +53,8 @@ fun WhatToWatchSection(
 
 
     var tvBasedOnNetworkList by remember {
-        mutableStateOf<TVBasedOnNetwork>(
-            TVBasedOnNetwork()
+        mutableStateOf<List<TVBasedOnNetworkResult>>(
+            emptyList()
         )
     }
 
@@ -63,7 +65,7 @@ fun WhatToWatchSection(
     when (result) {
         is NetworkResult.Success -> {
             loading = false
-            tvBasedOnNetworkList = result.data ?: TVBasedOnNetwork()
+            tvBasedOnNetworkList = result.data?.results ?: emptyList()
         }
 
         is NetworkResult.Error -> {
@@ -135,7 +137,7 @@ fun WhatToWatchSection(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(tvBasedOnNetworkList.results) { item ->
+                        items(tvBasedOnNetworkList) { item ->
                             MovieItem(
                                 item = item,
                                 onClick = {
@@ -147,6 +149,7 @@ fun WhatToWatchSection(
                                         )
                                     )
                                     scope.launch {
+                                        delay(100)
                                         homeViewModel.getWatchListTV()
                                     }
                                 }

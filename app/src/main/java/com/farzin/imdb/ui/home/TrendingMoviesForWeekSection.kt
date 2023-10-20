@@ -25,9 +25,11 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -37,8 +39,8 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
     val scope = rememberCoroutineScope()
 
     var trendingMoviesList by remember {
-        mutableStateOf<TrendingMoviesForWeek>(
-            TrendingMoviesForWeek()
+        mutableStateOf<List<TrendingMoviesForWeekResult>>(
+            emptyList()
         )
     }
 
@@ -47,7 +49,7 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
     val result by homeViewModel.trendingMoviesForWeek.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            trendingMoviesList = result.data ?: TrendingMoviesForWeek()
+            trendingMoviesList = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -102,7 +104,7 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
                     modifier = Modifier
                         .fillMaxSize()
                 ){
-                    items(trendingMoviesList.results){
+                    items(trendingMoviesList){
                         MovieItem(
                             item = it,
                             onClick = {
@@ -114,7 +116,8 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
                                     )
                                 )
                                 scope.launch {
-                                    homeViewModel.getWatchListTV()
+                                    delay(100)
+
                                 }
                             }
                         )

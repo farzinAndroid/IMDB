@@ -26,9 +26,11 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.PopularTVModel
+import com.farzin.imdb.models.home.PopularTVModelResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -37,8 +39,8 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 
     var popularTV by remember {
-        mutableStateOf<PopularTVModel>(
-            PopularTVModel()
+        mutableStateOf<List<PopularTVModelResult>>(
+            emptyList()
         )
     }
 
@@ -50,7 +52,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
     val result by homeViewModel.popularTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            popularTV = result.data ?: PopularTVModel()
+            popularTV = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -101,7 +103,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    items(popularTV.results) {
+                    items(popularTV) {
                         MovieItem(
                             item = it,
                             onClick = {
@@ -113,6 +115,7 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                     )
                                 )
                                 scope.launch {
+                                    delay(100)
                                     homeViewModel.getWatchListTV()
                                 }
                             }

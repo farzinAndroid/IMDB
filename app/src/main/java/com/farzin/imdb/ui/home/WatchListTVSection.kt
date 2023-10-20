@@ -10,7 +10,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +25,14 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.WatchListTV
-import com.farzin.imdb.navigation.Screens
+import com.farzin.imdb.models.home.WatchListTVResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun WatchListTVSection(
@@ -42,9 +43,7 @@ fun WatchListTVSection(
     val scope = rememberCoroutineScope()
 
     var watchListTVList by remember {
-        mutableStateOf<WatchListTV>(
-            WatchListTV()
-        )
+        mutableStateOf<List<WatchListTVResult>>(emptyList())
     }
 
     var loading by remember { mutableStateOf(false) }
@@ -52,7 +51,7 @@ fun WatchListTVSection(
     val result by homeViewModel.watchListTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            watchListTVList = result.data ?: WatchListTV()
+            watchListTVList = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -74,7 +73,7 @@ fun WatchListTVSection(
 
         MySpacerHeight(height = 20.dp)
 
-        val height = if (watchListTVList.results.isEmpty()) 350.dp else 480.dp
+        val height = if (watchListTVList.isEmpty()) 350.dp else 480.dp
 
         Card(
             modifier = Modifier
@@ -106,7 +105,7 @@ fun WatchListTVSection(
 
                 MySpacerHeight(height = 8.dp)
 
-                if (watchListTVList.results.isEmpty()) {
+                if (watchListTVList.isEmpty()) {
                     EmptySection(
                         onClick = {},
                         title = stringResource(R.string.empty_watchlist_title),
@@ -119,7 +118,7 @@ fun WatchListTVSection(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(watchListTVList.results) {
+                        items(watchListTVList) {
                             MovieItem(
                                 item = it,
                                 onClick = {
@@ -131,8 +130,10 @@ fun WatchListTVSection(
                                         )
                                     )
                                     scope.launch {
+                                        delay(100)
                                         homeViewModel.getWatchListTV()
                                     }
+
                                 }
                             )
                         }
