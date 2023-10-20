@@ -10,10 +10,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +29,8 @@ import com.farzin.imdb.models.home.PopularTVModel
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -37,6 +41,9 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
             PopularTVModel()
         )
     }
+
+    val scope = rememberCoroutineScope()
+
 
     var loading by remember { mutableStateOf(false) }
 
@@ -105,7 +112,9 @@ fun PopularTVSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         watchlist = true
                                     )
                                 )
-                                homeViewModel.getWatchListTV()
+                                scope.launch {
+                                    homeViewModel.getWatchListTV()
+                                }
                             }
                         )
                     }

@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.WatchListTV
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
@@ -119,7 +120,21 @@ fun WatchListTVSection(
                             .fillMaxSize()
                     ) {
                         items(watchListTVList.results) {
-                            MovieItem(item = it)
+                            MovieItem(
+                                item = it,
+                                onClick = {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_id = it.id,
+                                            media_type = "tv",
+                                            watchlist = false
+                                        )
+                                    )
+                                    scope.launch {
+                                        homeViewModel.getWatchListTV()
+                                    }
+                                }
+                            )
                         }
                     }
 

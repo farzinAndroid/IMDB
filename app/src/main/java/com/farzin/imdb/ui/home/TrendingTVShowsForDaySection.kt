@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.ui.theme.addBackground
 import com.farzin.imdb.ui.theme.sectionContainerBackground
@@ -38,11 +40,14 @@ import com.farzin.imdb.viewmodel.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel()) {
 
+
+    val scope = rememberCoroutineScope()
 
     var trendingTVShowsForDay by remember {
         mutableStateOf<TrendingTVShowsForDay>(
@@ -96,6 +101,10 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                 mutableStateOf("")
             }
 
+            var id by remember {
+                mutableStateOf(0)
+            }
+
 
             Box {
 
@@ -110,6 +119,7 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                     title = trendingTVShowsForDay.results[index].name
                     val voteNumber = trendingTVShowsForDay.results[index].vote_average
                     voteAvg = String.format("%.1f",voteNumber)
+                    id = trendingTVShowsForDay.results[index].id
 
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -161,7 +171,18 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.BottomStart
                         ) {
-                            PosterImage(posterPath)
+                            PosterImage(posterPath){
+                                homeViewModel.addToWatchList(
+                                    AddToWatchListRequest(
+                                        media_id = id,
+                                        media_type = "tv",
+                                        watchlist = true
+                                    )
+                                )
+                                scope.launch {
+                                    homeViewModel.getWatchListTV()
+                                }
+                            }
                         }
 
                         Box(

@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,16 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun NowPlayingSection(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 
+
+    val scope = rememberCoroutineScope()
 
     var nowPlayingMoviesList by remember {
         mutableStateOf<NowPlayingModel>(
@@ -97,7 +102,21 @@ fun NowPlayingSection(
                 ) {
 
                     items(nowPlayingMoviesList.results){item->
-                        MovieItem(item = item)
+                        MovieItem(
+                            item = item,
+                            onClick ={
+                                homeViewModel.addToWatchList(
+                                    AddToWatchListRequest(
+                                        media_id = item.id,
+                                        media_type = "movie",
+                                        watchlist = true
+                                    )
+                                )
+                                scope.launch {
+                                    homeViewModel.getWatchListTV()
+                                }
+                            }
+                        )
                     }
 
                 }

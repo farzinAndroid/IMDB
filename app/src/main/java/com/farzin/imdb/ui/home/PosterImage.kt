@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.farzin.imdb.R
 import com.farzin.imdb.utils.Utils
 
 @Composable
-fun PosterImage(backDropPath:String) {
+fun PosterImage(backDropPath: String, onClick: () -> Unit) {
 
 
     Box(
@@ -25,7 +27,7 @@ fun PosterImage(backDropPath:String) {
             .padding(start = 20.dp)
             .padding(bottom = 16.dp),
         contentAlignment = Alignment.TopStart
-    ){
+    ) {
 
         Image(
             painter = rememberAsyncImagePainter(Utils.appendImage(backDropPath)),
@@ -36,7 +38,8 @@ fun PosterImage(backDropPath:String) {
         )
 
         SaveButton(
-            onClick = {}
+            onClick = { onClick() },
+            icon = painterResource(R.drawable.add)
         )
 
     }

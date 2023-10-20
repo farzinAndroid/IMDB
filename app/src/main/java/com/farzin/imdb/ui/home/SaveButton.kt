@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
@@ -19,7 +20,7 @@ import com.farzin.imdb.ui.theme.addBackground
 import com.farzin.imdb.ui.theme.saveButtonBackground
 
 @Composable
-fun SaveButton(onClick: () -> Unit) {
+fun SaveButton(icon:Painter,onClick: () -> Unit,) {
 
 
     Box(
@@ -28,13 +29,12 @@ fun SaveButton(onClick: () -> Unit) {
             .size(30.dp)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.saveButtonBackground)
-            .clickable { onClick() }
-            ,
+            .clickable { onClick() },
         contentAlignment = Alignment.Center,
     ){
 
         Icon(
-            painter = painterResource(R.drawable.add),
+            painter =icon,
             contentDescription = "",
             modifier = Modifier
                 .size(10.dp),

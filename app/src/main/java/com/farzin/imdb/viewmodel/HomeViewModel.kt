@@ -3,6 +3,7 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.StateHolder
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.AddToWatchListResult
 import com.farzin.imdb.models.home.NowPlayingModel
@@ -80,6 +81,8 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
 
         }
     }
+
+
     fun addToWatchList(watchListRequest: AddToWatchListRequest){
         viewModelScope.launch {
 

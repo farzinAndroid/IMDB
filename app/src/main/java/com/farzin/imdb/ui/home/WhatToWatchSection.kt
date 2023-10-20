@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TVBasedOnNetwork
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun WhatToWatchSection(
@@ -43,6 +46,8 @@ fun WhatToWatchSection(
             homeViewModel.getTvBasedOnNetwork(it)
         }
     }
+
+    val scope = rememberCoroutineScope()
 
 
     var tvBasedOnNetworkList by remember {
@@ -131,7 +136,21 @@ fun WhatToWatchSection(
                             .fillMaxSize()
                     ) {
                         items(tvBasedOnNetworkList.results) { item ->
-                            MovieItem(item = item)
+                            MovieItem(
+                                item = item,
+                                onClick = {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_id = item.id,
+                                            media_type = "tv",
+                                            watchlist = true
+                                        )
+                                    )
+                                    scope.launch {
+                                        homeViewModel.getWatchListTV()
+                                    }
+                                }
+                            )
                         }
                     }
                 }

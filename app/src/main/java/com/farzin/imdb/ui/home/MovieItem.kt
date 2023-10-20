@@ -18,6 +18,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.models.home.NowPlayingResult
@@ -40,9 +47,14 @@ import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
-fun MovieItem(item: PopularTVModelResult, onClick: () -> Unit = {}) {
+fun MovieItem(
+    item: PopularTVModelResult,
+    onClick: () -> Unit = {},
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
 
     MySpacerWidth(width = 10.dp)
@@ -57,8 +69,7 @@ fun MovieItem(item: PopularTVModelResult, onClick: () -> Unit = {}) {
     ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Box(
@@ -71,12 +82,13 @@ fun MovieItem(item: PopularTVModelResult, onClick: () -> Unit = {}) {
                 Image(
                     painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
-                SaveButton {
+                SaveButton(
+                    icon = painterResource(R.drawable.add)
+                ) {
                     onClick()
                 }
             }
@@ -94,8 +106,7 @@ fun MovieItem(item: PopularTVModelResult, onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(R.drawable.star_fill),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(16.dp),
+                    modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.imdbYellow
                 )
 
@@ -149,7 +160,11 @@ fun MovieItem(item: PopularTVModelResult, onClick: () -> Unit = {}) {
 }
 
 @Composable
-fun MovieItem(item: TrendingMoviesForWeekResult, onClick: () -> Unit = {}) {
+fun MovieItem(
+    item: TrendingMoviesForWeekResult,
+    onClick: () -> Unit = {},
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
 
     MySpacerWidth(width = 10.dp)
@@ -164,8 +179,7 @@ fun MovieItem(item: TrendingMoviesForWeekResult, onClick: () -> Unit = {}) {
     ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Box(
@@ -178,12 +192,13 @@ fun MovieItem(item: TrendingMoviesForWeekResult, onClick: () -> Unit = {}) {
                 Image(
                     painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
-                SaveButton {
+                SaveButton(
+                    icon = painterResource(R.drawable.add)
+                ) {
                     onClick()
                 }
             }
@@ -201,8 +216,7 @@ fun MovieItem(item: TrendingMoviesForWeekResult, onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(R.drawable.star_fill),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(16.dp),
+                    modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.imdbYellow
                 )
 
@@ -257,7 +271,11 @@ fun MovieItem(item: TrendingMoviesForWeekResult, onClick: () -> Unit = {}) {
 
 
 @Composable
-fun MovieItem(item: TVBasedOnNetworkResult, onClick: () -> Unit = {}) {
+fun MovieItem(
+    item: TVBasedOnNetworkResult,
+    onClick: () -> Unit = {},
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
 
     MySpacerWidth(width = 10.dp)
@@ -272,8 +290,7 @@ fun MovieItem(item: TVBasedOnNetworkResult, onClick: () -> Unit = {}) {
     ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Box(
@@ -286,12 +303,13 @@ fun MovieItem(item: TVBasedOnNetworkResult, onClick: () -> Unit = {}) {
                 Image(
                     painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
-                SaveButton {
+                SaveButton(
+                    icon = painterResource(R.drawable.add)
+                ) {
                     onClick()
                 }
             }
@@ -309,8 +327,7 @@ fun MovieItem(item: TVBasedOnNetworkResult, onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(R.drawable.star_fill),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(16.dp),
+                    modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.imdbYellow
                 )
 
@@ -365,7 +382,11 @@ fun MovieItem(item: TVBasedOnNetworkResult, onClick: () -> Unit = {}) {
 
 
 @Composable
-fun MovieItem(item: NowPlayingResult, onClick: () -> Unit = {}) {
+fun MovieItem(
+    item: NowPlayingResult,
+    onClick: () -> Unit = {},
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
 
     MySpacerWidth(width = 10.dp)
@@ -380,8 +401,7 @@ fun MovieItem(item: NowPlayingResult, onClick: () -> Unit = {}) {
     ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Box(
@@ -394,12 +414,13 @@ fun MovieItem(item: NowPlayingResult, onClick: () -> Unit = {}) {
                 Image(
                     painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
-                SaveButton {
+                SaveButton(
+                    icon = painterResource(R.drawable.add)
+                ) {
                     onClick()
                 }
             }
@@ -417,8 +438,7 @@ fun MovieItem(item: NowPlayingResult, onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(R.drawable.star_fill),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(16.dp),
+                    modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.imdbYellow
                 )
 
@@ -473,8 +493,11 @@ fun MovieItem(item: NowPlayingResult, onClick: () -> Unit = {}) {
 
 
 @Composable
-fun MovieItem(item: WatchListTVResult, onClick: () -> Unit = {}) {
-
+fun MovieItem(
+    item: WatchListTVResult,
+    onClick: () -> Unit = {},
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
     MySpacerWidth(width = 10.dp)
 
@@ -488,8 +511,7 @@ fun MovieItem(item: WatchListTVResult, onClick: () -> Unit = {}) {
     ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Box(
@@ -502,12 +524,13 @@ fun MovieItem(item: WatchListTVResult, onClick: () -> Unit = {}) {
                 Image(
                     painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
                     contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
-                SaveButton {
+                SaveButton(
+                    icon = painterResource(R.drawable.star_fill)
+                ) {
                     onClick()
                 }
             }
@@ -525,8 +548,7 @@ fun MovieItem(item: WatchListTVResult, onClick: () -> Unit = {}) {
                 Icon(
                     painter = painterResource(R.drawable.star_fill),
                     contentDescription = "",
-                    modifier = Modifier
-                        .size(16.dp),
+                    modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.imdbYellow
                 )
 
