@@ -42,7 +42,6 @@ import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @Composable
 fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -165,7 +164,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                             content = {
 
                                 GenreCard(
-                                    genreTitle = getGenreNamesBasedOnLang(genre),
+                                    genreTitle = genre.name,
                                     onClick = {
                                         selectedTabIndex = index
                                     }
@@ -412,24 +411,6 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
             }
         }
     }
-}
-
-private fun getPersianGenreName(genreId: Int): String {
-    return when (genreId) {
-        28 -> "اکشن"
-        12 -> "ماجراجویی"
-        16 -> "انیمیشن"
-        35 -> "کمدی"
-        80 -> "جنایی"
-        99 -> "مستند"
-        else -> genreId.toString()
-    }
-}
-
-private fun getGenreNamesBasedOnLang(genre: Genre): String {
-    return if (Locale.getDefault().language == "fa") {
-        getPersianGenreName(genre.id)
-    } else genre.name
 }
 
 private fun getMovieBasedOnGenre(homeViewModel: HomeViewModel, genre: String) {
