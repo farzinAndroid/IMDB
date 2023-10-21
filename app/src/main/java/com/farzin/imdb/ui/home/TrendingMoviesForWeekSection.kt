@@ -24,7 +24,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
@@ -117,7 +116,7 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
                                 )
                                 scope.launch {
                                     delay(100)
-
+                                    homeViewModel.getWatchListMovie()
                                 }
                             }
                         )

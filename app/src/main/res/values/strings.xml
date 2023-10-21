@@ -32,6 +32,7 @@
     <string name="edit_services">ویرایش سرویس‌ها</string>
     <string name="now_playing">در حال پخش</string>
     <string name="your_watch_list_tv">لیست تماشای سریال</string>
+    <string name="your_watch_list_movie">لیست تماشای فیلم</string>
     <string name="empty_watchlist_title">لیست تماشای شما خالیست</string>
     <string name="empty_watchlist_subtitle">فیلم‌ها و برنامه‌های تلویزیونی را ذخیره کنید تا ببینید چه چیزی را باید تماشا کنید</string>
     <string name="empty_watchlist_button_text">اضافه کردن</string>

@@ -33,6 +33,7 @@
     <string name="edit_services">Edit your preferred services</string>
     <string name="now_playing">Now Playing</string>
     <string name="your_watch_list_tv">Your TV watchlist</string>
+    <string name="your_watch_list_movie">Your Movie watchlist</string>
     <string name="empty_watchlist_title">Your watchlist is empty</string>
     <string name="empty_watchlist_subtitle">Save movies and TV shows to keep track of what to watch</string>
     <string name="empty_watchlist_button_text">Add</string>

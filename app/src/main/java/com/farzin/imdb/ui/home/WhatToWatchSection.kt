@@ -26,7 +26,6 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TVBasedOnNetwork
 import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground

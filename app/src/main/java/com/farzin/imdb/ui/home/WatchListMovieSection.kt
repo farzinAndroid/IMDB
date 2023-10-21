@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.WatchListTVResult
+import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
@@ -32,25 +32,24 @@ import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun WatchListTVSection(
+fun WatchListMovieSection(
     homeViewModel: HomeViewModel = hiltViewModel(),
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
 
-    var watchListTVList by remember {
-        mutableStateOf<List<WatchListTVResult>>(emptyList())
+    var watchListMovieList by remember {
+        mutableStateOf<List<TrendingMoviesForWeekResult>>(emptyList())
     }
 
     var loading by remember { mutableStateOf(false) }
 
-    val result by homeViewModel.watchListTV.collectAsState()
+    val result by homeViewModel.watchListMovie.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
-            watchListTVList = result.data?.results ?: emptyList()
+            watchListMovieList = result.data?.results ?: emptyList()
             loading = false
         }
 
@@ -72,7 +71,7 @@ fun WatchListTVSection(
 
         MySpacerHeight(height = 20.dp)
 
-        val height = if (watchListTVList.isEmpty()) 350.dp else 480.dp
+        val height = if (watchListMovieList.isEmpty()) 350.dp else 480.dp
 
         Card(
             modifier = Modifier
@@ -92,19 +91,19 @@ fun WatchListTVSection(
             ) {
 
                 SectionStickyHeader(
-                    headerTitle = stringResource(R.string.your_watch_list_tv),
+                    headerTitle = stringResource(R.string.your_watch_list_movie),
                     isHaveAnotherText = true,
                     headerSubtitle = stringResource(R.string.refresh),
                     headerOnClick = {
                         scope.launch {
-                            homeViewModel.getWatchListTV()
+                            homeViewModel.getWatchListMovie()
                         }
                     }
                 )
 
                 MySpacerHeight(height = 8.dp)
 
-                if (watchListTVList.isEmpty()) {
+                if (watchListMovieList.isEmpty()) {
                     EmptySection(
                         onClick = {},
                         title = stringResource(R.string.empty_watchlist_title),
@@ -117,23 +116,23 @@ fun WatchListTVSection(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(watchListTVList) {
+                        items(watchListMovieList) {
                             MovieItem(
                                 item = it,
                                 onClick = {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
                                             media_id = it.id,
-                                            media_type = "tv",
-                                            watchlist = false
+                                            media_type = "movie",
+                                            watchlist = false,
                                         )
                                     )
                                     scope.launch {
                                         delay(100)
-                                        homeViewModel.getWatchListTV()
+                                        homeViewModel.getWatchListMovie()
                                     }
-
-                                }
+                                },
+                                isFromMovieWatchlist = true
                             )
                         }
                     }

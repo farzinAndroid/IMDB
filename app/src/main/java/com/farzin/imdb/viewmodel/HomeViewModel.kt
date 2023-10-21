@@ -3,7 +3,6 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.StateHolder
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.AddToWatchListResult
 import com.farzin.imdb.models.home.NowPlayingModel
@@ -28,6 +27,7 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
     var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
     var addToWatchList = MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
     var watchListTV = MutableStateFlow<NetworkResult<WatchListTV>>(NetworkResult.Loading())
+    var watchListMovie = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     var movieBasedOnGenre = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
 
 
@@ -71,6 +71,14 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
         viewModelScope.launch {
             launch {
                 watchListTV.emit(repo.getWatchListTV())
+            }
+        }
+    }
+
+    fun getWatchListMovie(){
+        viewModelScope.launch {
+            launch {
+                watchListMovie.emit(repo.getWatchListMovie())
             }
         }
     }

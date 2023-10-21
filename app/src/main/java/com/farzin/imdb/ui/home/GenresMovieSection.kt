@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,7 +34,6 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.Genre
-import com.farzin.imdb.models.home.NowPlayingResult
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
@@ -206,7 +204,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -239,7 +237,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -271,7 +269,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -304,7 +302,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -337,7 +335,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -370,7 +368,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )
@@ -403,7 +401,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                         )
                                         scope.launch {
                                             delay(100)
-                                            homeViewModel.getWatchListTV()
+                                            homeViewModel.getWatchListMovie()
                                         }
                                     }
                                 )

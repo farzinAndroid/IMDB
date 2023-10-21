@@ -32,7 +32,6 @@ import coil.size.Scale
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
 import com.farzin.imdb.ui.theme.addBackground
 import com.farzin.imdb.ui.theme.sectionContainerBackground

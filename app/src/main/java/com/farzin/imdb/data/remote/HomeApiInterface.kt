@@ -8,7 +8,6 @@ import com.farzin.imdb.models.home.TVBasedOnNetwork
 import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.home.WatchListTV
-import com.farzin.imdb.models.home.WatchListTVResult
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -72,6 +71,17 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
     ): Response<WatchListTV>
+
+
+    @GET("account/{account_id}/watchlist/movies")
+    suspend fun getWatchListMovie(
+        @Path(
+            value = "account_id",
+            encoded = true
+        ) accountId: Int = Constants.ACC_ID,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("session_id") sessionId: String = Constants.SESSION_ID,
+    ): Response<TrendingMoviesForWeek>
 
 
 

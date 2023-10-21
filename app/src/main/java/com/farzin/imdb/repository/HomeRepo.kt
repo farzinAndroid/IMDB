@@ -56,6 +56,12 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
         }
 
 
+    suspend fun getWatchListMovie(): NetworkResult<TrendingMoviesForWeek> =
+        safeApiCall {
+            api.getWatchListMovie()
+        }
+
+
 
     suspend fun getMoviesBasedOnGenre(genre:String): NetworkResult<TrendingMoviesForWeek> =
         safeApiCall {
