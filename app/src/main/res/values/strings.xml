@@ -37,4 +37,24 @@
     <string name="empty_watchlist_button_text">اضافه کردن</string>
     <string name="none">هیچکدام</string>
     <string name="refresh">دوباره بارگیری کن</string>
+    <string name="action">اکشن</string>
+    <string name="adventure">ماجراجویی</string>
+    <string name="animation">انیمیشن</string>
+    <string name="comedy">کمدی</string>
+    <string name="crime">جنایی</string>
+    <string name="documentary">مستند</string>
+    <string name="drama">درام</string>
+    <string name="family">خانوادگی</string>
+    <string name="fantasy">فانتزی</string>
+    <string name="history">تاریخی</string>
+    <string name="horror">ترسناک</string>
+    <string name="music">موسیقی</string>
+    <string name="mystery">معمایی</string>
+    <string name="romance">عاشقانه</string>
+    <string name="science_fiction">علمی-تخیلی</string>
+    <string name="tv_movie">فیلم تلویزیونی</string>
+    <string name="thriller">هیجان انگیز</string>
+    <string name="war">جنگی</string>
+    <string name="western">وسترن</string>
+    <string name="top_genres">ژانرهای پرطرفدار</string>
 </resources>

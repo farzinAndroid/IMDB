@@ -28,6 +28,7 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
     var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
     var addToWatchList = MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
     var watchListTV = MutableStateFlow<NetworkResult<WatchListTV>>(NetworkResult.Loading())
+    var movieBasedOnGenre = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
 
 
     fun getAllApiCallsForHome(){
@@ -60,6 +61,7 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
 
 
 
+
         }
 
     }
@@ -77,6 +79,15 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
 
             launch {
                 tVBasedOnNetwork.emit(repo.getTVBasedOnNetwork(networkId))
+            }
+
+        }
+    }
+
+    fun getMoviesBasedOnGenre(genre:String){
+        viewModelScope.launch {
+            launch {
+                movieBasedOnGenre.emit(repo.getMoviesBasedOnGenre(genre))
             }
 
         }

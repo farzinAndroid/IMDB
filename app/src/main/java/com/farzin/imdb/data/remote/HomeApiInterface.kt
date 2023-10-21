@@ -74,4 +74,12 @@ interface HomeApiInterface {
     ): Response<WatchListTV>
 
 
+
+    @GET("discover/movie")
+    suspend fun getMoviesBasedOnGenre(
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("with_genres") genres: String,
+    ): Response<TrendingMoviesForWeek>
+
+
 }
