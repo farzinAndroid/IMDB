@@ -1,90 +1,49 @@
 package com.farzin.imdb.ui.profile
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.farzin.imdb.R
 import com.farzin.imdb.navigation.Screens
-import com.farzin.imdb.ui.theme.imdbYellow
-import com.farzin.imdb.ui.theme.normalText
-import com.farzin.imdb.ui.theme.selectedColor
-import com.farzin.imdb.utils.Constants
-import com.farzin.imdb.utils.MySpacerWidth
+import com.farzin.imdb.ui.home.WatchListMovieSection
+import com.farzin.imdb.ui.home.WatchListTVSection
+import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
-fun Profile(navController: NavController) {
+fun Profile(
+    navController: NavController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
 
-    Row(
-        modifier = Modifier
-            .shadow(2.dp)
-            .fillMaxWidth()
-            .height(60.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            MySpacerWidth(width = 8.dp)
-
-            Icon(
-                painter = painterResource(R.drawable.profile),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(26.dp),
-                tint = MaterialTheme.colorScheme.imdbYellow
-            )
-
-
-            MySpacerWidth(width = 24.dp)
-
-            Text(
-                text = Constants.USER_NAME,
-                style = MaterialTheme.typography.displayLarge,
-                color = MaterialTheme.colorScheme.normalText,
-                modifier = Modifier
-                    .padding(vertical = 8.dp),
-                fontWeight = FontWeight.SemiBold
-            )
-
-        }
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-
-            IconButton(
-                onClick = { navController.navigate(Screens.Settings.route) },
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.settings),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(26.dp),
-                    tint = MaterialTheme.colorScheme.selectedColor,
-                )
-            }
-
-
-
-            MySpacerWidth(width = 8.dp)
-
-        }
-
-
+    LaunchedEffect(true){
+        getWatchLists(homeViewModel)
     }
 
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 60.dp)
+    ){
+        item { ProfileTopBar {navController.navigate(Screens.Settings.route)} }
+        item { WatchListTVSection() }
+        item { WatchListMovieSection() }
+    }
+
+
+
+
+
+
+}
+
+
+private fun getWatchLists(homeViewModel: HomeViewModel){
+    homeViewModel.getWatchListTV()
+    homeViewModel.getWatchListMovie()
 }
