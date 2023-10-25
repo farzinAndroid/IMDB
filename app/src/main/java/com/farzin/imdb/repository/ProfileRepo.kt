@@ -28,4 +28,10 @@ class ProfileRepo @Inject constructor(private val api: ProfileApiInterface) : Ba
         }
 
 
+    suspend fun getAccountDetails(sessionId:String) =
+        safeApiCall {
+            api.getAccountDetails(sessionId=sessionId)
+        }
+
+
 }

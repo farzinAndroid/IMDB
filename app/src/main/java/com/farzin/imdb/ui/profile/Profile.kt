@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,14 +17,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.farzin.imdb.R
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
 import com.farzin.imdb.ui.theme.selectedColor
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
-fun Profile() {
+fun Profile(navController: NavController) {
 
     Row(
         modifier = Modifier
@@ -50,7 +54,7 @@ fun Profile() {
             MySpacerWidth(width = 24.dp)
 
             Text(
-                text = "Hi",
+                text = Constants.USER_NAME,
                 style = MaterialTheme.typography.displayLarge,
                 color = MaterialTheme.colorScheme.normalText,
                 modifier = Modifier
@@ -62,14 +66,19 @@ fun Profile() {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
 
-            Icon(
-                painter = painterResource(R.drawable.settings),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(26.dp),
-                tint = MaterialTheme.colorScheme.selectedColor
+            IconButton(
+                onClick = { navController.navigate(Screens.Settings.route) },
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.settings),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(26.dp),
+                    tint = MaterialTheme.colorScheme.selectedColor,
+                )
+            }
 
-            )
+
 
             MySpacerWidth(width = 8.dp)
 

@@ -26,15 +26,18 @@ import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
 fun SectionStickyHeader(
-    headerTitle:String,
-    isHaveAnotherText : Boolean = false,
-    headerSubtitle:String = "",
-    headerOnClick:()->Unit = {}
+    headerTitle: String,
+    isHaveAnotherText: Boolean = false,
+    headerSubtitle: String = "",
+    headerOnClick: () -> Unit = {},
 ) {
 
     Column {
 
-        
+
+        val horizontalArrangement = if (isHaveAnotherText) Arrangement.SpaceBetween
+        else Arrangement.Start
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -42,7 +45,7 @@ fun SectionStickyHeader(
                 .padding(top = 8.dp)
                 .padding(bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = horizontalArrangement
         ) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -68,12 +71,9 @@ fun SectionStickyHeader(
                 )
 
 
-
-
-
             }
 
-            if (isHaveAnotherText){
+            if (isHaveAnotherText) {
 
                 Text(
                     text = headerSubtitle,
@@ -88,13 +88,10 @@ fun SectionStickyHeader(
             }
 
 
-        } 
-        
-        
+        }
 
-        
+
     }
-    
-  
+
 
 }

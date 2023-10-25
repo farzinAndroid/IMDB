@@ -172,31 +172,36 @@ fun TrendingTVShowsForDaySection(homeViewModel: HomeViewModel = hiltViewModel())
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.BottomStart
                         ) {
-                            PosterImage(posterPath){
-                                homeViewModel.addToWatchList(
-                                    AddToWatchListRequest(
-                                        media_id = id,
-                                        media_type = "tv",
-                                        watchlist = true
+                            PosterImage(
+                                backDropPath = posterPath,
+                                title = title,
+                                votesAverage = voteAvg,
+                                onClick = {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_id = id,
+                                            media_type = "tv",
+                                            watchlist = true
+                                        )
                                     )
-                                )
-                                scope.launch {
-                                    delay(100)
-                                    homeViewModel.getWatchListTV()
+                                    scope.launch {
+                                        delay(100)
+                                        homeViewModel.getWatchListTV()
+                                    }
                                 }
-                            }
+                            )
                         }
 
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 16.dp),
-                            contentAlignment = Alignment.BottomCenter
-                        ) {
-
-                            SliderTitle(title,voteAvg)
-
-                        }
+//                        Box(
+//                            modifier = Modifier
+//                                .align(Alignment.BottomCenter)
+//                                .padding(bottom = 16.dp),
+//                            contentAlignment = Alignment.BottomCenter
+//                        ) {
+//
+//                            SliderTitle(title,voteAvg)
+//
+//                        }
 
                     }
                 }

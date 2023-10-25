@@ -19,15 +19,15 @@ fun ProfileScreen(
 ) {
 
 
-   if (dataStoreViewModel.getSessionId() != null){
-       Profile()
+   if (!dataStoreViewModel.getSessionId().isNullOrBlank() || !dataStoreViewModel.getAccountId().isNullOrBlank()){
+       Profile(navController)
    }else{
-       when(profileViewModel.logginState){
+       when(profileViewModel.screenState){
            ProfileState.NOTLOGGED->{
                Login(navController)
            }
            ProfileState.LOGGED->{
-               Profile()
+               Profile(navController)
            }
 
        }

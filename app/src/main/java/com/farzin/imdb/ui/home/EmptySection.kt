@@ -3,6 +3,7 @@ package com.farzin.imdb.ui.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,18 +15,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
+import com.farzin.imdb.utils.Constants
+import com.farzin.imdb.utils.IMDBButton
+import kotlinx.coroutines.launch
 
 @Composable
 fun EmptySection(
-    onClick:()->Unit,
-    title:String,
-    subtitle:String,
-    buttonText:String
+    onClick: () -> Unit,
+    title: String,
+    subtitle: String,
+    buttonText: String,
 ) {
     Column(
         modifier = Modifier
@@ -52,24 +58,19 @@ fun EmptySection(
             textAlign = TextAlign.Center
         )
 
-
-        Button(
+        IMDBButton(
+            text = buttonText,
             onClick = { onClick() },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.imdbYellow,
-            ),
             elevation = ButtonDefaults.buttonElevation(4.dp),
+            containerColor = MaterialTheme.colorScheme.imdbYellow,
+            textColor = MaterialTheme.colorScheme.normalText,
+            fontWeight = FontWeight.Normal,
             modifier = Modifier
                 .height(50.dp)
                 .padding(top = 12.dp),
-        ) {
-            Text(
-                text = buttonText,
-                style = MaterialTheme.typography.titleLarge,
-                color = Color.White,
-                fontWeight = FontWeight.Normal,
-            )
-        }
+            style = MaterialTheme.typography.titleLarge
+
+        )
 
     }
 

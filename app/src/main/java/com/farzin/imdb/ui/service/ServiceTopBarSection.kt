@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,14 +23,17 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.normalText
 import com.farzin.imdb.ui.theme.whiteBackground
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
 fun ServiceTopBarSection(navController: NavController) {
 
 
+    val rotate = if (Constants.USER_LANG == Constants.PERSIAN)
+        180f else 0f
 
-        Row(
+    Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -47,6 +51,7 @@ fun ServiceTopBarSection(navController: NavController) {
                 modifier = Modifier
                     .size(26.dp)
                     .clickable { navController.popBackStack() }
+                    .rotate(rotate)
             )
 
             Text(

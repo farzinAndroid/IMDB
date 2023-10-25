@@ -22,24 +22,28 @@ interface HomeApiInterface {
     @GET("trending/tv/day")
     suspend fun getTVShowsForDay(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<TrendingTVShowsForDay>
 
 
     @GET("tv/popular")
     suspend fun getPopularTV(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<PopularTVModel>
 
 
     @GET("trending/movie/week")
     suspend fun getTrendingMoviesForWeek(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<TrendingMoviesForWeek>
 
 
     @GET("discover/tv")
     suspend fun getTVBasedOnNetwork(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
         @Query("with_networks") withNetworks: Int,
     ): Response<TVBasedOnNetwork>
 
@@ -47,6 +51,7 @@ interface HomeApiInterface {
     @GET("movie/now_playing")
     suspend fun getNowPlaying(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<NowPlayingModel>
 
 
@@ -56,9 +61,10 @@ interface HomeApiInterface {
         @Path(
             value = "account_id",
             encoded = true
-        ) accountId: Int = Constants.ACC_ID,
+        ) accountId: Int = Constants.ACC_ID.toInt(),
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<AddToWatchListResult>
 
 
@@ -67,9 +73,10 @@ interface HomeApiInterface {
         @Path(
             value = "account_id",
             encoded = true
-        ) accountId: Int = Constants.ACC_ID,
+        ) accountId: Int = Constants.ACC_ID.toInt(),
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<WatchListTV>
 
 
@@ -78,9 +85,10 @@ interface HomeApiInterface {
         @Path(
             value = "account_id",
             encoded = true
-        ) accountId: Int = Constants.ACC_ID,
+        ) accountId: Int = Constants.ACC_ID.toInt(),
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
+        @Query("language") language: String = Constants.USER_LANG,
     ): Response<TrendingMoviesForWeek>
 
 
@@ -88,6 +96,7 @@ interface HomeApiInterface {
     @GET("discover/movie")
     suspend fun getMoviesBasedOnGenre(
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
         @Query("with_genres") genres: String,
     ): Response<TrendingMoviesForWeek>
 

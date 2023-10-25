@@ -59,4 +59,8 @@
     <string name="war">War</string>
     <string name="western">Western</string>
     <string name="top_genres">Top genres</string>
+    <string name="language">Language</string>
+    <string name="persian">Persian</string>
+    <string name="english">English</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -129,7 +129,7 @@ fun WatchListTVSection(
                                         )
                                     )
                                     scope.launch {
-                                        delay(100)
+                                        delay(200)
                                         homeViewModel.getWatchListTV()
                                     }
 

@@ -11,13 +11,20 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
 import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
 import com.farzin.imdb.ui.theme.IMDBTheme
 import com.farzin.imdb.utils.AppConfig
+import com.farzin.imdb.utils.Constants.ENGLISH
+import com.farzin.imdb.utils.Constants.USER_LANG
 import com.farzin.imdb.utils.InitialRequestToken
+import com.farzin.imdb.utils.LocaleUtils
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,23 +49,36 @@ class MainActivity : ComponentActivity() {
                     AppConfig()
 
                     Log.e("TAG","session id ${vm.value.getSessionId()}")
+                    Log.e("TAG","acc id ${vm.value.getAccountId()}")
+                    Log.e("TAG", USER_LANG)
+
+                    LocaleUtils.setLocale(LocalContext.current,USER_LANG)
+
+                    val direction = if (USER_LANG == ENGLISH) {
+                        LayoutDirection.Ltr
+                    } else {
+                        LayoutDirection.Rtl
+                    }
+
+                    CompositionLocalProvider(LocalLayoutDirection.provides(direction)) {
+                        Scaffold(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            bottomBar = {
+                                BottomNav(
+                                    navController = navController,
+                                    onItemClick = {
+                                        navController.navigate(it.route)
+                                    }
+                                )
+                            },
+                            content = {
+                                SetUpNavGraph(navController = navController)
+                            }
+                        )
+                    }
 
 
-                    Scaffold(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        bottomBar = {
-                            BottomNav(
-                                navController = navController,
-                                onItemClick = {
-                                    navController.navigate(it.route)
-                                }
-                            )
-                        },
-                        content = {
-                            SetUpNavGraph(navController = navController)
-                        }
-                    )
 
 
                 }

@@ -17,7 +17,10 @@ fun AppConfig(
 }
 
 private fun getDataStoreVariables(dataStore: DataStoreViewModel) {
-
+    Constants.USER_LANG = dataStore.getUserLang()
+    dataStore.saveUserLang(Constants.USER_LANG)
 
     Constants.SESSION_ID = dataStore.getSessionId().toString()
+    Constants.ACC_ID = dataStore.getAccountId().toString()
+    Constants.USER_NAME = dataStore.getUserName().toString()
 }

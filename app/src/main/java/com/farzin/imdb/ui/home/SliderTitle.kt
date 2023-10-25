@@ -38,7 +38,6 @@ fun SliderTitle(
 
     Column(
         modifier = Modifier
-            .padding(start = 20.dp)
             .width(150.dp)
             .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,

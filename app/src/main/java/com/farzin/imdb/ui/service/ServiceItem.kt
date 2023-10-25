@@ -15,11 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.normalText
 import com.farzin.imdb.ui.theme.whiteBackground
 import com.farzin.imdb.utils.MyDividerHorizontal
@@ -27,11 +29,14 @@ import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
 fun ServiceItem(
-    item:ServiceModel,
-    onClick:()->Unit,
-    isSelected:Boolean
+    item: ServiceModel,
+    onClick: () -> Unit,
+    isSelected: Boolean,
 ) {
 
+
+    val iconTint = if (isSelected) MaterialTheme.colorScheme.imdbYellow
+    else Color.Transparent
 
     Row(
         modifier = Modifier
@@ -50,7 +55,7 @@ fun ServiceItem(
             item.logo?.let {
                 Image(
                     painter = it,
-                    contentDescription ="",
+                    contentDescription = "",
                     modifier = Modifier
                         .size(26.dp),
                     contentScale = ContentScale.FillBounds
@@ -70,18 +75,15 @@ fun ServiceItem(
         }
 
 
-        if (isSelected){
-            Icon(
-                painter = painterResource(R.drawable.check),
-                contentDescription ="",
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(16.dp)
-            )
-        }
 
-
-
+        Icon(
+            painter = painterResource(R.drawable.check),
+            contentDescription = "",
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .size(14.dp),
+            tint = iconTint
+        )
 
 
     }

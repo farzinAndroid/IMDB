@@ -58,4 +58,8 @@
     <string name="war">جنگی</string>
     <string name="western">وسترن</string>
     <string name="top_genres">ژانرهای پرطرفدار</string>
+    <string name="language">زبان برنامه</string>
+    <string name="persian">فارسی</string>
+    <string name="english">انگلیسی</string>
+    <string name="logout">خروج</string>
 </resources>

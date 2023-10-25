@@ -1,5 +1,6 @@
 package com.farzin.imdb.data.remote
 
+import com.farzin.imdb.models.profile.AccountDetail
 import com.farzin.imdb.models.profile.RequestToken
 import com.farzin.imdb.models.profile.SessionId
 import com.farzin.imdb.utils.Constants
@@ -31,5 +32,12 @@ interface ProfileApiInterface {
         @Query("api_key") apiKey : String = Constants.API_KEY,
         @Query("request_token") requestToken : String,
     ) : Response<SessionId>
+
+
+    @GET("account")
+    suspend fun getAccountDetails(
+        @Query("api_key") apiKey : String = Constants.API_KEY,
+        @Query("session_id") sessionId : String ,
+    ) : Response<AccountDetail>
 
 }
