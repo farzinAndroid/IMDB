@@ -10,8 +10,7 @@ import com.farzin.imdb.models.profile.AccountDetail
 import com.farzin.imdb.models.profile.RequestToken
 import com.farzin.imdb.models.profile.SessionId
 import com.farzin.imdb.repository.ProfileRepo
-import com.farzin.imdb.ui.profile.ProfileState
-import com.farzin.imdb.utils.Constants
+import com.farzin.imdb.ui.screens.profile.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow

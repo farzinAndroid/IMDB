@@ -21,14 +21,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.ui.theme.imdbYellow
-import com.farzin.imdb.ui.theme.normalText
+import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -114,7 +113,7 @@ fun IMDBButton(
     onClick:()->Unit,
     containerColor:Color = MaterialTheme.colorScheme.imdbYellow,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
-    textColor:Color = MaterialTheme.colorScheme.normalText,
+    textColor:Color = MaterialTheme.colorScheme.darkText,
     fontWeight: FontWeight = FontWeight.Normal,
     style: TextStyle = MaterialTheme.typography.titleLarge,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(2.dp)

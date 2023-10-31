@@ -1,5 +1,6 @@
 package com.farzin.imdb.utils
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -13,12 +14,17 @@ object Utils {
 
     fun extractYearFromDate(dateString: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = dateFormat.parse(dateString)
-        val calendar = Calendar.getInstance()
-        if (date != null) {
-            calendar.time = date
+        return try {
+            val date = dateFormat.parse(dateString)
+            val calendar = Calendar.getInstance()
+            if (date != null) {
+                calendar.time = date
+            }
+            calendar.get(Calendar.YEAR).toString()
+        } catch (e: ParseException) {
+            // Handle the exception here
+            ""
         }
-        return calendar.get(Calendar.YEAR).toString()
     }
 
 }

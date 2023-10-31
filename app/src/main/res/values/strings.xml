@@ -62,4 +62,13 @@
     <string name="persian">فارسی</string>
     <string name="english">انگلیسی</string>
     <string name="logout">خروج</string>
+    <string name="episode_guide">راهنمای اپیزود</string>
+    <string name="episodes">قسمت</string>
+    <string name="add_to_watchList">اضافه به لیست تماشا</string>
+    <string name="added_to_watchList">به لیست تماشا اضافه شده</string>
+    <string name="rate_this">امتیاز بدهید</string>
+    <string name="your_rating">امتیاز شما</string>
+    <string name="no_overView">خلاصه ای وجود ندارد</string>
+
+
 </resources>

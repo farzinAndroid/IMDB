@@ -63,4 +63,11 @@
     <string name="persian">Persian</string>
     <string name="english">English</string>
     <string name="logout">Logout</string>
+    <string name="episode_guide">EPISODE GUIDE</string>
+    <string name="episodes">episodes</string>
+    <string name="add_to_watchList">Add to watchlist</string>
+    <string name="added_to_watchList">Added to watchlist</string>
+    <string name="rate_this">Rate this</string>
+    <string name="your_rating">Your rating</string>
+    <string name="no_overView">No overview</string>
 </resources>

@@ -28,7 +28,7 @@ val ColorScheme.sectionContainerBackground: Color
     get() = if (isSystemInDarkTheme()) Color(0xFF1F1F1F) else Color(0xFFFDFDFD)
 
 
-val ColorScheme.normalText: Color
+val ColorScheme.darkText: Color
     @Composable
     get() = if (isSystemInDarkTheme()) Color(0xFFC9C9C9) else Color(0xFF000000)
 
