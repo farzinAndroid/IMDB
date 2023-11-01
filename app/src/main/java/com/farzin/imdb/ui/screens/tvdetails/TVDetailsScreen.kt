@@ -1,20 +1,24 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -30,7 +34,7 @@ import com.farzin.imdb.viewmodel.MediaDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun TVDetailsScreen(
     tvId: Int,
@@ -56,6 +60,9 @@ fun TVDetailsScreen(
     var genres by remember { mutableStateOf<List<Genre>>(emptyList()) }
     var rating by remember { mutableStateOf(0.0) }
     var voteCount by remember { mutableStateOf(0) }
+
+    var previousUserRating  = 0
+
 
 
     //get media details
@@ -95,122 +102,136 @@ fun TVDetailsScreen(
     }
 
     var isInWatchList by remember { mutableStateOf(false) }
-    var isRated by remember { mutableStateOf(false) }
-    var userRating by remember { mutableStateOf(0.0) }
 
-
+    // get if the TV is in watchlist
     LaunchedEffect(tvId) {
         homeViewModel.getWatchListTV()
 
-        homeViewModel.watchListTV.collectLatest {result->
-            when(result){
-                is NetworkResult.Success->{
+        homeViewModel.watchListTV.collectLatest { result ->
+            when (result) {
+                is NetworkResult.Success -> {
                     isInWatchList = result.data?.results?.any {
                         tvId == it.id
                     } ?: false
                 }
-                is NetworkResult.Error->{}
-                is NetworkResult.Loading->{}
+
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {}
             }
         }
 
     }
 
 
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded }
+    )
 
 
+    ModalBottomSheetLayout(
+        sheetContent = {
+            RatingBottomSheet(name,tvId)
+        },
+        sheetState = sheetState
 
-
-
-
-
-
-
-
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.appBackGround)
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.appBackGround)
+            ) {
 
-        stickyHeader {
-            MediaDetailTopBarSection(name)
-        }
+                stickyHeader {
+                    MediaDetailTopBarSection(name)
+                }
 
 
-        item {
-            MediaDetailTitleSection(
-                name = name,
-                date = date,
-                status = status,
-                runTime = runTime,
-                numberOfEpisode = numberOfEpisode,
-                isMovie = false
-            )
-        }
-        item {
-            MediaPosterSection(
-                picturePath = picturePath,
-                startYear = startYear,
-                endYear = endYear,
-                isMovie = false,
-                name = name
-            )
-        }
-        item {
+                item {
+                    MediaDetailTitleSection(
+                        name = name,
+                        date = date,
+                        status = status,
+                        runTime = runTime,
+                        numberOfEpisode = numberOfEpisode,
+                        isMovie = false
+                    )
+                }
+                item {
+                    MediaPosterSection(
+                        picturePath = picturePath,
+                        startYear = startYear,
+                        endYear = endYear,
+                        isMovie = false,
+                        name = name
+                    )
+                }
+                item {
 
-            if (overView.isEmpty())
-                overView = stringResource(R.string.no_overView)
+                    if (overView.isEmpty())
+                        overView = stringResource(R.string.no_overView)
 
-            MediaOverViewSection(
-                genres = genres,
-                overView = overView,
-                posterPath = posterPath,
-            )
-        }
-        item {
-            MediaDetailAddToWatchListButton(
-                buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
-                buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
-                onClick = {
-                    if (isInWatchList) {
-                        scope.launch {
-                            homeViewModel.addToWatchList(
-                                AddToWatchListRequest(
-                                    media_type = "tv",
-                                    media_id = tvId,
-                                    watchlist = false
-                                )
-                            )
-                            isInWatchList = false
+                    MediaOverViewSection(
+                        genres = genres,
+                        overView = overView,
+                        posterPath = posterPath,
+                    )
+                }
+                item {
+                    MediaDetailAddToWatchListButton(
+                        buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
+                        buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
+                        onClick = {
+                            if (isInWatchList) {
+                                scope.launch {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_type = "tv",
+                                            media_id = tvId,
+                                            watchlist = false
+                                        )
+                                    )
+                                    isInWatchList = false
+                                }
+                            } else {
+                                scope.launch {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_type = "tv",
+                                            media_id = tvId,
+                                            watchlist = true
+                                        )
+                                    )
+                                    isInWatchList = true
+                                }
+                            }
+                        },
+                        isInWatchList = isInWatchList
+                    )
+
+                }
+
+                item {
+                    MediaRatingSection(
+                        rating = String.format("%.1f", rating),
+                        voteCount = voteCount,
+                        tvId = tvId,
+                        onClick = {
+                            scope.launch {
+                                if (sheetState.isVisible)
+                                    sheetState.hide() else sheetState.show()
+                            }
                         }
-                    } else {
-                        scope.launch {
-                            homeViewModel.addToWatchList(
-                                AddToWatchListRequest(
-                                    media_type = "tv",
-                                    media_id = tvId,
-                                    watchlist = true
-                                )
-                            )
-                            isInWatchList = true
-                        }
-                    }
-                },
-                isInWatchList = isInWatchList
-            )
-
+                    )
+                }
+            }
         }
 
-        item {
-            MediaRatingSection(
-                rating = String.format("%.1f", rating),
-                voteCount = voteCount,
-                tvId = tvId,
-            )
-        }
+
     }
-
-
 }

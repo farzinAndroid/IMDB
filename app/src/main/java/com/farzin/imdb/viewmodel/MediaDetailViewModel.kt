@@ -3,6 +3,8 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.mediaDetail.AddRating
+import com.farzin.imdb.models.mediaDetail.AddRatingModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
 import com.farzin.imdb.repository.MediaDetailRepo
@@ -17,12 +19,23 @@ class MediaDetailViewModel @Inject constructor(private val repo: MediaDetailRepo
 
     val tvDetails = MutableStateFlow<NetworkResult<TVDetailModel>>(NetworkResult.Loading())
     val ratedTV = MutableStateFlow<NetworkResult<RatedTVModel>>(NetworkResult.Loading())
+    val addRating = MutableStateFlow<NetworkResult<AddRatingModel>>(NetworkResult.Loading())
 
 
     fun getTVDetails(seriesId:Int){
         viewModelScope.launch {
             launch {
                 tvDetails.emit(repo.getTVDetails(seriesId))
+            }
+        }
+    }
+
+
+
+    fun addRating(seriesId:Int,rating: AddRating){
+        viewModelScope.launch {
+            launch {
+                addRating.emit(repo.addRating(seriesId, rating))
             }
         }
     }

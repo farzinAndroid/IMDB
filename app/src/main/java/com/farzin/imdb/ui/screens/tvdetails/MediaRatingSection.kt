@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -48,6 +49,7 @@ fun MediaRatingSection(
     voteCount: Int,
     tvId: Int,
     mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    onClick:()->Unit,
 ) {
 
     LaunchedEffect(true) {
@@ -57,6 +59,7 @@ fun MediaRatingSection(
     var loading by remember { mutableStateOf(false) }
     var isRated by remember { mutableStateOf(false) }
     var userRating by remember { mutableStateOf(0) }
+    var matchingIndex by remember { mutableStateOf(-1) }
 
 
     val result by mediaDetailViewModel.ratedTV.collectAsState()
@@ -66,10 +69,8 @@ fun MediaRatingSection(
             isRated = result.data?.results?.any {
                 tvId == it.id
             } ?: false
-            result.data?.results?.forEach {
-                userRating = if (tvId == it.id) it.rating else 0
-            }
-
+            matchingIndex = result.data?.results?.indexOfFirst { tvId == it.id } ?: -1
+            userRating = if (matchingIndex != -1) result.data?.results?.get(matchingIndex)?.rating ?: 0 else 0
         }
 
         is NetworkResult.Error -> {
@@ -155,12 +156,13 @@ fun MediaRatingSection(
 
         Column(
             modifier = Modifier
-                .wrapContentSize(),
+                .wrapContentSize()
+                .clickable { onClick() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            if (!isRated) {
+            if (matchingIndex == -1) {
                 Icon(
                     painter = painterResource(R.drawable.star_unfill),
                     contentDescription = "",

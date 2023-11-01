@@ -70,4 +70,6 @@
     <string name="rate_this">Rate this</string>
     <string name="your_rating">Your rating</string>
     <string name="no_overView">No overview</string>
+    <string name="rate_desc">How would you rate </string>
+    <string name="rate">Rate</string>
 </resources>
