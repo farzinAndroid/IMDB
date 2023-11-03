@@ -12,6 +12,7 @@ import com.farzin.imdb.models.mediaDetail.TVDetailModel
 import com.farzin.imdb.repository.MediaDetailRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,6 +57,40 @@ class MediaDetailViewModel @Inject constructor(private val repo: MediaDetailRepo
             castAndCrew.emit(repo.getTVCastAndCrew(seriesId))
         }
     }
+
+    val directorsList = castAndCrew.map { networkResult ->
+        when (networkResult) {
+            is NetworkResult.Success -> {
+                val items = networkResult.data?.crew
+                val filteredItems = items?.filter { crew -> crew.department == "Directing" }
+                NetworkResult.Success("Success", filteredItems)
+            }
+            is NetworkResult.Error -> {
+                NetworkResult.Error(message = "Error", data = null)
+            }
+            is NetworkResult.Loading -> {
+                NetworkResult.Loading()
+            }
+        }
+    }
+
+    val writersList = castAndCrew.map { networkResult ->
+        when (networkResult) {
+            is NetworkResult.Success -> {
+                val items = networkResult.data?.crew
+                val filteredItems = items?.filter { crew -> crew.department == "Writing" }
+                NetworkResult.Success("Success", filteredItems)
+            }
+            is NetworkResult.Error -> {
+                NetworkResult.Error(message = "Error", data = null)
+            }
+            is NetworkResult.Loading -> {
+                NetworkResult.Loading()
+            }
+        }
+    }
+
+
 
 
     fun getRecommendedTVShows(seriesId:Int){

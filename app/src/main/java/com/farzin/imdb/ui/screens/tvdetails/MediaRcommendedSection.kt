@@ -30,6 +30,7 @@ import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.MovieItem
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.screens.home.SectionTitleMaker
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -72,67 +73,72 @@ fun MediaRecommendedSection(
     }
 
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
-    ) {
-
-        Card(
+    if (recommendedList.isNotEmpty()){
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(480.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            ),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
-            shape = MaterialTheme.shapes.extraSmall
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
         ) {
 
-            Column(
+            MySpacerHeight(height = 24.dp)
+
+            Card(
                 modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.Start
+                    .fillMaxWidth()
+                    .height(480.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                ),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
+                shape = MaterialTheme.shapes.extraSmall
             ) {
 
-                SectionStickyHeader(stringResource(R.string.more_like_this))
-
-                MySpacerHeight(height = 8.dp)
-
-                LazyRow(
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.Start
                 ) {
-                    items(recommendedList) { item ->
-                        MovieItem(
-                            item = item,
-                            onCardClicked = {
-                                navController.navigate(
-                                    Screens.TVDetails.route + "?id=${item.id}"
-                                )
-                            },
-                            onAddButtonClicked = {
-                                homeViewModel.addToWatchList(
-                                    AddToWatchListRequest(
-                                        media_id = item.id,
-                                        media_type = item.media_type,
-                                        watchlist = true
+
+                    SectionStickyHeader(stringResource(R.string.more_like_this))
+
+                    MySpacerHeight(height = 8.dp)
+
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        items(recommendedList) { item ->
+                            MovieItem(
+                                item = item,
+                                onCardClicked = {
+                                    navController.navigate(
+                                        Screens.TVDetails.route + "?id=${item.id}"
                                     )
-                                )
-                                scope.launch {
-                                    delay(200)
-                                    homeViewModel.getWatchListTV()
+                                },
+                                onAddButtonClicked = {
+                                    homeViewModel.addToWatchList(
+                                        AddToWatchListRequest(
+                                            media_id = item.id,
+                                            media_type = item.media_type,
+                                            watchlist = true
+                                        )
+                                    )
+                                    scope.launch {
+                                        delay(200)
+                                        homeViewModel.getWatchListTV()
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
+
+
             }
 
-
         }
-
     }
+
 
 
 }

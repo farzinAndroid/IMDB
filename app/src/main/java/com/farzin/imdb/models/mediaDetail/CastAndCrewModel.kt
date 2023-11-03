@@ -25,8 +25,6 @@ data class Role(
     val credit_id: String,
     val episode_count: Int,
 )
-
-
 data class Crew(
     val adult: Boolean,
     val department: String,
@@ -40,8 +38,6 @@ data class Crew(
     val profile_path: String?,
     val total_episode_count: Int,
 )
-
-
 data class Job(
     val credit_id: String,
     val episode_count: Int,
