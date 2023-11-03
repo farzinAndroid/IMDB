@@ -20,9 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun MediaDetailTitleSection(
@@ -81,7 +82,7 @@ fun MediaDetailTitleSection(
 
 
             Text(
-                text = Utils.extractYearFromDate(date),
+                text = DateHelper.extractYearFromDate(date),
                 modifier = Modifier
                     .wrapContentWidth(),
                 style = MaterialTheme.typography.titleSmall,

@@ -2,6 +2,7 @@ package com.farzin.imdb.data.remote
 
 import com.farzin.imdb.models.mediaDetail.AddRating
 import com.farzin.imdb.models.mediaDetail.AddRatingModel
+import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
 import com.farzin.imdb.utils.Constants
@@ -48,5 +49,16 @@ interface MediaDetailApiInterface {
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Body rating:AddRating
     ):Response<AddRatingModel>
+
+
+    @GET("tv/{series_id}/aggregate_credits")
+    suspend fun getTVCastAndCrew(
+        @Path(
+            "series_id",
+            encoded = false
+        ) seriesId:Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+    ):Response<CastAndCrewModel>
+
 
 }

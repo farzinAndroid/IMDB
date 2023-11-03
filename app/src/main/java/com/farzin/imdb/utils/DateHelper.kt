@@ -5,12 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-object Utils {
-
-    fun appendImage(path:String): String{
-        return "${Constants.IMAGE_APPEND}$path"
-    }
-
+object DateHelper {
 
     fun extractYearFromDate(dateString: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

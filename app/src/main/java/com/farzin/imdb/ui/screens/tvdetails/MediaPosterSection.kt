@@ -20,7 +20,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun MediaPosterSection(
@@ -31,8 +32,8 @@ fun MediaPosterSection(
     name: String,
 ) {
 
-    val startYearText = Utils.extractYearFromDate(startYear)
-    val endYearText = Utils.extractYearFromDate(endYear)
+    val startYearText = DateHelper.extractYearFromDate(startYear)
+    val endYearText = DateHelper.extractYearFromDate(endYear)
 
     Box(
         modifier = Modifier
@@ -45,7 +46,7 @@ fun MediaPosterSection(
 
 
         Image(
-            painter = rememberAsyncImagePainter(Utils.appendImage(picturePath)),
+            painter = rememberAsyncImagePainter(ImageHelper.appendImage(picturePath)),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxSize(),

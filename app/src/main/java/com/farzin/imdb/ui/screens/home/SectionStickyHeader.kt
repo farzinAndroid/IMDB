@@ -65,7 +65,7 @@ fun SectionStickyHeader(
 
                 Text(
                     text = headerTitle,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.darkText
                 )

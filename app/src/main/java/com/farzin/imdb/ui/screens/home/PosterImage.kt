@@ -33,7 +33,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.starColor
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.ImageHelper
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -58,7 +58,7 @@ fun PosterImage(
         ) {
 
             Image(
-                painter = rememberAsyncImagePainter(Utils.appendImage(backDropPath)),
+                painter = rememberAsyncImagePainter(ImageHelper.appendImage(backDropPath)),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxSize(),

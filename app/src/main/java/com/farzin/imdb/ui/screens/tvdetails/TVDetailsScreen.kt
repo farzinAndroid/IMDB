@@ -229,6 +229,8 @@ fun TVDetailsScreen(
                         }
                     )
                 }
+
+                item { MediaCastSection(tvId = tvId)}
             }
         }
 

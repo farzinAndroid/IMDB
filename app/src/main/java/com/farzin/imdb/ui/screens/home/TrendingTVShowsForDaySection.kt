@@ -37,14 +37,13 @@ import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.addBackground
 import com.farzin.imdb.ui.theme.sectionContainerBackground
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.net.URLDecoder
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -145,7 +144,7 @@ fun TrendingTVShowsForDaySection(
                     ) {
                         val painter = rememberAsyncImagePainter(
                             ImageRequest.Builder(LocalContext.current)
-                                .data(data = Utils.appendImage(backdropPath))
+                                .data(data = ImageHelper.appendImage(backdropPath))
                                 .scale(Scale.FIT)
                                 .build()
                         )

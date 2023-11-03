@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.models.mediaDetail.Genre
 import com.farzin.imdb.ui.theme.darkText
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun MediaOverViewSection(
@@ -37,7 +37,7 @@ fun MediaOverViewSection(
     ) {
 
         Image(
-            painter = rememberAsyncImagePainter(Utils.appendImage(posterPath)),
+            painter = rememberAsyncImagePainter(ImageHelper.appendImage(posterPath)),
             contentDescription = "",
             modifier = Modifier
                 .weight(0.3f)

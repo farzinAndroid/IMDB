@@ -39,9 +39,10 @@ import com.farzin.imdb.models.home.WatchListTVResult
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.utils.Utils
+import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
@@ -77,7 +78,7 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -138,7 +139,7 @@ fun MovieItem(
             MySpacerHeight(height = 10.dp)
 
             Text(
-                text = Utils.extractYearFromDate(item.first_air_date),
+                text = DateHelper.extractYearFromDate(item.first_air_date),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier
@@ -189,7 +190,7 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -254,7 +255,7 @@ fun MovieItem(
             MySpacerHeight(height = 10.dp)
 
             Text(
-                text = Utils.extractYearFromDate(item.release_date),
+                text = DateHelper.extractYearFromDate(item.release_date),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier
@@ -306,7 +307,7 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -367,7 +368,7 @@ fun MovieItem(
             MySpacerHeight(height = 10.dp)
 
             Text(
-                text = Utils.extractYearFromDate("${item.first_air_date}"),
+                text = DateHelper.extractYearFromDate("${item.first_air_date}"),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier
@@ -419,7 +420,7 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -480,7 +481,7 @@ fun MovieItem(
             MySpacerHeight(height = 10.dp)
 
             Text(
-                text = Utils.extractYearFromDate(item.release_date),
+                text = DateHelper.extractYearFromDate(item.release_date),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier
@@ -531,7 +532,7 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(Utils.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -592,7 +593,7 @@ fun MovieItem(
             MySpacerHeight(height = 10.dp)
 
             Text(
-                text = Utils.extractYearFromDate(item.first_air_date),
+                text = DateHelper.extractYearFromDate(item.first_air_date),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Thin,
                 modifier = Modifier

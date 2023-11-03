@@ -71,6 +71,9 @@
     <string name="no_overView">خلاصه ای وجود ندارد</string>
     <string name="rate_desc">چه امتیازی میدهید به </string>
     <string name="rate">ثبت</string>
+    <string name="cast">بازیگران</string>
+    <string name="show_more">نمایش بیش‌تر</string>
+
 
 
 </resources>

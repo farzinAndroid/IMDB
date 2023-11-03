@@ -72,4 +72,6 @@
     <string name="no_overView">No overview</string>
     <string name="rate_desc">How would you rate </string>
     <string name="rate">Rate</string>
+    <string name="cast">Cast</string>
+    <string name="show_more">Show more</string>
 </resources>
