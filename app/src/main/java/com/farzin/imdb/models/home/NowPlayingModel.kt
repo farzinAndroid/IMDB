@@ -22,7 +22,7 @@ data class NowPlayingResult(
     val original_title: String = "",
     val overview: String = "",
     val popularity: Double = 0.0,
-    val poster_path: String = "",
+    val poster_path: String? = "",
     val release_date: String = "",
     val title: String = "",
     val video: Boolean = false,

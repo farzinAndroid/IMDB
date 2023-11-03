@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
@@ -40,6 +41,7 @@ fun TVDetailsScreen(
     tvId: Int,
     mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
+    navController:NavController
 ) {
 
     val scope = rememberCoroutineScope()
@@ -148,7 +150,12 @@ fun TVDetailsScreen(
             ) {
 
                 stickyHeader {
-                    MediaDetailTopBarSection(name)
+                    MediaDetailTopBarSection(
+                        name = name,
+                        onClick = {
+                            navController.popBackStack()
+                        }
+                    )
                 }
 
 
@@ -220,7 +227,7 @@ fun TVDetailsScreen(
                     MediaRatingSection(
                         rating = String.format("%.1f", rating),
                         voteCount = voteCount,
-                        tvId = tvId,
+                        mediaId = tvId,
                         onClick = {
                             scope.launch {
                                 if (sheetState.isVisible)
@@ -230,7 +237,8 @@ fun TVDetailsScreen(
                     )
                 }
 
-                item { MediaCastSection(tvId = tvId)}
+                item { MediaCastSection(mediaId = tvId)}
+                item { MediaRecommendedSection(mediaId = tvId, navController = navController)}
             }
         }
 

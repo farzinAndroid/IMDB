@@ -28,29 +28,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.models.home.NowPlayingResult
 import com.farzin.imdb.models.home.PopularTVModelResult
 import com.farzin.imdb.models.home.TVBasedOnNetworkResult
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
 import com.farzin.imdb.models.home.WatchListTVResult
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.utils.ImageHelper
-import com.farzin.imdb.viewmodel.HomeViewModel
 
 @Composable
 fun MovieItem(
     item: PopularTVModelResult,
     onAddButtonClicked: () -> Unit = {},
     onCardClicked: () -> Unit = {},
-    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
 
@@ -78,7 +76,11 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
+                    painter =rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -190,7 +192,11 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
+                    painter =rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -279,7 +285,6 @@ fun MovieItem(
     item: TVBasedOnNetworkResult,
     onAddButtonClicked: () -> Unit = {},
     onCardClicked: () -> Unit = {},
-    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
 
@@ -307,7 +312,11 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
+                    painter =rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -392,7 +401,6 @@ fun MovieItem(
     item: NowPlayingResult,
     onAddButtonClicked: () -> Unit = {},
     onCardClicked: () -> Unit = {},
-    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
 
@@ -420,7 +428,11 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
+                    painter = rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
@@ -505,7 +517,7 @@ fun MovieItem(
     item: WatchListTVResult,
     onAddButtonClicked: () -> Unit = {},
     onCardClicked: () -> Unit = {},
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    isFromTVWatchlist: Boolean = false,
 ) {
 
     MySpacerWidth(width = 10.dp)
@@ -532,15 +544,136 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(item.poster_path)),
+                    painter =rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
 
                 SaveButton(
-                    icon = painterResource(R.drawable.star_fill)
+                    icon =
+                    if (isFromTVWatchlist)
+                        painterResource(R.drawable.star_fill)
+                    else
+                        painterResource(R.drawable.add)
                 ) {
+                    onAddButtonClicked()
+                }
+            }
+
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.1f)
+                    .padding(horizontal = 4.dp)
+            ) {
+
+                Icon(
+                    painter = painterResource(R.drawable.star_fill),
+                    contentDescription = "",
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.imdbYellow
+                )
+
+                MySpacerWidth(width = 8.dp)
+
+                Text(
+                    text = String.format("%.1f", item.vote_average),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Thin,
+                    color = MaterialTheme.colorScheme.darkText
+                )
+
+
+            }
+
+
+            Text(
+                text = item.name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.2f)
+                    .padding(horizontal = 4.dp)
+                    .padding(top = 4.dp),
+                textAlign = TextAlign.Start,
+                color = MaterialTheme.colorScheme.darkText,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+
+            MySpacerHeight(height = 10.dp)
+
+            Text(
+                text = DateHelper.extractYearFromDate(item.first_air_date),
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Thin,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.1f)
+                    .padding(horizontal = 4.dp),
+                textAlign = TextAlign.Start,
+                color = Color.Gray
+            )
+
+
+        }
+
+    }
+
+}
+
+@Composable
+fun MovieItem(
+    item: TrendingTVShowsForDayResult,
+    onAddButtonClicked: () -> Unit = {},
+    onCardClicked: () -> Unit = {}
+) {
+
+    MySpacerWidth(width = 10.dp)
+
+    Card(
+        modifier = Modifier
+            .width(150.dp)
+            .height(370.dp)
+            .clickable { onCardClicked() },
+        shape = Shapes().small,
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.6f),
+                contentAlignment = Alignment.TopStart
+            ) {
+
+                Image(
+                    painter =rememberAsyncImagePainter(item.poster_path?.let {
+                        ImageHelper.appendImage(
+                            it
+                        )
+                    }),
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+
+                SaveButton(
+                    icon = painterResource(R.drawable.add)) {
                     onAddButtonClicked()
                 }
             }

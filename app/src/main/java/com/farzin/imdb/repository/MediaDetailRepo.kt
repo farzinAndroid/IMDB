@@ -3,6 +3,7 @@ package com.farzin.imdb.repository
 import com.farzin.imdb.data.remote.BaseApiResponse
 import com.farzin.imdb.data.remote.MediaDetailApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.mediaDetail.AddRating
 import com.farzin.imdb.models.mediaDetail.AddRatingModel
 import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
@@ -33,6 +34,12 @@ class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterfa
 
     suspend fun getTVCastAndCrew(seriesId:Int) : NetworkResult<CastAndCrewModel> =
         safeApiCall {
-            api.getTVCastAndCrew(seriesId,)
+            api.getTVCastAndCrew(seriesId)
+        }
+
+
+    suspend fun getRecommendedTVShows(seriesId:Int) : NetworkResult<TrendingTVShowsForDay> =
+        safeApiCall {
+            api.getRecommendedTVShows(seriesId)
         }
 }

@@ -62,6 +62,7 @@ fun SetUpNavGraph(
             it.arguments!!.getInt("id").let { id->
                     TVDetailsScreen(
                         tvId =id,
+                        navController = navController
                     )
             }
 

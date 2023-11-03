@@ -41,13 +41,12 @@ import com.farzin.imdb.ui.theme.starColor
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MediaDetailViewModel
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun MediaRatingSection(
     rating: String,
     voteCount: Int,
-    tvId: Int,
+    mediaId: Int,
     mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
     onClick:()->Unit,
 ) {
@@ -67,9 +66,9 @@ fun MediaRatingSection(
         is NetworkResult.Success -> {
             loading = false
             isRated = result.data?.results?.any {
-                tvId == it.id
+                mediaId == it.id
             } ?: false
-            matchingIndex = result.data?.results?.indexOfFirst { tvId == it.id } ?: -1
+            matchingIndex = result.data?.results?.indexOfFirst { mediaId == it.id } ?: -1
             userRating = if (matchingIndex != -1) result.data?.results?.get(matchingIndex)?.rating ?: 0 else 0
         }
 

@@ -33,7 +33,6 @@ import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.net.URLEncoder
 
 
 @Composable
@@ -146,7 +145,8 @@ fun WatchListTVSection(
                                     navController.navigate(
                                         Screens.TVDetails.route+"?id=${item.id}"
                                     )
-                                }
+                                },
+                                isFromTVWatchlist = true
                             )
                         }
                     }

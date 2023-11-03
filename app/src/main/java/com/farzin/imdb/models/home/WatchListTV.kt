@@ -19,7 +19,7 @@ data class WatchListTVResult(
     val original_name: String = "",
     val overview: String = "",
     val popularity: Double = 0.0,
-    val poster_path: String = "",
+    val poster_path: String? = "",
     val vote_average: Double = 0.0,
     val vote_count: Int = 0
 )

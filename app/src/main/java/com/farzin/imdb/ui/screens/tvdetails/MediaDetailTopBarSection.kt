@@ -5,6 +5,7 @@ import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,7 +30,10 @@ import com.farzin.imdb.ui.theme.whiteBackground
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MediaDetailTopBarSection(name: String) {
+fun MediaDetailTopBarSection(
+    name: String,
+    onClick:()->Unit
+) {
 
     Row(
         modifier = Modifier
@@ -52,7 +56,8 @@ fun MediaDetailTopBarSection(name: String) {
                 painter = painterResource(R.drawable.back),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(26.dp),
+                    .size(26.dp)
+                    .clickable { onClick() },
             )
 
             Text(

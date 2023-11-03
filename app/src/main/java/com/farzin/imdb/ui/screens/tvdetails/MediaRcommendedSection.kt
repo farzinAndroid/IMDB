@@ -15,39 +15,51 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.Cast
+import com.farzin.imdb.models.home.AddToWatchListRequest
+import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
+import com.farzin.imdb.navigation.Screens
+import com.farzin.imdb.ui.screens.home.MovieItem
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
+import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun MediaCastSection(
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+fun MediaRecommendedSection(
     mediaId: Int,
+    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController,
 ) {
 
+
     LaunchedEffect(true) {
-        mediaDetailViewModel.getTVCastAndCrew(mediaId)
+        mediaDetailViewModel.getRecommendedTVShows(mediaId)
     }
 
+    val scope = rememberCoroutineScope()
     var loading by remember { mutableStateOf(false) }
-    var castList by remember { mutableStateOf<List<Cast>>(emptyList()) }
+    var recommendedList by remember { mutableStateOf<List<TrendingTVShowsForDayResult>>(emptyList()) }
 
 
-    val result by mediaDetailViewModel.castAndCrew.collectAsState()
+    val result by mediaDetailViewModel.recommendedTVShows.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
-            castList = result.data?.cast?.take(20) ?: emptyList()
+            recommendedList = result.data?.results ?: emptyList()
         }
 
         is NetworkResult.Error -> {
@@ -58,6 +70,7 @@ fun MediaCastSection(
             loading = true
         }
     }
+
 
     Column(
         modifier = Modifier
@@ -82,7 +95,7 @@ fun MediaCastSection(
                 horizontalAlignment = Alignment.Start
             ) {
 
-                SectionStickyHeader(stringResource(R.string.cast))
+                SectionStickyHeader(stringResource(R.string.more_like_this))
 
                 MySpacerHeight(height = 8.dp)
 
@@ -90,14 +103,29 @@ fun MediaCastSection(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    items(castList){cast->
-                        CastCardItem(cast = cast)
+                    items(recommendedList) { item ->
+                        MovieItem(
+                            item = item,
+                            onCardClicked = {
+                                navController.navigate(
+                                    Screens.TVDetails.route + "?id=${item.id}"
+                                )
+                            },
+                            onAddButtonClicked = {
+                                homeViewModel.addToWatchList(
+                                    AddToWatchListRequest(
+                                        media_id = item.id,
+                                        media_type = item.media_type,
+                                        watchlist = true
+                                    )
+                                )
+                                scope.launch {
+                                    delay(200)
+                                    homeViewModel.getWatchListTV()
+                                }
+                            }
+                        )
                     }
-
-                    item {
-                        ShowMoreItem()
-                    }
-
                 }
             }
 
@@ -105,7 +133,6 @@ fun MediaCastSection(
         }
 
     }
-
 
 
 }
