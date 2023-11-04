@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.Cyan
@@ -29,15 +30,18 @@ import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
-fun ShowMoreItem() {
+fun ShowMoreItem(
+    width:Dp = 150.dp,
+    height:Dp = 350.dp,
+) {
 
 
     MySpacerWidth(width = 10.dp)
 
     Card(
         modifier = Modifier
-            .width(150.dp)
-            .height(350.dp)
+            .width(width)
+            .height(height)
             .clickable { },
         shape = Shapes().small,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),

@@ -4,6 +4,7 @@ import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.mediaDetail.AddRating
 import com.farzin.imdb.models.mediaDetail.AddRatingModel
 import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
+import com.farzin.imdb.models.mediaDetail.ImagesTVModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
 import com.farzin.imdb.utils.Constants
@@ -70,7 +71,18 @@ interface MediaDetailApiInterface {
             encoded = false
         ) seriesId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("language") language: String = Constants.USER_LANG,
     ):Response<TrendingTVShowsForDay>
+
+
+    @GET("tv/{series_id}/images")
+    suspend fun getImagesForTV(
+        @Path(
+            "series_id",
+            encoded = false
+        ) seriesId:Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+    ):Response<ImagesTVModel>
 
 
 }

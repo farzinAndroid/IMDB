@@ -239,6 +239,7 @@ fun TVDetailsScreen(
 
                 item { MediaCastSection(mediaId = tvId)}
                 item { MediaRecommendedSection(mediaId = tvId, navController = navController)}
+                item { MediaImageSection(mediaId = tvId)}
             }
         }
 

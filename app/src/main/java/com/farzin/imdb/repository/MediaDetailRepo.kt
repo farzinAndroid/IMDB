@@ -7,6 +7,7 @@ import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.mediaDetail.AddRating
 import com.farzin.imdb.models.mediaDetail.AddRatingModel
 import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
+import com.farzin.imdb.models.mediaDetail.ImagesTVModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
 import javax.inject.Inject
@@ -42,4 +43,11 @@ class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterfa
         safeApiCall {
             api.getRecommendedTVShows(seriesId)
         }
+
+    suspend fun getImagesForTV(seriesId:Int) : NetworkResult<ImagesTVModel> =
+        safeApiCall {
+            api.getImagesForTV(seriesId)
+        }
+
+
 }

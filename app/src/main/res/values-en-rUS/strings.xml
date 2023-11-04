@@ -78,4 +78,6 @@
     <string name="directors">Director(s)</string>
     <string name="writers">ٌWriter(s)</string>
     <string name="producers">Producer(s)</string>
+    <string name="photos">Photos</string>
+    <string name="see_all">See all</string>
 </resources>
