@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +36,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.mediaDetail.AddRating
 import com.farzin.imdb.ui.theme.darkText
-import com.farzin.imdb.ui.theme.starColor
+import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.MediaDetailViewModel
 import kotlinx.coroutines.delay
@@ -120,7 +119,7 @@ fun RatingBottomSheet(
                     Icon(
                         painter = starIcon,
                         contentDescription = "",
-                        tint = MaterialTheme.colorScheme.starColor
+                        tint = MaterialTheme.colorScheme.starBlue
                     )
                 }
                 MySpacerWidth(width = 8.dp)

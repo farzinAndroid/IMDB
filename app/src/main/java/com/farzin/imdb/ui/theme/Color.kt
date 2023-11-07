@@ -55,6 +55,6 @@ val ColorScheme.addBackground: Color
     get() = Color(0xFFFFFFFF)
 
 
-val ColorScheme.starColor: Color
+val ColorScheme.starBlue: Color
     @Composable
     get() = Color(0xB9005BFF)

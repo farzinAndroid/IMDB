@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -75,15 +76,18 @@ fun SectionStickyHeader(
 
             if (isHaveAnotherText) {
 
-                Text(
-                    text = headerSubtitle,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Thin,
-                    color = MaterialTheme.colorScheme.Cyan,
+                TextButton(
+                    onClick = { headerOnClick() },
                     modifier = Modifier
                         .padding(end = 8.dp)
-                        .clickable { headerOnClick() }
-                )
+                ) {
+                    Text(
+                        text = headerSubtitle,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Thin,
+                        color = MaterialTheme.colorScheme.Cyan,
+                    )
+                }
 
             }
 

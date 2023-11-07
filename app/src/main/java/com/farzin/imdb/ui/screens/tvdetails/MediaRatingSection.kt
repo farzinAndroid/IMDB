@@ -37,7 +37,7 @@ import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.imdbYellow
-import com.farzin.imdb.ui.theme.starColor
+import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MediaDetailViewModel
@@ -49,6 +49,7 @@ fun MediaRatingSection(
     mediaId: Int,
     mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
     onClick:()->Unit,
+    userRatingCallBack:(Int)->Unit
 ) {
 
     LaunchedEffect(true) {
@@ -70,6 +71,7 @@ fun MediaRatingSection(
             } ?: false
             matchingIndex = result.data?.results?.indexOfFirst { mediaId == it.id } ?: -1
             userRating = if (matchingIndex != -1) result.data?.results?.get(matchingIndex)?.rating ?: 0 else 0
+            userRatingCallBack(userRating)
         }
 
         is NetworkResult.Error -> {
@@ -184,7 +186,7 @@ fun MediaRatingSection(
                     contentDescription = "",
                     modifier = Modifier
                         .size(24.dp),
-                    tint = MaterialTheme.colorScheme.starColor
+                    tint = MaterialTheme.colorScheme.starBlue
                 )
 
 
@@ -219,7 +221,7 @@ fun MediaRatingSection(
                 Text(
                     text = stringResource(R.string.your_rating),
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.starColor,
+                    color = MaterialTheme.colorScheme.starBlue,
                     fontWeight = FontWeight.Thin,
                 )
             }

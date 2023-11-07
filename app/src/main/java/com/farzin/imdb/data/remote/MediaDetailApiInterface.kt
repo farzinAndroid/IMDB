@@ -7,6 +7,7 @@ import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
 import com.farzin.imdb.models.mediaDetail.ImagesTVModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
+import com.farzin.imdb.models.mediaDetail.TVReviewModel
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -83,6 +84,16 @@ interface MediaDetailApiInterface {
         ) seriesId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
     ):Response<ImagesTVModel>
+
+
+    @GET("tv/{series_id}/reviews")
+    suspend fun getReviewsForTV(
+        @Path(
+            "series_id",
+            encoded = false
+        ) seriesId:Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+    ):Response<TVReviewModel>
 
 
 }

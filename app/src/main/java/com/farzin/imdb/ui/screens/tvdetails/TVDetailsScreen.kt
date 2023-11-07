@@ -28,6 +28,9 @@ import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.mediaDetail.Genre
+import com.farzin.imdb.models.mediaDetail.Network
+import com.farzin.imdb.models.mediaDetail.ProductionCountry
+import com.farzin.imdb.models.mediaDetail.SpokenLanguage
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -41,7 +44,7 @@ fun TVDetailsScreen(
     tvId: Int,
     mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
-    navController:NavController
+    navController: NavController,
 ) {
 
     val scope = rememberCoroutineScope()
@@ -62,9 +65,11 @@ fun TVDetailsScreen(
     var genres by remember { mutableStateOf<List<Genre>>(emptyList()) }
     var rating by remember { mutableStateOf(0.0) }
     var voteCount by remember { mutableStateOf(0) }
-
-    var previousUserRating  = 0
-
+    var userRating by remember { mutableStateOf(0) }
+    var spokenLangList by remember {mutableStateOf<List<SpokenLanguage>>(emptyList()) }
+    var productionCountry by remember { mutableStateOf<List<ProductionCountry>>(emptyList()) }
+    var networks by remember { mutableStateOf<List<Network>>(emptyList()) }
+    var originCountry by remember { mutableStateOf<List<String>>(emptyList()) }
 
 
     //get media details
@@ -88,6 +93,10 @@ fun TVDetailsScreen(
                     genres = result.data?.genres ?: emptyList()
                     rating = result.data?.vote_average ?: 0.0
                     voteCount = result.data?.vote_count ?: 0
+                    spokenLangList = result.data?.spoken_languages ?: emptyList()
+                    productionCountry = result.data?.production_countries ?: emptyList()
+                    networks = result.data?.networks ?: emptyList()
+                    originCountry = result.data?.origin_country ?: emptyList()
                 }
 
                 is NetworkResult.Error -> {
@@ -133,7 +142,7 @@ fun TVDetailsScreen(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            RatingBottomSheet(name,tvId)
+            RatingBottomSheet(name, tvId)
         },
         sheetState = sheetState
 
@@ -233,13 +242,33 @@ fun TVDetailsScreen(
                                 if (sheetState.isVisible)
                                     sheetState.hide() else sheetState.show()
                             }
+                        },
+                        userRatingCallBack = {
+                            userRating = it
                         }
                     )
                 }
 
-                item { MediaCastSection(mediaId = tvId)}
-                item { MediaRecommendedSection(mediaId = tvId, navController = navController)}
-                item { MediaImageSection(mediaId = tvId)}
+                item { MediaCastSection(mediaId = tvId) }
+                item { MediaRecommendedSection(mediaId = tvId, navController = navController) }
+                item { MediaImageSection(mediaId = tvId) }
+                item {
+                    MediaCommentSection(
+                        mediaId = tvId,
+                        rating = String.format("%.1f", rating),
+                        userRating = userRating,
+                        navController = navController
+                    )
+                }
+                item {
+                    MediaDetailSection(
+                        spokenLangList = spokenLangList,
+                        productionCountry = productionCountry,
+                        networks = networks,
+                        originCountry = originCountry,
+                        releaseDate = startYear
+                    )
+                }
             }
         }
 

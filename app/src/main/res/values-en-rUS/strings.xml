@@ -76,8 +76,16 @@
     <string name="show_more">Show more</string>
     <string name="more_like_this">More like this</string>
     <string name="directors">Director(s)</string>
-    <string name="writers">ٌWriter(s)</string>
+    <string name="writers">Writer(s)</string>
     <string name="producers">Producer(s)</string>
     <string name="photos">Photos</string>
     <string name="see_all">See all</string>
+    <string name="user_review">User reviews</string>
+    <string name="users_rating">User\'s rating</string>
+    <string name="no_comment">No comment</string>
+    <string name="details">Details</string>
+    <string name="release_date">Release date</string>
+    <string name="spoken_lang">Spoken language</string>
+    <string name="production_country">Production country</string>
+    <string name="origin_country">Origin country</string>
 </resources>

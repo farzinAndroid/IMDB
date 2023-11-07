@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
-import com.farzin.imdb.ui.theme.starColor
+import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.utils.ImageHelper
 
@@ -109,7 +109,7 @@ fun PosterImage(
                     contentDescription = "",
                     modifier = Modifier
                         .size(16.dp),
-                    tint = MaterialTheme.colorScheme.starColor
+                    tint = MaterialTheme.colorScheme.starBlue
                 )
 
                 MySpacerWidth(width = 8.dp)

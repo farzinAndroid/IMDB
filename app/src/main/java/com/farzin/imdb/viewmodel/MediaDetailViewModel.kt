@@ -10,6 +10,7 @@ import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
 import com.farzin.imdb.models.mediaDetail.ImagesTVModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
+import com.farzin.imdb.models.mediaDetail.TVReviewModel
 import com.farzin.imdb.repository.MediaDetailRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,7 @@ class MediaDetailViewModel @Inject constructor(private val repo: MediaDetailRepo
     val castAndCrew = MutableStateFlow<NetworkResult<CastAndCrewModel>>(NetworkResult.Loading())
     val recommendedTVShows = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
     val imagesForTV = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
+    val reviewsTV = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
 
 
     fun getTVDetails(seriesId:Int){
@@ -105,6 +107,13 @@ class MediaDetailViewModel @Inject constructor(private val repo: MediaDetailRepo
     fun getImagesForTV(seriesId:Int){
         viewModelScope.launch {
             imagesForTV.emit(repo.getImagesForTV(seriesId))
+        }
+    }
+
+
+    fun getReviewsForTV(seriesId:Int){
+        viewModelScope.launch {
+            reviewsTV.emit(repo.getReviewsForTV(seriesId))
         }
     }
 

@@ -84,6 +84,8 @@ fun MediaImageSection(
         horizontalAlignment = Alignment.Start
     ) {
 
+        MySpacerHeight(height = 24.dp)
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()

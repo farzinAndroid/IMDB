@@ -10,6 +10,7 @@ import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
 import com.farzin.imdb.models.mediaDetail.ImagesTVModel
 import com.farzin.imdb.models.mediaDetail.RatedTVModel
 import com.farzin.imdb.models.mediaDetail.TVDetailModel
+import com.farzin.imdb.models.mediaDetail.TVReviewModel
 import javax.inject.Inject
 
 class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterface) : BaseApiResponse() {
@@ -47,6 +48,11 @@ class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterfa
     suspend fun getImagesForTV(seriesId:Int) : NetworkResult<ImagesTVModel> =
         safeApiCall {
             api.getImagesForTV(seriesId)
+        }
+
+    suspend fun getReviewsForTV(seriesId:Int) : NetworkResult<TVReviewModel> =
+        safeApiCall {
+            api.getReviewsForTV(seriesId)
         }
 
 
