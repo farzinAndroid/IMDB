@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -177,6 +179,37 @@ fun MediaDetailSection(
                         fontWeight = FontWeight.Thin,
                         color = Color.Gray
                     )
+                }
+
+
+                MyDividerHorizontal()
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .padding(start = 12.dp)
+                        .padding(bottom = 12.dp),
+                    horizontalAlignment = Alignment.Start
+
+                ) {
+                    Text(
+                        text = stringResource(R.string.networks),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.darkText
+                    )
+
+                    LazyRow(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .fillMaxWidth()
+                    ){
+                        items(networks){
+                            MediaDetailGenreItem(it.name)
+                        }
+                    }
+
                 }
 
 

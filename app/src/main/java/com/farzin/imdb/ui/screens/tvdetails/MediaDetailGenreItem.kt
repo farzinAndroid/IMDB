@@ -25,7 +25,7 @@ fun MediaDetailGenreItem(
 ) {
 
     Row {
-        MySpacerWidth(width = 8.dp)
+
 
 
         Box(
@@ -45,6 +45,8 @@ fun MediaDetailGenreItem(
                 color = MaterialTheme.colorScheme.darkText
             )
         }
+
+        MySpacerWidth(width = 8.dp)
 
 
     }

@@ -88,4 +88,5 @@
     <string name="spoken_lang">Spoken language</string>
     <string name="production_country">Production country</string>
     <string name="origin_country">Origin country</string>
+    <string name="networks">Networks</string>
 </resources>
