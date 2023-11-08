@@ -111,11 +111,10 @@ class MediaDetailViewModel @Inject constructor(private val repo: MediaDetailRepo
     }
 
 
-    fun getReviewsForTV(seriesId:Int){
+    fun getReviewsForTV(seriesId:Int,page:Int){
         viewModelScope.launch {
-            reviewsTV.emit(repo.getReviewsForTV(seriesId))
+            reviewsTV.emit(repo.getReviewsForTV(seriesId,page))
         }
     }
-
 
 }

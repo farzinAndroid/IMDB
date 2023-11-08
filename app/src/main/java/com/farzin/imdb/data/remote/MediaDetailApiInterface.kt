@@ -93,6 +93,7 @@ interface MediaDetailApiInterface {
             encoded = false
         ) seriesId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
+        @Query("page") page: Int
     ):Response<TVReviewModel>
 
 

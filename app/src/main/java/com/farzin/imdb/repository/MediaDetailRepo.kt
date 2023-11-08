@@ -50,9 +50,9 @@ class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterfa
             api.getImagesForTV(seriesId)
         }
 
-    suspend fun getReviewsForTV(seriesId:Int) : NetworkResult<TVReviewModel> =
+    suspend fun getReviewsForTV(seriesId:Int,page:Int) : NetworkResult<TVReviewModel> =
         safeApiCall {
-            api.getReviewsForTV(seriesId)
+            api.getReviewsForTV(seriesId, page = page)
         }
 
 

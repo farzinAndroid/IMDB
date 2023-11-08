@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +41,7 @@ import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.mediaDetail.TVReviewModelResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.imdbYellow
@@ -59,16 +62,11 @@ fun MediaCommentSection(
 
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.getReviewsForTV(mediaId)
+        mediaDetailViewModel.getReviewsForTV(mediaId,1)
     }
 
-    val scope = rememberCoroutineScope()
     var loading by remember { mutableStateOf(false) }
     var reviewList by remember { mutableStateOf<List<TVReviewModelResult>>(emptyList()) }
-    var authorRating by remember { mutableStateOf("") }
-    var userName by remember { mutableStateOf("") }
-    var content by remember { mutableStateOf("") }
-    var date by remember { mutableStateOf("") }
 
 
     val result by mediaDetailViewModel.reviewsTV.collectAsState()
@@ -223,10 +221,6 @@ fun MediaCommentSection(
                         }
                     } else {
                         items(reviewList) {
-                            authorRating = it.author_details.rating.toString()
-                            userName = it.author_details.username
-                            content = it.content
-                            date = it.created_at
                             CommentCard(
                                 item = it,
                                 onClick = {
@@ -237,6 +231,25 @@ fun MediaCommentSection(
                 }
 
                 MySpacerHeight(height = 20.dp)
+
+
+                if (!reviewList.isNullOrEmpty()){
+                    TextButton(
+                        onClick = { navController.navigate(Screens.Comment.route+"?id=${mediaId}") }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.view_all_comments),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.Cyan,
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .fillMaxWidth(),
+                            textAlign = TextAlign.Start
+                        )
+                    }
+                }
+
+
 
             }
         }

@@ -1,5 +1,6 @@
 package com.farzin.imdb.utils
 
+import android.annotation.SuppressLint
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -21,5 +22,15 @@ object DateHelper {
             ""
         }
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun formatDate(dateString: String): String? {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val outputFormat = SimpleDateFormat("MMMM dd, yyyy")
+
+        val parsedDate = inputFormat.parse(dateString)
+        return parsedDate?.let { outputFormat.format(it) }
+    }
+
 
 }

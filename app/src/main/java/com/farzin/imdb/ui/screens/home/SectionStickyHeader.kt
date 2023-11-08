@@ -80,6 +80,7 @@ fun SectionStickyHeader(
                     onClick = { headerOnClick() },
                     modifier = Modifier
                         .padding(end = 8.dp)
+                        .clickable { headerOnClick() }
                 ) {
                     Text(
                         text = headerSubtitle,

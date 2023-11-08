@@ -89,4 +89,6 @@
     <string name="production_country">Production country</string>
     <string name="origin_country">Origin country</string>
     <string name="networks">Networks</string>
+    <string name="view_all_comments">View all comments</string>
+    <string name="result">Results</string>
 </resources>
