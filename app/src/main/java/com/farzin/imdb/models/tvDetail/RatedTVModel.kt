@@ -1,4 +1,4 @@
-package com.farzin.imdb.models.mediaDetail
+package com.farzin.imdb.models.tvDetail
 
 data class RatedTVModel(
     val page: Int,

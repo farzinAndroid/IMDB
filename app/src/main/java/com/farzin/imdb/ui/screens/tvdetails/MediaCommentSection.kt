@@ -21,7 +21,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.TVReviewModelResult
+import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.Cyan
@@ -49,12 +48,12 @@ import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
 fun MediaCommentSection(
     mediaId: Int,
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
     rating: String,
     userRating: Int,
     navController: NavController,
@@ -62,14 +61,14 @@ fun MediaCommentSection(
 
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.getReviewsForTV(mediaId,1)
+        tvDetailViewModel.getReviewsForTV(mediaId,1)
     }
 
     var loading by remember { mutableStateOf(false) }
     var reviewList by remember { mutableStateOf<List<TVReviewModelResult>>(emptyList()) }
 
 
-    val result by mediaDetailViewModel.reviewsTV.collectAsState()
+    val result by tvDetailViewModel.reviewsTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false

@@ -23,16 +23,16 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun MediaDetailTitleSection(
-    name:String,
-    isMovie:Boolean,
-    date:String,
-    status:String,
-    runTime:List<Int>,
-    numberOfEpisode : Int = 0
+    name: String = "",
+    isMovie: Boolean = false,
+    date: String = "",
+    status: String = "",
+    runTimeList: List<Int> = emptyList(),
+    runTime: Int = 0,
+    numberOfEpisode: Int = 0,
 ) {
 
 
@@ -43,9 +43,10 @@ fun MediaDetailTitleSection(
         horizontalAlignment = Alignment.Start,
     ) {
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         ) {
 
             Text(
@@ -93,34 +94,45 @@ fun MediaDetailTitleSection(
             MySpacerWidth(width = 8.dp)
 
 
-            runTime.forEachIndexed {index, time ->
-            Text(
-                    text = "${time}m",
-                    modifier = Modifier
-                        .wrapContentWidth(),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = Color.Gray,
-                    fontWeight = FontWeight.Normal
-                )
-
-
-                if (index != runTime.lastIndex){
+            if (runTimeList.isNotEmpty()) {
+                runTimeList.forEachIndexed { index, time ->
                     Text(
-                        text = " - ",
+                        text = "${time}m",
                         modifier = Modifier
                             .wrapContentWidth(),
                         style = MaterialTheme.typography.titleSmall,
                         color = Color.Gray,
                         fontWeight = FontWeight.Normal
                     )
-                }
 
+
+                    if (index != runTimeList.lastIndex) {
+                        Text(
+                            text = " - ",
+                            modifier = Modifier
+                                .wrapContentWidth(),
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.Gray,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
+
+                }
+            } else {
+                Text(
+                    text = "${runTime}m",
+                    modifier = Modifier
+                        .wrapContentWidth(),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.Normal
+                )
             }
 
 
         }
 
-        if (!isMovie){
+        if (!isMovie) {
 
             MySpacerHeight(height = 12.dp)
 
@@ -154,8 +166,6 @@ fun MediaDetailTitleSection(
             }
 
         }
-
-
 
 
     }

@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.farzin.imdb.models.mediaDetail.Genre
+import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.utils.ImageHelper
 

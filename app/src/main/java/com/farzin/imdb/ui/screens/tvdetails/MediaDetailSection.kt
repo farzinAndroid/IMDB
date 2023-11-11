@@ -19,9 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
-import com.farzin.imdb.models.mediaDetail.Network
-import com.farzin.imdb.models.mediaDetail.ProductionCountry
-import com.farzin.imdb.models.mediaDetail.SpokenLanguage
+import com.farzin.imdb.models.tvDetail.Network
+import com.farzin.imdb.models.tvDetail.ProductionCountry
+import com.farzin.imdb.models.tvDetail.SpokenLanguage
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground

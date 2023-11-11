@@ -1,6 +1,5 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.moviedetails
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,24 +26,31 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
+import com.farzin.imdb.models.movieDetail.MovieRatingBottomSheet
 import com.farzin.imdb.models.tvDetail.Genre
-import com.farzin.imdb.models.tvDetail.Network
 import com.farzin.imdb.models.tvDetail.ProductionCountry
 import com.farzin.imdb.models.tvDetail.SpokenLanguage
+import com.farzin.imdb.ui.screens.tvdetails.MediaDetailAddToWatchListButton
+import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTitleSection
+import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
+import com.farzin.imdb.ui.screens.tvdetails.MediaOverViewSection
+import com.farzin.imdb.ui.screens.tvdetails.MediaPosterSection
+import com.farzin.imdb.ui.screens.tvdetails.TVRatingBottomSheet
+import com.farzin.imdb.ui.screens.tvdetails.TVRecommendedSection
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.HomeViewModel
-import com.farzin.imdb.viewmodel.TVDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun TVDetailsScreen(
-    tvId: Int,
-    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
-    homeViewModel: HomeViewModel = hiltViewModel(),
+fun MovieDetailsScreen(
+    movieId: Int,
     navController: NavController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
@@ -55,10 +61,6 @@ fun TVDetailsScreen(
     var name by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
-    var numberOfEpisode by remember { mutableStateOf(0) }
-    var runTime by remember { mutableStateOf<List<Int>>(emptyList()) }
-    var startYear by remember { mutableStateOf("") }
-    var endYear by remember { mutableStateOf("") }
     var picturePath by remember { mutableStateOf("") }
     var posterPath by remember { mutableStateOf("") }
     var overView by remember { mutableStateOf("") }
@@ -66,42 +68,35 @@ fun TVDetailsScreen(
     var rating by remember { mutableStateOf(0.0) }
     var voteCount by remember { mutableStateOf(0) }
     var userRating by remember { mutableStateOf(0) }
-    var spokenLangList by remember {mutableStateOf<List<SpokenLanguage>>(emptyList()) }
+    var runTime by remember { mutableStateOf(0) }
+    var spokenLangList by remember { mutableStateOf<List<SpokenLanguage>>(emptyList()) }
     var productionCountry by remember { mutableStateOf<List<ProductionCountry>>(emptyList()) }
-    var networks by remember { mutableStateOf<List<Network>>(emptyList()) }
-    var originCountry by remember { mutableStateOf<List<String>>(emptyList()) }
 
 
     //get media details
-    LaunchedEffect(tvId) {
-        tvDetailViewModel.getTVDetails(tvId)
+    LaunchedEffect(movieId) {
+        movieDetailViewModel.getMovieDetails(movieId)
 
-        tvDetailViewModel.tvDetails.collectLatest { result ->
+        movieDetailViewModel.movieDetails.collectLatest { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     loading = false
-                    name = result.data?.name ?: ""
-                    date = result.data?.last_air_date ?: ""
+                    name = result.data?.title ?: ""
+                    date = result.data?.release_date ?: ""
                     status = result.data?.status ?: ""
-                    numberOfEpisode = result.data?.number_of_episodes ?: 0
-                    runTime = result.data?.episode_run_time ?: emptyList()
-                    startYear = result.data?.first_air_date ?: ""
-                    endYear = result.data?.last_air_date ?: ""
-                    picturePath = result.data?.backdropPath ?: ""
+                    picturePath = result.data?.backdrop_path ?: ""
                     overView = result.data?.overview ?: ""
                     posterPath = result.data?.poster_path ?: ""
                     genres = result.data?.genres ?: emptyList()
                     rating = result.data?.vote_average ?: 0.0
                     voteCount = result.data?.vote_count ?: 0
+                    runTime = result.data?.runtime ?: 0
                     spokenLangList = result.data?.spoken_languages ?: emptyList()
                     productionCountry = result.data?.production_countries ?: emptyList()
-                    networks = result.data?.networks ?: emptyList()
-                    originCountry = result.data?.origin_country ?: emptyList()
                 }
 
                 is NetworkResult.Error -> {
                     loading = false
-                    Log.e("TAG", "error")
                 }
 
                 is NetworkResult.Loading -> {
@@ -115,14 +110,14 @@ fun TVDetailsScreen(
     var isInWatchList by remember { mutableStateOf(false) }
 
     // get if the TV is in watchlist
-    LaunchedEffect(tvId) {
-        homeViewModel.getWatchListTV()
+    LaunchedEffect(movieId) {
+        homeViewModel.getWatchListMovie()
 
-        homeViewModel.watchListTV.collectLatest { result ->
+        homeViewModel.watchListMovie.collectLatest { result ->
             when (result) {
                 is NetworkResult.Success -> {
                     isInWatchList = result.data?.results?.any {
-                        tvId == it.id
+                        movieId == it.id
                     } ?: false
                 }
 
@@ -142,7 +137,7 @@ fun TVDetailsScreen(
 
     ModalBottomSheetLayout(
         sheetContent = {
-            TVRatingBottomSheet(name, tvId)
+            MovieRatingBottomSheet(name, movieId)
         },
         sheetState = sheetState
 
@@ -163,7 +158,7 @@ fun TVDetailsScreen(
                         name = name,
                         onClick = {
                             navController.popBackStack()
-                        }
+                        },
                     )
                 }
 
@@ -173,18 +168,16 @@ fun TVDetailsScreen(
                         name = name,
                         date = date,
                         status = status,
-                        runTimeList = runTime,
-                        numberOfEpisode = numberOfEpisode,
-                        isMovie = false
+                        isMovie = true,
+                        runTime = runTime
                     )
                 }
                 item {
                     MediaPosterSection(
                         picturePath = picturePath,
-                        startYear = startYear,
-                        endYear = endYear,
-                        isMovie = false,
-                        name = name
+                        isMovie = true,
+                        name = name,
+                        startYear = date
                     )
                 }
                 item {
@@ -207,8 +200,8 @@ fun TVDetailsScreen(
                                 scope.launch {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
-                                            media_type = "tv",
-                                            media_id = tvId,
+                                            media_type = "movie",
+                                            media_id = movieId,
                                             watchlist = false
                                         )
                                     )
@@ -218,8 +211,8 @@ fun TVDetailsScreen(
                                 scope.launch {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
-                                            media_type = "tv",
-                                            media_id = tvId,
+                                            media_type = "movie",
+                                            media_id = movieId,
                                             watchlist = true
                                         )
                                     )
@@ -233,10 +226,10 @@ fun TVDetailsScreen(
                 }
 
                 item {
-                    TVRatingSection(
+                    MovieRatingSection(
                         rating = String.format("%.1f", rating),
                         voteCount = voteCount,
-                        mediaId = tvId,
+                        mediaId = movieId,
                         onClick = {
                             scope.launch {
                                 if (sheetState.isVisible)
@@ -248,27 +241,10 @@ fun TVDetailsScreen(
                         }
                     )
                 }
+                item{ MovieCastSection(mediaId = movieId)}
+                item { MovieRecommendedSection(mediaId = movieId, navController = navController) }
 
-                item { TVCastSection(mediaId = tvId) }
-                item { TVRecommendedSection(mediaId = tvId, navController = navController) }
-                item { MediaImageSection(mediaId = tvId) }
-                item {
-                    MediaCommentSection(
-                        mediaId = tvId,
-                        rating = String.format("%.1f", rating),
-                        userRating = userRating,
-                        navController = navController
-                    )
-                }
-                item {
-                    MediaDetailSection(
-                        spokenLangList = spokenLangList,
-                        productionCountry = productionCountry,
-                        networks = networks,
-                        originCountry = originCountry,
-                        releaseDate = startYear
-                    )
-                }
+
             }
         }
 

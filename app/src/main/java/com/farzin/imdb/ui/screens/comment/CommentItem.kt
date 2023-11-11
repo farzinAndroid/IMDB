@@ -23,7 +23,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farzin.imdb.R
-import com.farzin.imdb.models.mediaDetail.TVReviewModelResult
+import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.starBlue

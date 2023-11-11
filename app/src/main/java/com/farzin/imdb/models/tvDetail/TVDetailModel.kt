@@ -1,4 +1,4 @@
-package com.farzin.imdb.models.mediaDetail
+package com.farzin.imdb.models.tvDetail
 
 import com.google.gson.annotations.SerializedName
 

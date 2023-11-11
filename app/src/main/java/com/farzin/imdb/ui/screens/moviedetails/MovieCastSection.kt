@@ -1,10 +1,8 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.moviedetails
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,32 +28,34 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.Cast
+import com.farzin.imdb.models.movieDetail.Cast
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.screens.tvdetails.CastCardItem
+import com.farzin.imdb.ui.screens.tvdetails.ShowMoreItem
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun MediaCastSection(
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+fun MovieCastSection(
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
     mediaId: Int,
 ) {
 
+
     LaunchedEffect(true) {
-        mediaDetailViewModel.getTVCastAndCrew(mediaId)
+        movieDetailViewModel.getMovieCastAndCrew(mediaId)
     }
 
     var loading by remember { mutableStateOf(false) }
-    var castList by remember { mutableStateOf<List<Cast>>(emptyList()) }
     var director by remember { mutableStateOf("") }
     var writer by remember { mutableStateOf("") }
 
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.directorsList.collectLatest { directors ->
+        movieDetailViewModel.directorsList.collectLatest { directors ->
 
             director = when (directors) {
                 is NetworkResult.Success -> {
@@ -77,7 +77,7 @@ fun MediaCastSection(
     }
 
     LaunchedEffect(true){
-        mediaDetailViewModel.writersList.collectLatest { writers ->
+        movieDetailViewModel.writersList.collectLatest { writers ->
 
             writer = when (writers) {
                 is NetworkResult.Success -> {
@@ -99,8 +99,12 @@ fun MediaCastSection(
     }
 
 
+    var castList by remember { mutableStateOf<List<Cast>>(emptyList()) }
+    var name by remember { mutableStateOf("") }
+    var profilePath by remember { mutableStateOf("") }
+    var character by remember { mutableStateOf("") }
 
-    val result by mediaDetailViewModel.castAndCrew.collectAsState()
+    val result by movieDetailViewModel.castAndCrew.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
@@ -148,7 +152,14 @@ fun MediaCastSection(
                         .fillMaxWidth()
                 ) {
                     items(castList) { cast ->
-                        CastCardItem(cast = cast)
+                        name = cast.name
+                        character = cast.character
+                        profilePath = cast.profile_path.toString()
+                        CastCardItem(
+                            profilePath = profilePath,
+                            character = character,
+                            name = name
+                        )
                     }
 
                     item {
@@ -219,4 +230,5 @@ fun MediaCastSection(
             }
         }
     }
+
 }

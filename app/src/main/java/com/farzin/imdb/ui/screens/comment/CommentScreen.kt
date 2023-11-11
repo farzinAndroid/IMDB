@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,20 +18,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.TVReviewModelResult
+import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
 fun CommentScreen(
     mediaId: Int,
     navController: NavController,
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    TVDetailViewModel: TVDetailViewModel = hiltViewModel(),
 ) {
 
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.getReviewsForTV(mediaId, 1)
+        TVDetailViewModel.getReviewsForTV(mediaId, 1)
     }
 
     var loading by remember { mutableStateOf(false) }
@@ -40,7 +39,7 @@ fun CommentScreen(
     var totalResult by remember { mutableStateOf(0) }
 
 
-    val result by mediaDetailViewModel.reviewsTV.collectAsState()
+    val result by TVDetailViewModel.reviewsTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false

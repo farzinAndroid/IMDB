@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.models.movieDetail
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -34,19 +34,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.AddRating
+import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun RatingBottomSheet(
+fun MovieRatingBottomSheet(
     name: String,
-    tvId: Int,
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    movieId: Int,
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
 ) {
 
     val context = LocalContext.current
@@ -56,11 +56,12 @@ fun RatingBottomSheet(
     var message by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
 
-    val result by mediaDetailViewModel.addRating.collectAsState()
+    val result by movieDetailViewModel.addRating.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
             message = result.data?.status_message ?: ""
+            Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
         }
 
         is NetworkResult.Error -> {
@@ -130,10 +131,13 @@ fun RatingBottomSheet(
 
         Button(
             onClick = {
-                mediaDetailViewModel.addRating(tvId, AddRating(selectedStars))
+                scope.launch {
+                    movieDetailViewModel.addRating(AddRating(selectedStars),movieId)
+                }
+
                 scope.launch {
                     delay(2000)
-                    mediaDetailViewModel.getRatedTV()
+                    movieDetailViewModel.getRatedMovie()
                 }
             },
             modifier = Modifier

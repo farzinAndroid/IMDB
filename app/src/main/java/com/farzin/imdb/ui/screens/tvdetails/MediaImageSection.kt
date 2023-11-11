@@ -1,17 +1,14 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,32 +19,27 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.mediaDetail.Backdrop
-import com.farzin.imdb.models.mediaDetail.ImagesTVModel
-import com.farzin.imdb.models.mediaDetail.Logo
-import com.farzin.imdb.models.mediaDetail.Poster
+import com.farzin.imdb.models.tvDetail.Backdrop
+import com.farzin.imdb.models.tvDetail.Logo
+import com.farzin.imdb.models.tvDetail.Poster
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
-import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
 fun MediaImageSection(
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
     mediaId: Int,
 ) {
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.getImagesForTV(mediaId)
+        tvDetailViewModel.getImagesForTV(mediaId)
     }
 
     val scope = rememberCoroutineScope()
@@ -58,7 +50,7 @@ fun MediaImageSection(
     var imageNumber by remember { mutableStateOf(0) }
 
 
-    val result by mediaDetailViewModel.imagesForTV.collectAsState()
+    val result by tvDetailViewModel.imagesForTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false

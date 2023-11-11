@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,10 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -32,7 +35,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun TrendingMoviesForWeekSection(
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController,
+) {
 
 
     val scope = rememberCoroutineScope()
@@ -102,8 +108,8 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
                 LazyRow(
                     modifier = Modifier
                         .fillMaxSize()
-                ){
-                    items(trendingMoviesList){
+                ) {
+                    items(trendingMoviesList) {
                         MovieItem(
                             item = it,
                             onAddButtonClicked = {
@@ -115,9 +121,12 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
                                     )
                                 )
                                 scope.launch {
-                                    delay(100)
+                                    delay(200)
                                     homeViewModel.getWatchListMovie()
                                 }
+                            },
+                            onCardClicked = {
+                                navController.navigate(Screens.MovieDetails.route + "?id=${it.id}")
                             }
                         )
                     }
@@ -125,9 +134,7 @@ fun TrendingMoviesForWeekSection(homeViewModel: HomeViewModel = hiltViewModel())
             }
 
 
-
         }
-
 
 
     }

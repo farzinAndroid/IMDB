@@ -1,13 +1,16 @@
-package com.farzin.imdb.models.mediaDetail
+package com.farzin.imdb.models.movieDetail
 
-data class CastAndCrewModel(
+data class MovieCastAndCrewModel(
     val cast: List<Cast>,
     val crew: List<Crew>,
-    val id: Int,
+    val id: Int
 )
 
 data class Cast(
     val adult: Boolean,
+    val cast_id: Int,
+    val character: String,
+    val credit_id: String,
     val gender: Int,
     val id: Int,
     val known_for_department: String,
@@ -15,31 +18,19 @@ data class Cast(
     val order: Int,
     val original_name: String,
     val popularity: Double,
-    val profile_path: String?,
-    val roles: List<Role>,
-    val total_episode_count: Int,
+    val profile_path: String?
 )
 
-data class Role(
-    val character: String,
-    val credit_id: String,
-    val episode_count: Int,
-)
 data class Crew(
     val adult: Boolean,
+    val credit_id: String,
     val department: String,
     val gender: Int,
     val id: Int,
-    val jobs: List<Job>,
+    val job: String,
     val known_for_department: String,
     val name: String,
     val original_name: String,
     val popularity: Double,
-    val profile_path: String?,
-    val total_episode_count: Int,
-)
-data class Job(
-    val credit_id: String,
-    val episode_count: Int,
-    val job: String,
+    val profile_path: String?
 )

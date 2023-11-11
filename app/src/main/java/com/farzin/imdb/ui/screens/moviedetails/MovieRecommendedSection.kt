@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.moviedetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,36 +26,35 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
+import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.MovieItem
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
-import com.farzin.imdb.viewmodel.TVDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun TVRecommendedSection(
+fun MovieRecommendedSection(
     mediaId: Int,
-    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavController,
 ) {
 
-
     LaunchedEffect(true) {
-        tvDetailViewModel.getRecommendedTVShows(mediaId)
+        movieDetailViewModel.getMovieRecommendation(mediaId)
     }
 
     val scope = rememberCoroutineScope()
     var loading by remember { mutableStateOf(false) }
-    var recommendedList by remember { mutableStateOf<List<TrendingTVShowsForDayResult>>(emptyList()) }
+    var recommendedList by remember { mutableStateOf<List<TrendingMoviesForWeekResult>>(emptyList()) }
 
 
-    val result by tvDetailViewModel.recommendedTVShows.collectAsState()
+    val result by movieDetailViewModel.movieRecommendation.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
@@ -111,7 +110,7 @@ fun TVRecommendedSection(
                                 item = item,
                                 onCardClicked = {
                                     navController.navigate(
-                                        Screens.TVDetails.route + "?id=${item.id}"
+                                        Screens.MovieDetails.route + "?id=${item.id}"
                                     )
                                 },
                                 onAddButtonClicked = {
@@ -124,7 +123,7 @@ fun TVRecommendedSection(
                                     )
                                     scope.launch {
                                         delay(200)
-                                        homeViewModel.getWatchListTV()
+                                        homeViewModel.getWatchListMovie()
                                     }
                                 }
                             )
@@ -137,4 +136,5 @@ fun TVRecommendedSection(
 
         }
     }
+
 }

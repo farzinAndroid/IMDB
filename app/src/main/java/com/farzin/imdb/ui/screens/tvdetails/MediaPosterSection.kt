@@ -91,7 +91,7 @@ fun MediaPosterSection(
                 )
             } else {
                 Text(
-                    text = "($startYear)",
+                    text = "(${DateHelper.extractYearFromDate(startYear)})",
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.Gray,
                     fontWeight = FontWeight.SemiBold

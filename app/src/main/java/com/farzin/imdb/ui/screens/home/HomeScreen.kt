@@ -76,7 +76,7 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
             item { WhatToWatchSection(navController) }
             item { PopularTVSection(navController = navController) }
             item { WatchListTVSection(navController = navController) }
-            item { TrendingMoviesForWeekSection() }
+            item { TrendingMoviesForWeekSection(navController = navController) }
             item { NowPlayingSection() }
             item { GenresMovieSection() }
             item { WatchListMovieSection() }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
+import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
 import com.farzin.imdb.ui.screens.comment.CommentScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
@@ -65,6 +66,27 @@ fun SetUpNavGraph(
                         tvId =id,
                         navController = navController
                     )
+            }
+
+
+        }
+
+        composable(
+            route = Screens.MovieDetails.route+"?id={id}",
+            arguments = listOf(
+                navArgument("id"){
+                    nullable = false
+                    defaultValue = 0
+                    type = NavType.IntType
+                }
+            )
+        ) {
+
+            it.arguments!!.getInt("id").let { id->
+                MovieDetailsScreen(
+                    movieId =id,
+                    navController = navController
+                )
             }
 
 

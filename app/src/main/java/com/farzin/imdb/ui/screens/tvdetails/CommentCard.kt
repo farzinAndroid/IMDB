@@ -24,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
-import com.farzin.imdb.models.mediaDetail.TVReviewModelResult
+import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground

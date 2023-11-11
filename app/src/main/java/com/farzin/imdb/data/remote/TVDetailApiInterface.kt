@@ -1,13 +1,13 @@
 package com.farzin.imdb.data.remote
 
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
-import com.farzin.imdb.models.mediaDetail.AddRating
-import com.farzin.imdb.models.mediaDetail.AddRatingModel
-import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
-import com.farzin.imdb.models.mediaDetail.ImagesTVModel
-import com.farzin.imdb.models.mediaDetail.RatedTVModel
-import com.farzin.imdb.models.mediaDetail.TVDetailModel
-import com.farzin.imdb.models.mediaDetail.TVReviewModel
+import com.farzin.imdb.models.tvDetail.AddRating
+import com.farzin.imdb.models.tvDetail.AddRatingModel
+import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
+import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.RatedTVModel
+import com.farzin.imdb.models.tvDetail.TVDetailModel
+import com.farzin.imdb.models.tvDetail.TVReviewModel
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,7 +16,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface MediaDetailApiInterface {
+interface TVDetailApiInterface {
 
 
     @GET("tv/{series_id}")
@@ -61,7 +61,7 @@ interface MediaDetailApiInterface {
             encoded = false
         ) seriesId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-    ):Response<CastAndCrewModel>
+    ):Response<CastAndCrewModelTV>
 
 
 

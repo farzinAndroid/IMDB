@@ -1,19 +1,19 @@
 package com.farzin.imdb.repository
 
 import com.farzin.imdb.data.remote.BaseApiResponse
-import com.farzin.imdb.data.remote.MediaDetailApiInterface
+import com.farzin.imdb.data.remote.TVDetailApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
-import com.farzin.imdb.models.mediaDetail.AddRating
-import com.farzin.imdb.models.mediaDetail.AddRatingModel
-import com.farzin.imdb.models.mediaDetail.CastAndCrewModel
-import com.farzin.imdb.models.mediaDetail.ImagesTVModel
-import com.farzin.imdb.models.mediaDetail.RatedTVModel
-import com.farzin.imdb.models.mediaDetail.TVDetailModel
-import com.farzin.imdb.models.mediaDetail.TVReviewModel
+import com.farzin.imdb.models.tvDetail.AddRating
+import com.farzin.imdb.models.tvDetail.AddRatingModel
+import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
+import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.RatedTVModel
+import com.farzin.imdb.models.tvDetail.TVDetailModel
+import com.farzin.imdb.models.tvDetail.TVReviewModel
 import javax.inject.Inject
 
-class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterface) : BaseApiResponse() {
+class TVDetailRepo @Inject constructor(private val api: TVDetailApiInterface) : BaseApiResponse() {
 
 
     suspend fun getTVDetails(seriesId:Int) : NetworkResult<TVDetailModel> =
@@ -34,7 +34,7 @@ class MediaDetailRepo @Inject constructor(private val api: MediaDetailApiInterfa
         }
 
 
-    suspend fun getTVCastAndCrew(seriesId:Int) : NetworkResult<CastAndCrewModel> =
+    suspend fun getTVCastAndCrew(seriesId:Int) : NetworkResult<CastAndCrewModelTV> =
         safeApiCall {
             api.getTVCastAndCrew(seriesId)
         }

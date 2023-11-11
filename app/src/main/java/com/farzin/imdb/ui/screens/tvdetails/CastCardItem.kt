@@ -26,7 +26,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.farzin.imdb.models.mediaDetail.Cast
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.ImageHelper
@@ -34,7 +33,11 @@ import com.farzin.imdb.utils.MySpacerWidth
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CastCardItem(cast: Cast) {
+fun CastCardItem(
+    name:String,
+    profilePath:String,
+    character:String
+) {
 
 
     MySpacerWidth(width = 10.dp)
@@ -55,11 +58,7 @@ fun CastCardItem(cast: Cast) {
         ) {
 
             Image(
-                painter = rememberAsyncImagePainter(cast.profile_path?.let {
-                    ImageHelper.appendImage(
-                        it
-                    )
-                }),
+                painter = rememberAsyncImagePainter(ImageHelper.appendImage(profilePath)),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,7 +67,7 @@ fun CastCardItem(cast: Cast) {
             )
 
             Text(
-                text = cast.name,
+                text = name,
                 style = MaterialTheme.typography.displaySmall,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.darkText,
@@ -81,7 +80,7 @@ fun CastCardItem(cast: Cast) {
             )
 
             Text(
-                text = cast.roles[0].character,
+                text = character,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Normal,
                 color = Color.Gray,

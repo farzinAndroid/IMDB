@@ -40,20 +40,20 @@ import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
-import com.farzin.imdb.viewmodel.MediaDetailViewModel
+import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
-fun MediaRatingSection(
+fun TVRatingSection(
     rating: String,
     voteCount: Int,
     mediaId: Int,
-    mediaDetailViewModel: MediaDetailViewModel = hiltViewModel(),
+    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
     onClick:()->Unit,
     userRatingCallBack:(Int)->Unit
 ) {
 
     LaunchedEffect(true) {
-        mediaDetailViewModel.getRatedTV()
+        tvDetailViewModel.getRatedTV()
     }
 
     var loading by remember { mutableStateOf(false) }
@@ -62,7 +62,7 @@ fun MediaRatingSection(
     var matchingIndex by remember { mutableStateOf(-1) }
 
 
-    val result by mediaDetailViewModel.ratedTV.collectAsState()
+    val result by tvDetailViewModel.ratedTV.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
