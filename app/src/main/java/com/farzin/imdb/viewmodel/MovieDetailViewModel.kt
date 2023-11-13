@@ -9,7 +9,9 @@ import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
+import com.farzin.imdb.models.tvDetail.ImagesTVModel
 import com.farzin.imdb.models.tvDetail.TVDetailModel
+import com.farzin.imdb.models.tvDetail.TVReviewModel
 import com.farzin.imdb.repository.MovieDetailRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,8 @@ class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo)
     val addRating = MutableStateFlow<NetworkResult<AddRatingModel>>(NetworkResult.Loading())
     val castAndCrew = MutableStateFlow<NetworkResult<MovieCastAndCrewModel>>(NetworkResult.Loading())
     val movieRecommendation = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    val movieReviews = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
+    val movieImages = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
 
 
     fun getMovieDetails(movieId:Int){
@@ -98,6 +102,22 @@ class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo)
         viewModelScope.launch {
             launch {
                 movieRecommendation.emit(repo.getMovieRecommendation(movieId))
+            }
+        }
+    }
+
+    fun getMovieReviews(movieId: Int){
+        viewModelScope.launch {
+            launch {
+                movieReviews.emit(repo.getMovieReviews(movieId))
+            }
+        }
+    }
+
+    fun getImagesForMovie(movieId: Int){
+        viewModelScope.launch {
+            launch {
+                movieImages.emit(repo.getImagesForMovie(movieId))
             }
         }
     }

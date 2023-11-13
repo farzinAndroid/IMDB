@@ -251,9 +251,9 @@ fun TVDetailsScreen(
 
                 item { TVCastSection(mediaId = tvId) }
                 item { TVRecommendedSection(mediaId = tvId, navController = navController) }
-                item { MediaImageSection(mediaId = tvId) }
+                item { TVImageSection(mediaId = tvId) }
                 item {
-                    MediaCommentSection(
+                    TVCommentSection(
                         mediaId = tvId,
                         rating = String.format("%.1f", rating),
                         userRating = userRating,

@@ -31,12 +31,11 @@ import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.models.tvDetail.ProductionCountry
 import com.farzin.imdb.models.tvDetail.SpokenLanguage
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailAddToWatchListButton
+import com.farzin.imdb.ui.screens.tvdetails.MediaDetailSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTitleSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaOverViewSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaPosterSection
-import com.farzin.imdb.ui.screens.tvdetails.TVRatingBottomSheet
-import com.farzin.imdb.ui.screens.tvdetails.TVRecommendedSection
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -71,6 +70,9 @@ fun MovieDetailsScreen(
     var runTime by remember { mutableStateOf(0) }
     var spokenLangList by remember { mutableStateOf<List<SpokenLanguage>>(emptyList()) }
     var productionCountry by remember { mutableStateOf<List<ProductionCountry>>(emptyList()) }
+    var releaseDate by remember { mutableStateOf("") }
+    var budget by remember { mutableStateOf(0) }
+    var revenue by remember { mutableStateOf(0L) }
 
 
     //get media details
@@ -93,6 +95,10 @@ fun MovieDetailsScreen(
                     runTime = result.data?.runtime ?: 0
                     spokenLangList = result.data?.spoken_languages ?: emptyList()
                     productionCountry = result.data?.production_countries ?: emptyList()
+                    releaseDate = result.data?.release_date ?: ""
+                    budget = result.data?.budget ?: 0
+                    revenue = result.data?.revenue ?: 0
+
                 }
 
                 is NetworkResult.Error -> {
@@ -241,9 +247,26 @@ fun MovieDetailsScreen(
                         }
                     )
                 }
-                item{ MovieCastSection(mediaId = movieId)}
+                item { MovieCastSection(mediaId = movieId) }
                 item { MovieRecommendedSection(mediaId = movieId, navController = navController) }
-
+                item { MovieImageSection(mediaId = movieId) }
+                item {
+                    MovieCommentSection(
+                        mediaId = movieId,
+                        rating = String.format("%.1f", rating),
+                        userRating = userRating,
+                        navController = navController
+                    )
+                }
+                item {
+                    MediaDetailSection(
+                        spokenLangList = spokenLangList,
+                        productionCountry = productionCountry,
+                        releaseDate = releaseDate,
+                        budget = budget,
+                        revenue = revenue
+                    )
+                }
 
             }
         }

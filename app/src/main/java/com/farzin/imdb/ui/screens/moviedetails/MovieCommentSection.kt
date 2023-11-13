@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.moviedetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +40,8 @@ import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.screens.tvdetails.CommentCard
+import com.farzin.imdb.ui.screens.tvdetails.MediaNoCommentCard
 import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
@@ -48,27 +50,27 @@ import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
-import com.farzin.imdb.viewmodel.TVDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 
 @Composable
-fun MediaCommentSection(
+fun MovieCommentSection(
     mediaId: Int,
-    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
-    rating: String,
-    userRating: Int,
     navController: NavController,
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
+    rating:String,
+    userRating:Int
 ) {
 
 
     LaunchedEffect(true) {
-        tvDetailViewModel.getReviewsForTV(mediaId,1)
+        movieDetailViewModel.getMovieReviews(mediaId)
     }
 
     var loading by remember { mutableStateOf(false) }
     var reviewList by remember { mutableStateOf<List<TVReviewModelResult>>(emptyList()) }
 
 
-    val result by tvDetailViewModel.reviewsTV.collectAsState()
+    val result by movieDetailViewModel.movieReviews.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
@@ -234,7 +236,7 @@ fun MediaCommentSection(
 
                 if (!reviewList.isNullOrEmpty()){
                     TextButton(
-                        onClick = { navController.navigate(Screens.Comment.route+"?id=${mediaId}") }
+                        onClick = { navController.navigate(Screens.MovieComment.route+"?id=${mediaId}") }
                     ) {
                         Text(
                             text = stringResource(R.string.view_all_comments),

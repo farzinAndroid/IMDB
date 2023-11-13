@@ -9,7 +9,8 @@ sealed class Screens(val route:String){
     object Settings: Screens(route = "settings_screen")
     object TVDetails: Screens(route = "tv_details_screen")
     object MovieDetails: Screens(route = "movie_details_screen")
-    object Comment: Screens(route = "comment_screen")
+    object TVComment: Screens(route = "tv_comment_screen")
+    object MovieComment: Screens(route = "movie_comment_screen")
 
     fun withArgs(vararg args: Any): String {
         return buildString {

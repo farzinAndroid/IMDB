@@ -8,8 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
-import com.farzin.imdb.ui.screens.comment.CommentScreen
+import com.farzin.imdb.ui.screens.tvcomment.TVCommentScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
+import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
 import com.farzin.imdb.ui.screens.search.SearchScreen
 import com.farzin.imdb.ui.screens.service.ServiceScreen
@@ -94,7 +95,7 @@ fun SetUpNavGraph(
 
 
         composable(
-            route = Screens.Comment.route+"?id={id}",
+            route = Screens.TVComment.route+"?id={id}",
             arguments = listOf(
                 navArgument("id"){
                     nullable = false
@@ -105,7 +106,29 @@ fun SetUpNavGraph(
         ) {
 
             it.arguments!!.getInt("id").let { id->
-                CommentScreen(
+                TVCommentScreen(
+                    mediaId =id,
+                    navController = navController
+                )
+            }
+
+
+        }
+
+
+        composable(
+            route = Screens.MovieComment.route+"?id={id}",
+            arguments = listOf(
+                navArgument("id"){
+                    nullable = false
+                    defaultValue = 0
+                    type = NavType.IntType
+                }
+            )
+        ) {
+
+            it.arguments!!.getInt("id").let { id->
+                MovieCommentScreen(
                     mediaId =id,
                     navController = navController
                 )

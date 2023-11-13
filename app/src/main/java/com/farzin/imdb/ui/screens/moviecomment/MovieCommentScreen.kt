@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.comment
+package com.farzin.imdb.ui.screens.moviecomment
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,19 +19,22 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.TVReviewModelResult
+import com.farzin.imdb.ui.screens.tvcomment.CommentItem
+import com.farzin.imdb.ui.screens.tvcomment.CommentResultSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
-fun CommentScreen(
+fun MovieCommentScreen(
     mediaId: Int,
     navController: NavController,
-    TVDetailViewModel: TVDetailViewModel = hiltViewModel(),
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
 ) {
 
 
     LaunchedEffect(true) {
-        TVDetailViewModel.getReviewsForTV(mediaId, 1)
+        movieDetailViewModel.getMovieReviews(mediaId)
     }
 
     var loading by remember { mutableStateOf(false) }
@@ -39,7 +42,7 @@ fun CommentScreen(
     var totalResult by remember { mutableStateOf(0) }
 
 
-    val result by TVDetailViewModel.reviewsTV.collectAsState()
+    val result by movieDetailViewModel.movieReviews.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false

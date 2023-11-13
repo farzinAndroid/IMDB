@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.moviedetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,18 +28,20 @@ import com.farzin.imdb.models.tvDetail.Backdrop
 import com.farzin.imdb.models.tvDetail.Logo
 import com.farzin.imdb.models.tvDetail.Poster
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.screens.tvdetails.ImageItem
+import com.farzin.imdb.ui.screens.tvdetails.ShowMoreItem
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
-import com.farzin.imdb.viewmodel.TVDetailViewModel
+import com.farzin.imdb.viewmodel.MovieDetailViewModel
 
 @Composable
-fun MediaImageSection(
-    tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
+fun MovieImageSection(
     mediaId: Int,
+    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
 ) {
 
     LaunchedEffect(true) {
-        tvDetailViewModel.getImagesForTV(mediaId)
+        movieDetailViewModel.getImagesForMovie(mediaId)
     }
 
     val scope = rememberCoroutineScope()
@@ -50,7 +52,7 @@ fun MediaImageSection(
     var imageNumber by remember { mutableStateOf(0) }
 
 
-    val result by tvDetailViewModel.imagesForTV.collectAsState()
+    val result by movieDetailViewModel.movieImages.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
@@ -99,7 +101,10 @@ fun MediaImageSection(
                 SectionStickyHeader(
                     headerTitle = stringResource(R.string.photos),
                     isHaveAnotherText = true,
-                    headerSubtitle = "${stringResource(R.string.see_all)} $imageNumber ${stringResource(R.string.photos)}"
+                    headerSubtitle = "${stringResource(R.string.see_all)} $imageNumber ${
+                        stringResource(
+                            R.string.photos)
+                    }",
                 )
 
 
@@ -115,7 +120,7 @@ fun MediaImageSection(
                         ImageItem(path = it.file_path)
                     }
 
-                    item{ ShowMoreItem(200.dp,150.dp)}
+                    item{ ShowMoreItem(200.dp,150.dp) }
 
                 }
 

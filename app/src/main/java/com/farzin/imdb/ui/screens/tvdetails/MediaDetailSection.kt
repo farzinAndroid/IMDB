@@ -25,16 +25,19 @@ import com.farzin.imdb.models.tvDetail.SpokenLanguage
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 
 @Composable
 fun MediaDetailSection(
-    spokenLangList: List<SpokenLanguage>,
-    productionCountry: List<ProductionCountry>,
-    networks: List<Network>,
-    originCountry: List<String>,
-    releaseDate: String,
+    spokenLangList: List<SpokenLanguage> = emptyList(),
+    productionCountry: List<ProductionCountry> = emptyList(),
+    networks: List<Network> = emptyList(),
+    originCountry: List<String> = emptyList(),
+    releaseDate: String = "",
+    budget:Int = 0,
+    revenue:Long = 0L
 ) {
 
     var spokenLang = ""
@@ -80,140 +83,215 @@ fun MediaDetailSection(
 
                 SectionStickyHeader(stringResource(R.string.details))
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.Start
-
-                ) {
-                    Text(
-                        text = stringResource(R.string.release_date),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.darkText
-                    )
-
-                    Text(
-                        text = releaseDate,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Thin,
-                        color = Color.Gray
-                    )
-                }
-
-                MyDividerHorizontal()
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.Start
-
-                ) {
-                    Text(
-                        text = stringResource(R.string.spoken_lang),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.darkText
-                    )
-
-                    Text(
-                        text = spokenLang,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Thin,
-                        color = Color.Gray
-                    )
-                }
-
-                MyDividerHorizontal()
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.Start
-
-                ) {
-                    Text(
-                        text = stringResource(R.string.production_country),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.darkText
-                    )
-
-                    Text(
-                        text = productionCountryText,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Thin,
-                        color = Color.Gray
-                    )
-                }
-
-                MyDividerHorizontal()
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.Start
-
-                ) {
-                    Text(
-                        text = stringResource(R.string.origin_country),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.darkText
-                    )
-
-                    Text(
-                        text = originCountryText,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Thin,
-                        color = Color.Gray
-                    )
-                }
-
-
-                MyDividerHorizontal()
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp),
-                    horizontalAlignment = Alignment.Start
-
-                ) {
-                    Text(
-                        text = stringResource(R.string.networks),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.darkText
-                    )
-
-                    LazyRow(
+                if (releaseDate.isNotEmpty()) {
+                    Column(
                         modifier = Modifier
-                            .padding(top = 4.dp)
                             .fillMaxWidth()
-                    ){
-                        items(networks){
-                            MediaDetailGenreItem(it.name)
-                        }
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.release_date),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+                        Text(
+                            text = releaseDate,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
                     }
 
+                    MyDividerHorizontal()
                 }
 
 
-                MySpacerHeight(height = 8.dp)
+                if (spokenLangList.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.spoken_lang),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+                        Text(
+                            text = spokenLang,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
+                    }
+
+                    MyDividerHorizontal()
+                }
+
+
+                if (productionCountry.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.production_country),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+                        Text(
+                            text = productionCountryText,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
+                    }
+
+                    MyDividerHorizontal()
+                }
+
+
+                if (originCountry.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.origin_country),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+                        Text(
+                            text = originCountryText,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
+                    }
+                    MyDividerHorizontal()
+                }
+
+
+                if (networks.isNotEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.networks),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+                        LazyRow(
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .fillMaxWidth()
+                        ) {
+                            items(networks) {
+                                MediaDetailGenreItem(it.name)
+                            }
+                        }
+
+                    }
+
+
+                    MySpacerHeight(height = 8.dp)
+                }
+
+                if (budget != 0){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.budget),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+
+                        Text(
+                            text = DigitHelper.digitBySeparator(budget.toString()),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
+
+                    }
+
+
+                    MyDividerHorizontal()
+                }
+
+                if (revenue != 0L){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp),
+                        horizontalAlignment = Alignment.Start
+
+                    ) {
+                        Text(
+                            text = stringResource(R.string.revenue),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.darkText
+                        )
+
+
+                        Text(
+                            text = DigitHelper.digitBySeparator(revenue.toString()),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Thin,
+                            color = Color.Gray
+                        )
+
+                    }
+
+
+                    MySpacerHeight(height = 8.dp)
+                }
+
 
             }
 
