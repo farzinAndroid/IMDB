@@ -1,6 +1,5 @@
 package com.farzin.imdb.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -109,13 +108,21 @@ fun TrendingMoviesForWeekSection(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    items(trendingMoviesList) {
+                    items(trendingMoviesList) { item->
                         MovieItem(
-                            item = it,
+                            posterPath = item.poster_path ?: "",
+                            voteAverage = item.vote_average,
+                            name = item.title,
+                            releaseDate = item.release_date,
+                            onCardClicked = {
+                                navController.navigate(
+                                    Screens.MovieDetails.route + "?id=${item.id}"
+                                )
+                            },
                             onAddButtonClicked = {
                                 homeViewModel.addToWatchList(
                                     AddToWatchListRequest(
-                                        media_id = it.id,
+                                        media_id = item.id,
                                         media_type = "movie",
                                         watchlist = true
                                     )
@@ -124,9 +131,6 @@ fun TrendingMoviesForWeekSection(
                                     delay(200)
                                     homeViewModel.getWatchListMovie()
                                 }
-                            },
-                            onCardClicked = {
-                                navController.navigate(Screens.MovieDetails.route + "?id=${it.id}")
                             }
                         )
                     }

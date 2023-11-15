@@ -127,7 +127,15 @@ fun WatchListTVSection(
 
 
                             MovieItem(
-                                item = item,
+                                posterPath = item.poster_path ?: "",
+                                voteAverage = item.vote_average,
+                                name = item.name,
+                                releaseDate = item.first_air_date ?: "",
+                                onCardClicked = {
+                                    navController.navigate(
+                                        Screens.TVDetails.route + "?id=${item.id}"
+                                    )
+                                },
                                 onAddButtonClicked = {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
@@ -141,12 +149,7 @@ fun WatchListTVSection(
                                         homeViewModel.getWatchListTV()
                                     }
                                 },
-                                onCardClicked = {
-                                    navController.navigate(
-                                        Screens.TVDetails.route+"?id=${item.id}"
-                                    )
-                                },
-                                isFromTVWatchlist = true
+                                isFromWatchlist = true
                             )
                         }
                     }

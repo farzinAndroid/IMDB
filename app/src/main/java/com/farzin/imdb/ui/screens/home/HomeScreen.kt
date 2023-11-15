@@ -63,7 +63,6 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
     ) {
 
 
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -77,9 +76,9 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
             item { PopularTVSection(navController = navController) }
             item { WatchListTVSection(navController = navController) }
             item { TrendingMoviesForWeekSection(navController = navController) }
-            item { NowPlayingSection() }
-            item { GenresMovieSection() }
-            item { WatchListMovieSection() }
+            item { NowPlayingSection(navController = navController) }
+            item { GenresMovieSection(navController = navController) }
+            item { WatchListMovieSection(navController = navController) }
 
 
         }

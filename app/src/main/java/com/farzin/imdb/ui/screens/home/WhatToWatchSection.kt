@@ -34,7 +34,6 @@ import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.net.URLEncoder
 
 @Composable
 fun WhatToWatchSection(
@@ -143,7 +142,15 @@ fun WhatToWatchSection(
                         ) { item ->
 
                             MovieItem(
-                                item = item,
+                                posterPath = item.poster_path ?: "",
+                                voteAverage = item.vote_average,
+                                name = item.name,
+                                releaseDate = item.first_air_date ?: "",
+                                onCardClicked = {
+                                    navController.navigate(
+                                        Screens.TVDetails.route + "?id=${item.id}"
+                                    )
+                                },
                                 onAddButtonClicked = {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
@@ -156,12 +163,6 @@ fun WhatToWatchSection(
                                         delay(200)
                                         homeViewModel.getWatchListTV()
                                     }
-                                },
-                                onCardClicked = {
-
-                                    navController.navigate(
-                                        Screens.TVDetails.route + "?id=${item.id}"
-                                    )
                                 }
                             )
                         }

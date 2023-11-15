@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.NowPlayingResult
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -33,7 +35,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun NowPlayingSection(
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navController:NavController
 ) {
 
 
@@ -104,8 +107,16 @@ fun NowPlayingSection(
 
                     items(nowPlayingMoviesList){item->
                         MovieItem(
-                            item = item,
-                            onAddButtonClicked ={
+                            posterPath = item.poster_path ?: "",
+                            voteAverage = item.vote_average,
+                            name = item.title,
+                            releaseDate = item.release_date,
+                            onCardClicked = {
+                                navController.navigate(
+                                    Screens.MovieDetails.route + "?id=${item.id}"
+                                )
+                            },
+                            onAddButtonClicked = {
                                 homeViewModel.addToWatchList(
                                     AddToWatchListRequest(
                                         media_id = item.id,
@@ -114,7 +125,7 @@ fun NowPlayingSection(
                                     )
                                 )
                                 scope.launch {
-                                    delay(100)
+                                    delay(200)
                                     homeViewModel.getWatchListMovie()
                                 }
                             }

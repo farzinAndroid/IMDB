@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
@@ -36,6 +38,7 @@ import kotlinx.coroutines.launch
 fun WatchListMovieSection(
     homeViewModel: HomeViewModel = hiltViewModel(),
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
     val scope = rememberCoroutineScope()
@@ -116,15 +119,23 @@ fun WatchListMovieSection(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(watchListMovieList) {
+                        items(watchListMovieList) {item->
                             MovieItem(
-                                item = it,
+                                posterPath = item.poster_path ?: "",
+                                voteAverage = item.vote_average,
+                                name = item.title,
+                                releaseDate = item.release_date,
+                                onCardClicked = {
+                                    navController.navigate(
+                                        Screens.MovieDetails.route + "?id=${item.id}"
+                                    )
+                                },
                                 onAddButtonClicked = {
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
-                                            media_id = it.id,
+                                            media_id = item.id,
                                             media_type = "movie",
-                                            watchlist = false,
+                                            watchlist = false
                                         )
                                     )
                                     scope.launch {
@@ -132,7 +143,7 @@ fun WatchListMovieSection(
                                         homeViewModel.getWatchListMovie()
                                     }
                                 },
-                                isFromMovieWatchlist = true
+                                isFromWatchlist = true
                             )
                         }
                     }

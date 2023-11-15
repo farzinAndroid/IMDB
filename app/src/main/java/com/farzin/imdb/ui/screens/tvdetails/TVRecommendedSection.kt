@@ -108,7 +108,10 @@ fun TVRecommendedSection(
                     ) {
                         items(recommendedList) { item ->
                             MovieItem(
-                                item = item,
+                                posterPath = item.poster_path,
+                                voteAverage = item.vote_average,
+                                name = item.name,
+                                releaseDate = item.first_air_date,
                                 onCardClicked = {
                                     navController.navigate(
                                         Screens.TVDetails.route + "?id=${item.id}"
@@ -118,7 +121,7 @@ fun TVRecommendedSection(
                                     homeViewModel.addToWatchList(
                                         AddToWatchListRequest(
                                             media_id = item.id,
-                                            media_type = item.media_type,
+                                            media_type = "tv",
                                             watchlist = true
                                         )
                                     )

@@ -30,13 +30,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.HomeGenre
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
-import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -44,7 +46,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun GenresMovieSection(
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController,
+) {
 
 
     var selectedTabIndex by remember { mutableStateOf(0) }
@@ -192,7 +197,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -202,7 +215,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -225,7 +238,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -235,7 +256,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -257,7 +278,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -267,7 +296,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -290,7 +319,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -300,7 +337,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -323,7 +360,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -333,7 +378,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -356,7 +401,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -366,7 +419,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }
@@ -389,7 +442,15 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                         ) {
                             items(moviesBasedOnGenreList) { item ->
                                 MovieItem(
-                                    item = item,
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
+                                        )
+                                    },
                                     onAddButtonClicked = {
                                         homeViewModel.addToWatchList(
                                             AddToWatchListRequest(
@@ -399,7 +460,7 @@ fun GenresMovieSection(homeViewModel: HomeViewModel = hiltViewModel()) {
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListMovie()
                                         }
                                     }

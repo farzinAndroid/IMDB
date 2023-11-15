@@ -32,7 +32,7 @@ fun Profile(
     ){
         item { ProfileTopBar {navController.navigate(Screens.Settings.route)} }
         item { WatchListTVSection(navController=navController) }
-        item { WatchListMovieSection() }
+        item { WatchListMovieSection(navController=navController) }
     }
 
 
