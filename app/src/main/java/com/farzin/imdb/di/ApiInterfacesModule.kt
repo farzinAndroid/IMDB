@@ -2,8 +2,9 @@ package com.farzin.imdb.di
 
 import com.farzin.imdb.data.remote.HomeApiInterface
 import com.farzin.imdb.data.remote.MovieDetailApiInterface
-import com.farzin.imdb.data.remote.TVDetailApiInterface
 import com.farzin.imdb.data.remote.ProfileApiInterface
+import com.farzin.imdb.data.remote.SearchApiInterface
+import com.farzin.imdb.data.remote.TVDetailApiInterface
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,5 +38,12 @@ object ApiInterfacesModule {
     @Singleton
     fun provideMovieDetailApiInterface(retrofit: Retrofit) : MovieDetailApiInterface =
         retrofit.create(MovieDetailApiInterface::class.java)
+
+
+
+    @Provides
+    @Singleton
+    fun provideSearchApiInterface(retrofit: Retrofit) : SearchApiInterface =
+        retrofit.create(SearchApiInterface::class.java)
 
 }

@@ -151,7 +151,7 @@ fun TVCastSection(
                 ) {
                     items(castList) { cast ->
                         name = cast.name
-                        character = cast.roles.joinToString { "${it.character}, " }
+                        character = cast.roles.filter { it.character.isNotBlank() }.joinToString { it.character }
                         profilePath = cast.profile_path.toString()
                         CastCardItem(
                             profilePath = profilePath,

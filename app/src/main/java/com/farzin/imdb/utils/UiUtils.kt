@@ -3,6 +3,7 @@ package com.farzin.imdb.utils
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -26,8 +27,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -84,24 +85,24 @@ fun InitialRequestToken(
 }
 
 @Composable
-fun MyDividerHorizontal() {
+fun MyDividerHorizontal(modifier: Modifier = Modifier) {
 
     Divider(
         color = Color.Gray,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(1.dp)
     )
 
 }
 @Composable
-fun MyDividerVertical() {
+fun MyDividerVertical(modifier: Modifier = Modifier) {
 
     Divider(
         color = Color.Gray,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(1.dp)
+        modifier = modifier
+            .fillMaxHeight()
+            .width(1.dp)
     )
 
 }

@@ -126,7 +126,7 @@ fun TrendingTVShowsForDaySection(
                         .fillMaxSize()
                 ) { index ->
                     backdropPath = trendingTVShowsForDay[index].backdrop_path
-                    posterPath = trendingTVShowsForDay[index].poster_path
+                    posterPath = trendingTVShowsForDay[index].poster_path ?: ""
                     title = trendingTVShowsForDay[index].name
                     val voteNumber = trendingTVShowsForDay[index].vote_average
                     voteAvg = String.format("%.1f", voteNumber)
