@@ -7,14 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
-import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
-import com.farzin.imdb.ui.screens.tvcomment.TVCommentScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
+import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
 import com.farzin.imdb.ui.screens.search.SearchScreen
 import com.farzin.imdb.ui.screens.service.ServiceScreen
 import com.farzin.imdb.ui.screens.settings.SettingsScreen
+import com.farzin.imdb.ui.screens.tvcomment.TVCommentScreen
 import com.farzin.imdb.ui.screens.tvdetails.TVDetailsScreen
 
 
@@ -34,7 +34,7 @@ fun SetUpNavGraph(
         }
 
         composable(Screens.Search.route) {
-            SearchScreen()
+            SearchScreen(navController)
         }
 
 

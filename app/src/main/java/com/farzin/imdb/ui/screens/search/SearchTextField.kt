@@ -63,7 +63,7 @@ fun SearchTextField(
             colors = TextFieldDefaults.textFieldColors(
                 cursorColor = MaterialTheme.colorScheme.imdbYellow,
                 focusedIndicatorColor = MaterialTheme.colorScheme.imdbYellow, // Remove the line when focused
-                unfocusedIndicatorColor = Color.Transparent, // Remove the line when not focused
+                unfocusedIndicatorColor = Color.Gray, // Remove the line when not focused
                 containerColor = Color.Transparent, // Make the background transparent
                 textColor = MaterialTheme.colorScheme.darkText
             ),

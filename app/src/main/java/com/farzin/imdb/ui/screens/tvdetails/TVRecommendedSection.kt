@@ -108,7 +108,7 @@ fun TVRecommendedSection(
                     ) {
                         items(recommendedList) { item ->
                             MovieItem(
-                                posterPath = item.poster_path,
+                                posterPath = item.poster_path ?: "",
                                 voteAverage = item.vote_average,
                                 name = item.name,
                                 releaseDate = item.first_air_date,

@@ -22,13 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController) {
 
 
     val tabTitles = listOf(
@@ -87,15 +88,23 @@ fun SearchScreen() {
 
         when (selectedTabIndex) {
             0 -> {
-                SearchTVSection(searchValue = searchTVValue, onSearchValueChanged = { newValue ->
-                    searchTVValue = newValue
-                })
+                SearchTVSection(
+                    searchValue = searchTVValue,
+                    onSearchValueChanged = { newValue ->
+                        searchTVValue = newValue
+                    },
+                    navController = navController
+                )
             }
 
             1 -> {
-                SearchMovieSection(searchValue = searchMovieValue, onSearchValueChanged = { newValue ->
-                    searchMovieValue = newValue
-                })
+                SearchMovieSection(
+                    searchValue = searchMovieValue,
+                    onSearchValueChanged = { newValue ->
+                        searchMovieValue = newValue
+                    },
+                    navController = navController
+                )
             }
         }
 

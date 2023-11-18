@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,8 +20,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.ui.theme.Cyan
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
@@ -76,19 +75,15 @@ fun SectionStickyHeader(
 
             if (isHaveAnotherText) {
 
-                TextButton(
-                    onClick = { headerOnClick() },
+                Text(
+                    text = headerSubtitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Thin,
+                    color = MaterialTheme.colorScheme.Cyan,
                     modifier = Modifier
                         .padding(end = 8.dp)
                         .clickable { headerOnClick() }
-                ) {
-                    Text(
-                        text = headerSubtitle,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.Thin,
-                        color = MaterialTheme.colorScheme.Cyan,
-                    )
-                }
+                )
 
             }
 
