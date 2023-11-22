@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
+import com.farzin.imdb.ui.screens.episode_guide.EpisodeGuideScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
@@ -129,6 +130,27 @@ fun SetUpNavGraph(
 
             it.arguments!!.getInt("id").let { id->
                 MovieCommentScreen(
+                    mediaId =id,
+                    navController = navController
+                )
+            }
+
+
+        }
+
+        composable(
+            route = Screens.EpisodeGuide.route+"?id={id}",
+            arguments = listOf(
+                navArgument("id"){
+                    nullable = false
+                    defaultValue = 0
+                    type = NavType.IntType
+                }
+            )
+        ) {
+
+            it.arguments!!.getInt("id").let { id->
+                EpisodeGuideScreen(
                     mediaId =id,
                     navController = navController
                 )

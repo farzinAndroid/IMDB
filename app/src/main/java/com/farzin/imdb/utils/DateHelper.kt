@@ -24,12 +24,20 @@ object DateHelper {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun formatDate(dateString: String): String? {
+    fun formatDateISO8601(dateString: String): String? {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
         val outputFormat = SimpleDateFormat("MMMM dd, yyyy")
 
         val parsedDate = inputFormat.parse(dateString)
         return parsedDate?.let { outputFormat.format(it) }
+    }
+
+   
+    fun formatSimpleDate(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+        val date = inputFormat.parse(dateString)
+        return outputFormat.format(date)
     }
 
 

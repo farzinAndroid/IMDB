@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -33,6 +34,7 @@ fun MediaDetailTitleSection(
     runTimeList: List<Int> = emptyList(),
     runTime: Int = 0,
     numberOfEpisode: Int = 0,
+    onEpisodeGuideClicked:()->Unit = {}
 ) {
 
 
@@ -146,7 +148,8 @@ fun MediaDetailTitleSection(
                 Text(
                     text = stringResource(R.string.episode_guide),
                     modifier = Modifier
-                        .wrapContentWidth(),
+                        .wrapContentWidth()
+                        .clickable { onEpisodeGuideClicked() },
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.Cyan,
                     fontWeight = FontWeight.SemiBold

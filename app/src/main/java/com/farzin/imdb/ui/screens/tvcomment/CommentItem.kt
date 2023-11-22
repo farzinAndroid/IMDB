@@ -106,7 +106,7 @@ fun CommentItem(comment: TVReviewModelResult) {
         }
 
         Text(
-            text = "${DateHelper.formatDate(comment.created_at)}",
+            text = "${DateHelper.formatDateISO8601(comment.created_at)}",
             style = MaterialTheme.typography.titleSmall,
             color = Color.Gray,
             modifier = Modifier.padding(horizontal = 8.dp)

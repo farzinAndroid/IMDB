@@ -31,6 +31,7 @@ import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.models.tvDetail.Network
 import com.farzin.imdb.models.tvDetail.ProductionCountry
 import com.farzin.imdb.models.tvDetail.SpokenLanguage
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -175,7 +176,10 @@ fun TVDetailsScreen(
                         status = status,
                         runTimeList = runTime,
                         numberOfEpisode = numberOfEpisode,
-                        isMovie = false
+                        isMovie = false,
+                        onEpisodeGuideClicked = {
+                            navController.navigate(Screens.EpisodeGuide.route+"?id=$tvId")
+                        }
                     )
                 }
                 item {
