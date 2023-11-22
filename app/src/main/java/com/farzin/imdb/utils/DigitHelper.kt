@@ -1,7 +1,5 @@
 package com.farzin.imdb.utils
 
-import android.icu.text.DecimalFormat
-
 object DigitHelper {
 
     fun digitByLang(englishStr: String): String {
@@ -26,14 +24,15 @@ object DigitHelper {
         return result
     }
 
-    fun digitBySeparator(price: String): String {
-        val priceFormat = DecimalFormat("###,###")
-        return priceFormat.format(Integer.valueOf(price))
+
+    fun digitBySeparator(number: String): String {
+        val regex = Regex("\\d{3}")
+        val groups = regex.findAll(number).map { it.value }.joinToString(",")
+        return groups
     }
 
     fun digitByLangAndSeparator(price: String): String {
-        val priceWithoutCommas = price.replace(",", "")
-        val persianDigit = digitByLang(priceWithoutCommas)
+        val persianDigit = digitByLang(price)
         return digitBySeparator(persianDigit)
     }
 
