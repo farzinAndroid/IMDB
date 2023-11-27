@@ -74,6 +74,7 @@ interface HomeApiInterface {
             value = "account_id",
             encoded = true
         ) accountId: Int = Constants.ACC_ID.toInt(),
+        @Query("sort_by") sortBy: String = Constants.CREATED_AT_DESC,
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Query("language") language: String = Constants.USER_LANG,
@@ -86,6 +87,7 @@ interface HomeApiInterface {
             value = "account_id",
             encoded = true
         ) accountId: Int = Constants.ACC_ID.toInt(),
+        @Query("sort_by") sortBy: String = Constants.CREATED_AT_DESC,
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Query("language") language: String = Constants.USER_LANG,

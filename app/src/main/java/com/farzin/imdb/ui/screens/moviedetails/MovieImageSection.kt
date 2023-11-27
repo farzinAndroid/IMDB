@@ -120,7 +120,7 @@ fun MovieImageSection(
                         ImageItem(path = it.file_path)
                     }
 
-                    item{ ShowMoreItem(200.dp,150.dp) }
+                    item{ ShowMoreItem(200.dp,150.dp){} }
 
                 }
 

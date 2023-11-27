@@ -72,7 +72,7 @@ private fun SwipeRefreshSection(homeViewModel: HomeViewModel, navController: Nav
         ) {
 
             item { TrendingTVShowsForDaySection(navController = navController) }
-            item { WhatToWatchSection(navController) }
+            item { WhatToWatchSection(navController=navController) }
             item { PopularTVSection(navController = navController) }
             item { WatchListTVSection(navController = navController) }
             item { TrendingMoviesForWeekSection(navController = navController) }

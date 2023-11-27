@@ -23,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
-import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
@@ -33,6 +32,7 @@ import com.farzin.imdb.utils.MySpacerWidth
 fun ShowMoreItem(
     width:Dp = 150.dp,
     height:Dp = 350.dp,
+    onClick:()->Unit
 ) {
 
 
@@ -42,7 +42,7 @@ fun ShowMoreItem(
         modifier = Modifier
             .width(width)
             .height(height)
-            .clickable { },
+            .clickable { onClick() },
         shape = Shapes().small,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
         elevation = CardDefaults.cardElevation(4.dp)

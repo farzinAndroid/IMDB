@@ -253,7 +253,7 @@ fun TVDetailsScreen(
                     )
                 }
 
-                item { TVCastSection(mediaId = tvId) }
+                item { TVCastSection(mediaId = tvId, navController = navController) }
                 item { TVRecommendedSection(mediaId = tvId, navController = navController) }
                 item { TVImageSection(mediaId = tvId) }
                 item {

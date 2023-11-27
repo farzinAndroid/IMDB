@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +35,7 @@ import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WatchListMovieSection(
     homeViewModel: HomeViewModel = hiltViewModel(),
@@ -119,7 +121,10 @@ fun WatchListMovieSection(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(watchListMovieList) {item->
+                        items(
+                            watchListMovieList,
+                            key = {it.id}
+                        ) {item->
                             MovieItem(
                                 posterPath = item.poster_path ?: "",
                                 voteAverage = item.vote_average,
@@ -143,7 +148,8 @@ fun WatchListMovieSection(
                                         homeViewModel.getWatchListMovie()
                                     }
                                 },
-                                isFromWatchlist = true
+                                isFromWatchlist = true,
+                                modifier = Modifier.animateItemPlacement()
                             )
                         }
                     }

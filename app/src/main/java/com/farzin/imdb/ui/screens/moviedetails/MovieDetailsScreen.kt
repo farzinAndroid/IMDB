@@ -247,7 +247,7 @@ fun MovieDetailsScreen(
                         }
                     )
                 }
-                item { MovieCastSection(mediaId = movieId) }
+                item { MovieCastSection(mediaId = movieId, navController = navController) }
                 item { MovieRecommendedSection(mediaId = movieId, navController = navController) }
                 item { MovieImageSection(mediaId = movieId) }
                 item {

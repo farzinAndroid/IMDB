@@ -3,6 +3,7 @@ package com.farzin.imdb.ui.screens.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,12 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -43,6 +46,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
@@ -212,6 +217,21 @@ fun TrendingTVShowsForDaySection(
                     }
                 }
 
+            }
+
+
+            val isDraggedState by pagerState.interactionSource.collectIsDraggedAsState()
+            LaunchedEffect(isDraggedState) {
+                snapshotFlow { isDraggedState }
+                    .filter { !isDraggedState }
+                    .collectLatest { isDragged ->
+                        while (true) {
+                            delay(6000)
+                            var newPosition = pagerState.currentPage + 1
+                            if (newPosition > trendingTVShowsForDay.size - 1) newPosition = 0
+                            pagerState.animateScrollToPage(newPosition)
+                        }
+                    }
             }
 
 

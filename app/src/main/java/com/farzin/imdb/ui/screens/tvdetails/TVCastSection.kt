@@ -26,9 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.Cast
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
@@ -40,6 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun TVCastSection(
     tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
     mediaId: Int,
+    navController: NavController
 ) {
 
     LaunchedEffect(true) {
@@ -106,7 +109,7 @@ fun TVCastSection(
     when (result) {
         is NetworkResult.Success -> {
             loading = false
-            castList = result.data?.cast?.take(20) ?: emptyList()
+            castList = result.data?.cast?.take(10) ?: emptyList()
         }
 
         is NetworkResult.Error -> {
@@ -161,7 +164,9 @@ fun TVCastSection(
                     }
 
                     item {
-                        ShowMoreItem()
+                        ShowMoreItem(){
+                            navController.navigate(Screens.AllCastTV.route + "?id=${mediaId}")
+                        }
                     }
 
                 }

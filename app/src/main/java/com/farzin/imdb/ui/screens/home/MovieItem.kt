@@ -47,14 +47,15 @@ fun MovieItem(
     posterPath:String,
     voteAverage:Double,
     name:String,
-    releaseDate:String
+    releaseDate:String,
+    modifier: Modifier = Modifier
 ) {
 
 
     MySpacerWidth(width = 10.dp)
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .width(150.dp)
             .height(370.dp)
             .clickable { onCardClicked() },

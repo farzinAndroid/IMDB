@@ -18,20 +18,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel() {
+class HomeViewModel @Inject constructor(private val repo: HomeRepo) : ViewModel() {
 
-    var trendingTVShowsForDay = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
+    var trendingTVShowsForDay =
+        MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
     var popularTV = MutableStateFlow<NetworkResult<PopularTVModel>>(NetworkResult.Loading())
-    var trendingMoviesForWeek = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
-    var tVBasedOnNetwork = MutableStateFlow<NetworkResult<TVBasedOnNetwork>>(NetworkResult.Loading())
+    var trendingMoviesForWeek =
+        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    var tVBasedOnNetwork =
+        MutableStateFlow<NetworkResult<TVBasedOnNetwork>>(NetworkResult.Loading())
     var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
-    var addToWatchList = MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
+    var addToWatchList =
+        MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
     var watchListTV = MutableStateFlow<NetworkResult<WatchListTV>>(NetworkResult.Loading())
-    var watchListMovie = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
-    var movieBasedOnGenre = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    var watchListMovie =
+        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    var movieBasedOnGenre =
+        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
 
 
-    fun getAllApiCallsForHome(){
+    fun getAllApiCallsForHome() {
 
         viewModelScope.launch {
 
@@ -55,60 +61,50 @@ class HomeViewModel @Inject constructor(private val repo:HomeRepo) : ViewModel()
             }
 
 
-
-
-
-
-
-
-
         }
 
     }
 
 
-    fun getWatchListTV(){
-        viewModelScope.launch {
-            launch {
-                watchListTV.emit(repo.getWatchListTV())
-            }
-        }
-    }
-
-    fun getWatchListMovie(){
-        viewModelScope.launch {
-            launch {
-                watchListMovie.emit(repo.getWatchListMovie())
-            }
-        }
-    }
-    fun getTvBasedOnNetwork(networkId:Int){
+    fun getWatchListTV() {
         viewModelScope.launch {
 
-            launch {
-                tVBasedOnNetwork.emit(repo.getTVBasedOnNetwork(networkId))
-            }
+            watchListTV.emit(repo.getWatchListTV())
 
         }
     }
 
-    fun getMoviesBasedOnGenre(genre:String){
+    fun getWatchListMovie() {
         viewModelScope.launch {
-            launch {
-                movieBasedOnGenre.emit(repo.getMoviesBasedOnGenre(genre))
-            }
+
+            watchListMovie.emit(repo.getWatchListMovie())
+
+        }
+    }
+
+    fun getTvBasedOnNetwork(networkId: Int) {
+        viewModelScope.launch {
+
+
+            tVBasedOnNetwork.emit(repo.getTVBasedOnNetwork(networkId))
+
+
+        }
+    }
+
+    fun getMoviesBasedOnGenre(genre: String) {
+        viewModelScope.launch {
+
+            movieBasedOnGenre.emit(repo.getMoviesBasedOnGenre(genre))
+
 
         }
     }
 
 
-    fun addToWatchList(watchListRequest: AddToWatchListRequest){
+    fun addToWatchList(watchListRequest: AddToWatchListRequest) {
         viewModelScope.launch {
-
-            launch {
-                addToWatchList.emit(repo.addToWatchList(watchListRequest))
-            }
-
+            addToWatchList.emit(repo.addToWatchList(watchListRequest))
         }
     }
 
