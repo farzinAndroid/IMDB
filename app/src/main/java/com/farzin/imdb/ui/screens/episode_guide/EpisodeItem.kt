@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +29,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
@@ -103,7 +103,7 @@ fun EpisodeItem(
                     Text(
                         text = String.format("%.1f", vote),
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.strongGray,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(start = 4.dp)
                     )
@@ -116,7 +116,7 @@ fun EpisodeItem(
                 Text(
                     text = DateHelper.formatSimpleDate(airDate),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.padding(start = 4.dp)
                 )
@@ -127,7 +127,7 @@ fun EpisodeItem(
             Text(
                 text = overView,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier
                     .padding(start = 4.dp)

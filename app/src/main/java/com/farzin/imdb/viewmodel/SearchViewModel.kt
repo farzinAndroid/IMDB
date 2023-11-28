@@ -12,25 +12,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val repo:SearchRepo) : ViewModel() {
+class SearchViewModel @Inject constructor(private val repo: SearchRepo) : ViewModel() {
 
-    val searchedMovies = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    val searchedMovies =
+        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     val searchedTV = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
 
-    fun searchMovie(query:String) {
+    fun searchMovie(query: String) {
         viewModelScope.launch {
-            launch {
-                searchedMovies.emit(repo.searchMovie(query))
-            }
+            searchedMovies.emit(repo.searchMovie(query))
         }
     }
 
 
-    fun searchTV(query:String) {
+    fun searchTV(query: String) {
         viewModelScope.launch {
-            launch {
-                searchedTV.emit(repo.searchTV(query))
-            }
+            searchedTV.emit(repo.searchTV(query))
         }
     }
 

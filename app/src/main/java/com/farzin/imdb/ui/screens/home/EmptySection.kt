@@ -12,12 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.IMDBButton
 
 @Composable
@@ -44,7 +44,7 @@ fun EmptySection(
         Text(
             text = subtitle,
             style = MaterialTheme.typography.titleLarge,
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.strongGray,
             fontWeight = FontWeight.Normal,
             modifier = Modifier
                 .padding(top = 10.dp)

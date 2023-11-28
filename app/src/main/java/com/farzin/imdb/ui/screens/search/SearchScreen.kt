@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,6 +26,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.ui.theme.strongGray
 
 @Composable
 fun SearchScreen(navController: NavController) {
@@ -68,7 +68,7 @@ fun SearchScreen(navController: NavController) {
                         selectedTabIndex = index
                     },
                     selectedContentColor = MaterialTheme.colorScheme.imdbYellow,
-                    unselectedContentColor = Color.Gray,
+                    unselectedContentColor = MaterialTheme.colorScheme.strongGray,
                     text = {
                         Row {
                             Text(

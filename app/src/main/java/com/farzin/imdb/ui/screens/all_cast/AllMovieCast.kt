@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.movieDetail.Cast
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
 
@@ -78,7 +79,9 @@ fun AllMovieCast(
                 name = name,
                 profilePath = profilePath,
                 character = character,
-                onCardClicked = {}
+                onCardClicked = {
+                    navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
+                }
             )
         }
     }

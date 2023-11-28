@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
@@ -90,7 +90,7 @@ fun SearchMediaItem(
             Text(
                 text = DateHelper.extractYearFromDate(startYear),
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.Normal,
             )
 
@@ -98,7 +98,7 @@ fun SearchMediaItem(
                 Text(
                     text = stringResource(R.string.tv),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.Normal,
                 )
 
@@ -106,7 +106,7 @@ fun SearchMediaItem(
                 Text(
                     text = stringResource(R.string.movie),
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.Normal,
                 )
             }

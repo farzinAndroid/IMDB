@@ -94,6 +94,15 @@
     <string name="revenue">درآمد</string>
     <string name="tv">سریال</string>
     <string name="movie">فیلم</string>
+    <string name="born_in">تاریخ تولد : </string>
+    <string name="died_in">تاریخ مرگ : </string>
+    <string name="male">مرد</string>
+    <string name="femaile">زن</string>
+    <string name="not_specified">تعریف نشده</string>
+    <string name="gender">جنسیت</string>
+    <string name="known_for">حرفه</string>
+    <string name="place_of_birth">محل تولد</string>
+    <string name="alternate_names">نام های دیگر</string>
 
 
 

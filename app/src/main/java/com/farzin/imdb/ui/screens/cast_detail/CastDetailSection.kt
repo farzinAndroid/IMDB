@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvdetails
+package com.farzin.imdb.ui.screens.cast_detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,42 +18,36 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
-import com.farzin.imdb.models.tvDetail.Network
-import com.farzin.imdb.models.tvDetail.ProductionCountry
-import com.farzin.imdb.models.tvDetail.SpokenLanguage
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
+import com.farzin.imdb.ui.screens.tvdetails.MediaDetailGenreItem
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
-import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 
 @Composable
-fun MediaDetailSection(
-    spokenLangList: List<SpokenLanguage> = emptyList(),
-    productionCountry: List<ProductionCountry> = emptyList(),
-    networks: List<Network> = emptyList(),
-    originCountry: List<String> = emptyList(),
-    releaseDate: String = "",
-    budget:Int = 0,
-    revenue:Long = 0L
+fun CastDetailSection(
+    gender: Int = 0,
+    placeOfBirth: String = "",
+    knownForDepartment: String = "",
+    alternateNames: List<String> = emptyList(),
 ) {
 
-    var spokenLang = ""
-    spokenLangList.forEach {
-        spokenLang += "${it.english_name}, "
+    val genderText = when (gender) {
+        1 -> {
+            stringResource(R.string.femaile)
+        }
+
+        2 -> {
+            stringResource(R.string.male)
+        }
+
+        else -> {
+            stringResource(R.string.not_specified)
+        }
     }
 
-    var productionCountryText = ""
-    productionCountry.forEach {
-        productionCountryText += "${it.name}, "
-    }
-
-    var originCountryText = ""
-    originCountry.forEach {
-        originCountryText += "${it}, "
-    }
 
     Column(
         modifier = Modifier
@@ -83,7 +77,6 @@ fun MediaDetailSection(
 
                 SectionStickyHeader(stringResource(R.string.details))
 
-                if (releaseDate.isNotEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -93,14 +86,14 @@ fun MediaDetailSection(
 
                     ) {
                         Text(
-                            text = stringResource(R.string.release_date),
+                            text = stringResource(R.string.gender),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.darkText
                         )
 
                         Text(
-                            text = releaseDate,
+                            text = genderText,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray
@@ -108,10 +101,10 @@ fun MediaDetailSection(
                     }
 
                     MyDividerHorizontal()
-                }
 
 
-                if (spokenLangList.isNotEmpty()) {
+
+                if (knownForDepartment.isNotEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -122,14 +115,14 @@ fun MediaDetailSection(
 
                     ) {
                         Text(
-                            text = stringResource(R.string.spoken_lang),
+                            text = stringResource(R.string.known_for),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.darkText
                         )
 
                         Text(
-                            text = spokenLang,
+                            text = knownForDepartment,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray
@@ -140,7 +133,8 @@ fun MediaDetailSection(
                 }
 
 
-                if (productionCountry.isNotEmpty()) {
+
+                if (placeOfBirth.isNotEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -151,43 +145,14 @@ fun MediaDetailSection(
 
                     ) {
                         Text(
-                            text = stringResource(R.string.production_country),
+                            text = stringResource(R.string.place_of_birth),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.darkText
                         )
 
                         Text(
-                            text = productionCountryText,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Thin,
-                            color = MaterialTheme.colorScheme.strongGray
-                        )
-                    }
-
-                    MyDividerHorizontal()
-                }
-
-
-                if (originCountry.isNotEmpty()) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .padding(start = 12.dp)
-                            .padding(bottom = 12.dp),
-                        horizontalAlignment = Alignment.Start
-
-                    ) {
-                        Text(
-                            text = stringResource(R.string.origin_country),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.darkText
-                        )
-
-                        Text(
-                            text = originCountryText,
+                            text = placeOfBirth,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray
@@ -197,7 +162,7 @@ fun MediaDetailSection(
                 }
 
 
-                if (networks.isNotEmpty()) {
+                if (alternateNames.isNotEmpty()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -208,7 +173,7 @@ fun MediaDetailSection(
 
                     ) {
                         Text(
-                            text = stringResource(R.string.networks),
+                            text = stringResource(R.string.alternate_names),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.darkText
@@ -219,72 +184,10 @@ fun MediaDetailSection(
                                 .padding(top = 4.dp)
                                 .fillMaxWidth()
                         ) {
-                            items(networks) {
-                                MediaDetailGenreItem(it.name)
+                            items(alternateNames) {
+                                MediaDetailGenreItem(it)
                             }
                         }
-
-                    }
-
-
-                    MySpacerHeight(height = 8.dp)
-                }
-
-                if (budget != 0){
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .padding(start = 12.dp)
-                            .padding(bottom = 12.dp),
-                        horizontalAlignment = Alignment.Start
-
-                    ) {
-                        Text(
-                            text = stringResource(R.string.budget),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.darkText
-                        )
-
-
-                        Text(
-                            text = DigitHelper.digitBySeparator(budget.toString()),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Thin,
-                            color = MaterialTheme.colorScheme.strongGray
-                        )
-
-                    }
-
-
-                    MyDividerHorizontal()
-                }
-
-                if (revenue != 0L){
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .padding(start = 12.dp)
-                            .padding(bottom = 12.dp),
-                        horizontalAlignment = Alignment.Start
-
-                    ) {
-                        Text(
-                            text = stringResource(R.string.revenue),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.darkText
-                        )
-
-
-                        Text(
-                            text = DigitHelper.digitBySeparator(revenue.toString()),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Thin,
-                            color = MaterialTheme.colorScheme.strongGray
-                        )
 
                     }
 
@@ -298,4 +201,5 @@ fun MediaDetailSection(
         }
 
     }
+
 }

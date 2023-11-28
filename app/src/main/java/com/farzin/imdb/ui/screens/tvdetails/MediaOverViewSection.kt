@@ -15,18 +15,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.farzin.imdb.R
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun MediaOverViewSection(
-    genres:List<Genre>,
-    posterPath:String,
-    overView:String,
+    genres: List<Genre>,
+    posterPath: String,
+    overView: String,
+    bornDate: String = "",
+    deathDate:String = ""
 ) {
 
     Row(
@@ -57,9 +68,10 @@ fun MediaOverViewSection(
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-            ){
-                items(genres, key = {it.id}) {
-                    MediaDetailGenreItem(it.name) }
+            ) {
+                items(genres, key = { it.id }) {
+                    MediaDetailGenreItem(it.name)
+                }
             }
 
             Text(
@@ -71,8 +83,86 @@ fun MediaOverViewSection(
                     .padding(horizontal = 8.dp)
                     .padding(top = 8.dp),
                 lineHeight = 18.sp,
-                maxLines = 10
+                maxLines = 10,
+                overflow = TextOverflow.Ellipsis
             )
+
+
+            if (bornDate.isNotBlank() || bornDate.isNotEmpty()) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = font_standard,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.darkText
+                            )
+                        ) {
+                            append(stringResource(R.string.born_in))
+                        }
+
+
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = font_standard,
+                                fontWeight = FontWeight.Thin,
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.darkText
+                            )
+                        ) {
+                            append(" $bornDate")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.darkText,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                        .padding(top = 8.dp),
+                    textAlign = TextAlign.Start
+                )
+            }
+
+
+
+            if (deathDate.isNotBlank() || deathDate.isNotEmpty()) {
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = font_standard,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.darkText
+                            )
+                        ) {
+                            append(stringResource(R.string.died_in))
+                        }
+
+
+                        withStyle(
+                            style = SpanStyle(
+                                fontFamily = font_standard,
+                                fontWeight = FontWeight.Thin,
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.darkText
+                            )
+                        ) {
+                            append(" $deathDate")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.darkText,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    textAlign = TextAlign.Start
+                )
+            }
+
+
+
 
         }
 

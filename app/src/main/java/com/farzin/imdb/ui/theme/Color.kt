@@ -58,3 +58,8 @@ val ColorScheme.addBackground: Color
 val ColorScheme.starBlue: Color
     @Composable
     get() = Color(0xB9005BFF)
+
+
+val ColorScheme.strongGray: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) Color(0xFF707070) else Color(0xFF464646)

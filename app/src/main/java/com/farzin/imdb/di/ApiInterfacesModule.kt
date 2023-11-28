@@ -1,5 +1,6 @@
 package com.farzin.imdb.di
 
+import com.farzin.imdb.data.remote.CastDetailApiInterface
 import com.farzin.imdb.data.remote.EpisodeGuideApiInterface
 import com.farzin.imdb.data.remote.HomeApiInterface
 import com.farzin.imdb.data.remote.MovieDetailApiInterface
@@ -50,5 +51,10 @@ object ApiInterfacesModule {
     @Singleton
     fun provideEpisodeGuideApiInterface(retrofit: Retrofit): EpisodeGuideApiInterface =
         retrofit.create(EpisodeGuideApiInterface::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCastDetailApiInterface(retrofit: Retrofit): CastDetailApiInterface =
+        retrofit.create(CastDetailApiInterface::class.java)
 
 }

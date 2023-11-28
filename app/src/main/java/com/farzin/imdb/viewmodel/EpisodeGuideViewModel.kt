@@ -15,11 +15,9 @@ class EpisodeGuideViewModel @Inject constructor(private val repo: EpisodeGuideRe
 
     val seasonDetails = MutableStateFlow<NetworkResult<SeasonDetailModel>>(NetworkResult.Loading())
 
-    fun getSeasonDetails(seriesId:Int,seasonNumber:Int) {
+    fun getSeasonDetails(seriesId: Int, seasonNumber: Int) {
         viewModelScope.launch {
-            launch {
-                seasonDetails.emit(repo.getSeasonDetails(seriesId, seasonNumber))
-            }
+            seasonDetails.emit(repo.getSeasonDetails(seriesId, seasonNumber))
         }
     }
 

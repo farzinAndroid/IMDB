@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +24,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.selectedColor
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.MySpacerHeight
 
 @Composable
@@ -38,21 +38,21 @@ fun BottomNav(
             name = stringResource(R.string.home),
             route = Screens.Home.route,
             selectedColor = MaterialTheme.colorScheme.selectedColor,
-            deSelectedColor = Color.Gray,
+            deSelectedColor = MaterialTheme.colorScheme.strongGray,
             icon = painterResource(R.drawable.home)
         ),
         BottomNavItem(
             name = stringResource(R.string.search),
             route = Screens.Search.route,
             selectedColor = MaterialTheme.colorScheme.selectedColor,
-            deSelectedColor = Color.Gray,
+            deSelectedColor = MaterialTheme.colorScheme.strongGray,
             icon = painterResource(R.drawable.search)
         ),
         BottomNavItem(
             name = stringResource(R.string.you),
             route = Screens.Profile.route,
             selectedColor = MaterialTheme.colorScheme.selectedColor,
-            deSelectedColor = Color.Gray,
+            deSelectedColor = MaterialTheme.colorScheme.strongGray,
             icon = painterResource(R.drawable.profile)
         ),
     )

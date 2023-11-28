@@ -95,4 +95,13 @@
     <string name="revenue">Revenue</string>
     <string name="tv">TV</string>
     <string name="movie">Movie</string>
+    <string name="born_in">Born in : </string>
+    <string name="died_in">Died in : </string>
+    <string name="male">Male</string>
+    <string name="femaile">Female</string>
+    <string name="not_specified">Not specified</string>
+    <string name="gender">Gender</string>
+    <string name="known_for">Known for</string>
+    <string name="place_of_birth">Place of birth</string>
+    <string name="alternate_names">Alternate Names</string>
 </resources>

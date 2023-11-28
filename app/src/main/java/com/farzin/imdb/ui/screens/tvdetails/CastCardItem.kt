@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerWidth
 
@@ -36,7 +36,8 @@ import com.farzin.imdb.utils.MySpacerWidth
 fun CastCardItem(
     name:String,
     profilePath:String,
-    character:String
+    character:String,
+    onCardClicked:()->Unit
 ) {
 
 
@@ -46,7 +47,7 @@ fun CastCardItem(
         modifier = Modifier
             .width(150.dp)
             .height(350.dp)
-            .clickable { },
+            .clickable { onCardClicked() },
         shape = Shapes().small,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.sectionContainerBackground),
         elevation = CardDefaults.cardElevation(4.dp)
@@ -83,7 +84,7 @@ fun CastCardItem(
                 text = character,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Normal,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.strongGray,
                 modifier = Modifier
                     .basicMarquee(
                         iterations = Int.MAX_VALUE,

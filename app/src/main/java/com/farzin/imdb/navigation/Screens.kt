@@ -14,6 +14,7 @@ sealed class Screens(val route:String){
     object EpisodeGuide: Screens(route = "episode_guide_screen")
     object AllCastMovie: Screens(route = "all_cast_movie_screen")
     object AllCastTV: Screens(route = "all_cast_tv_screen")
+    object PersonDetail: Screens(route = "person_detail_screen")
 
     fun withArgs(vararg args: Any): String {
         return buildString {

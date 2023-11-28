@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.ImageHelper
 
@@ -78,7 +79,7 @@ fun MediaPosterSection(
             Text(
                 text = name,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.SemiBold
             )
 
@@ -86,14 +87,14 @@ fun MediaPosterSection(
                 Text(
                     text = "($startYearText-$endYearText)",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.SemiBold
                 )
             } else {
                 Text(
                     text = "(${DateHelper.extractYearFromDate(startYear)})",
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.SemiBold
                 )
             }

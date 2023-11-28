@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +32,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerHeight
@@ -47,8 +47,9 @@ fun MovieItem(
     posterPath:String,
     voteAverage:Double,
     name:String,
-    releaseDate:String,
-    modifier: Modifier = Modifier
+    releaseDate:String = "",
+    modifier: Modifier = Modifier,
+    character:String = ""
 ) {
 
 
@@ -140,17 +141,34 @@ fun MovieItem(
 
             MySpacerHeight(height = 10.dp)
 
-            Text(
-                text = DateHelper.extractYearFromDate(releaseDate),
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Thin,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.1f)
-                    .padding(horizontal = 4.dp),
-                textAlign = TextAlign.Start,
-                color = Color.Gray
-            )
+            if (releaseDate == ""){
+                Text(
+                    text = character,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.1f)
+                        .padding(horizontal = 4.dp),
+                    textAlign = TextAlign.Start,
+                    color =MaterialTheme.colorScheme.strongGray,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }else{
+                Text(
+                    text = DateHelper.extractYearFromDate(releaseDate),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(0.1f)
+                        .padding(horizontal = 4.dp),
+                    textAlign = TextAlign.Start,
+                    color = MaterialTheme.colorScheme.strongGray
+                )
+            }
+
 
 
         }

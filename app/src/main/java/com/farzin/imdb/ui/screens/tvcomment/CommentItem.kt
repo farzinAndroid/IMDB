@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -27,6 +26,7 @@ import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.starBlue
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
@@ -108,7 +108,7 @@ fun CommentItem(comment: TVReviewModelResult) {
         Text(
             text = "${DateHelper.formatDateISO8601(comment.created_at)}",
             style = MaterialTheme.typography.titleSmall,
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.strongGray,
             modifier = Modifier.padding(horizontal = 8.dp)
         )
 

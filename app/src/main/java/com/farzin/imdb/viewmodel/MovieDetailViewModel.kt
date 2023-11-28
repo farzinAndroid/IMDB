@@ -10,7 +10,6 @@ import com.farzin.imdb.models.movieDetail.RatedMovieModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.ImagesTVModel
-import com.farzin.imdb.models.tvDetail.TVDetailModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
 import com.farzin.imdb.repository.MovieDetailRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,47 +19,45 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo) : ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val repo: MovieDetailRepo) : ViewModel() {
 
     val movieDetails = MutableStateFlow<NetworkResult<MovieDetailModel>>(NetworkResult.Loading())
     val ratedMovies = MutableStateFlow<NetworkResult<RatedMovieModel>>(NetworkResult.Loading())
     val addRating = MutableStateFlow<NetworkResult<AddRatingModel>>(NetworkResult.Loading())
-    val castAndCrew = MutableStateFlow<NetworkResult<MovieCastAndCrewModel>>(NetworkResult.Loading())
-    val movieRecommendation = MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+    val castAndCrew =
+        MutableStateFlow<NetworkResult<MovieCastAndCrewModel>>(NetworkResult.Loading())
+    val movieRecommendation =
+        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     val movieReviews = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
     val movieImages = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
 
 
-    fun getMovieDetails(movieId:Int){
+    fun getMovieDetails(movieId: Int) {
         viewModelScope.launch {
-            launch {
-                movieDetails.emit(repo.getMovieDetails(movieId))
-            }
+            movieDetails.emit(repo.getMovieDetails(movieId))
+
         }
     }
 
 
-    fun getRatedMovie(){
+    fun getRatedMovie() {
         viewModelScope.launch {
-            launch {
-                ratedMovies.emit(repo.getRatedMovie())
-            }
+            ratedMovies.emit(repo.getRatedMovie())
         }
     }
 
-    fun addRating(rating: AddRating,movieId: Int){
+    fun addRating(rating: AddRating, movieId: Int) {
         viewModelScope.launch {
-            launch {
-                addRating.emit(repo.addRating(rating,movieId))
-            }
+            addRating.emit(repo.addRating(rating, movieId))
+
         }
     }
 
-    fun getMovieCastAndCrew(movieId: Int){
+    fun getMovieCastAndCrew(movieId: Int) {
         viewModelScope.launch {
-            launch {
-                castAndCrew.emit(repo.getMovieCastAndCrew(movieId))
-            }
+
+            castAndCrew.emit(repo.getMovieCastAndCrew(movieId))
+
         }
     }
 
@@ -71,9 +68,11 @@ class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo)
                 val filteredItems = items?.filter { crew -> crew.department == "Directing" }
                 NetworkResult.Success("Success", filteredItems)
             }
+
             is NetworkResult.Error -> {
                 NetworkResult.Error(message = "Error", data = null)
             }
+
             is NetworkResult.Loading -> {
                 NetworkResult.Loading()
             }
@@ -87,9 +86,11 @@ class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo)
                 val filteredItems = items?.filter { crew -> crew.department == "Writing" }
                 NetworkResult.Success("Success", filteredItems)
             }
+
             is NetworkResult.Error -> {
                 NetworkResult.Error(message = "Error", data = null)
             }
+
             is NetworkResult.Loading -> {
                 NetworkResult.Loading()
             }
@@ -97,28 +98,27 @@ class MovieDetailViewModel @Inject constructor(private val repo:MovieDetailRepo)
     }
 
 
-
-    fun getMovieRecommendation(movieId: Int){
+    fun getMovieRecommendation(movieId: Int) {
         viewModelScope.launch {
-            launch {
-                movieRecommendation.emit(repo.getMovieRecommendation(movieId))
-            }
+
+            movieRecommendation.emit(repo.getMovieRecommendation(movieId))
+
         }
     }
 
-    fun getMovieReviews(movieId: Int){
+    fun getMovieReviews(movieId: Int) {
         viewModelScope.launch {
-            launch {
-                movieReviews.emit(repo.getMovieReviews(movieId))
-            }
+
+            movieReviews.emit(repo.getMovieReviews(movieId))
+
         }
     }
 
-    fun getImagesForMovie(movieId: Int){
+    fun getImagesForMovie(movieId: Int) {
         viewModelScope.launch {
-            launch {
-                movieImages.emit(repo.getImagesForMovie(movieId))
-            }
+
+            movieImages.emit(repo.getImagesForMovie(movieId))
+
         }
     }
 

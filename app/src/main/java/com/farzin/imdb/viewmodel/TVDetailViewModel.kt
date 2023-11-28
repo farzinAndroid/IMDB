@@ -26,37 +26,33 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
     val ratedTV = MutableStateFlow<NetworkResult<RatedTVModel>>(NetworkResult.Loading())
     val addRating = MutableStateFlow<NetworkResult<AddRatingModel>>(NetworkResult.Loading())
     val castAndCrew = MutableStateFlow<NetworkResult<CastAndCrewModelTV>>(NetworkResult.Loading())
-    val recommendedTVShows = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
+    val recommendedTVShows =
+        MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
     val imagesForTV = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
     val reviewsTV = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
 
 
-    fun getTVDetails(seriesId:Int){
+    fun getTVDetails(seriesId: Int) {
         viewModelScope.launch {
-            launch {
-                tvDetails.emit(repo.getTVDetails(seriesId))
-            }
+            tvDetails.emit(repo.getTVDetails(seriesId))
         }
     }
 
 
-
-    fun addRating(seriesId:Int,rating: AddRating){
+    fun addRating(seriesId: Int, rating: AddRating) {
         viewModelScope.launch {
-            launch {
-                addRating.emit(repo.addRating(seriesId, rating))
-            }
+            addRating.emit(repo.addRating(seriesId, rating))
         }
     }
 
-    fun getRatedTV(){
+    fun getRatedTV() {
         viewModelScope.launch {
             ratedTV.emit(repo.getRatedTV())
         }
     }
 
 
-    fun getTVCastAndCrew(seriesId:Int){
+    fun getTVCastAndCrew(seriesId: Int) {
         viewModelScope.launch {
             castAndCrew.emit(repo.getTVCastAndCrew(seriesId))
         }
@@ -69,9 +65,11 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
                 val filteredItems = items?.filter { crew -> crew.department == "Directing" }
                 NetworkResult.Success("Success", filteredItems)
             }
+
             is NetworkResult.Error -> {
                 NetworkResult.Error(message = "Error", data = null)
             }
+
             is NetworkResult.Loading -> {
                 NetworkResult.Loading()
             }
@@ -85,9 +83,11 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
                 val filteredItems = items?.filter { crew -> crew.department == "Writing" }
                 NetworkResult.Success("Success", filteredItems)
             }
+
             is NetworkResult.Error -> {
                 NetworkResult.Error(message = "Error", data = null)
             }
+
             is NetworkResult.Loading -> {
                 NetworkResult.Loading()
             }
@@ -95,25 +95,23 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
     }
 
 
-
-
-    fun getRecommendedTVShows(seriesId:Int){
+    fun getRecommendedTVShows(seriesId: Int) {
         viewModelScope.launch {
             recommendedTVShows.emit(repo.getRecommendedTVShows(seriesId))
         }
     }
 
 
-    fun getImagesForTV(seriesId:Int){
+    fun getImagesForTV(seriesId: Int) {
         viewModelScope.launch {
             imagesForTV.emit(repo.getImagesForTV(seriesId))
         }
     }
 
 
-    fun getReviewsForTV(seriesId:Int,page:Int){
+    fun getReviewsForTV(seriesId: Int, page: Int) {
         viewModelScope.launch {
-            reviewsTV.emit(repo.getReviewsForTV(seriesId,page))
+            reviewsTV.emit(repo.getReviewsForTV(seriesId, page))
         }
     }
 

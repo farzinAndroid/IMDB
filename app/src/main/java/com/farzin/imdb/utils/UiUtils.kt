@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -88,7 +89,7 @@ fun InitialRequestToken(
 fun MyDividerHorizontal(modifier: Modifier = Modifier) {
 
     Divider(
-        color = Color.Gray,
+        color = MaterialTheme.colorScheme.strongGray,
         modifier = modifier
             .fillMaxWidth()
             .height(1.dp)
@@ -99,7 +100,7 @@ fun MyDividerHorizontal(modifier: Modifier = Modifier) {
 fun MyDividerVertical(modifier: Modifier = Modifier) {
 
     Divider(
-        color = Color.Gray,
+        color = MaterialTheme.colorScheme.strongGray,
         modifier = modifier
             .fillMaxHeight()
             .width(1.dp)

@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -38,6 +37,7 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.starBlue
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -149,7 +149,7 @@ fun MovieRatingSection(
             Text(
                 text = voteCount.toString(),
                 style = MaterialTheme.typography.titleSmall,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.Thin,
             )
 

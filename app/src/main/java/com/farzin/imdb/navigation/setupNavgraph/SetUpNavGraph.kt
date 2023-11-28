@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.all_cast.AllMovieCast
 import com.farzin.imdb.ui.screens.all_cast.AllTVCast
+import com.farzin.imdb.ui.screens.cast_detail.CastDetailScreen
 import com.farzin.imdb.ui.screens.episode_guide.EpisodeGuideScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
@@ -201,6 +202,24 @@ fun SetUpNavGraph(
             }
         }
 
+        composable(
+            route = Screens.PersonDetail.route + "?id={id}",
+            arguments = listOf(
+                navArgument("id") {
+                    nullable = false
+                    defaultValue = 0
+                    type = NavType.IntType
+                }
+            )
+        ) {
+
+            it.arguments!!.getInt("id").let { id ->
+                CastDetailScreen(
+                    id = id,
+                    navController = navController,
+                )
+            }
+        }
 
     }
 

@@ -36,6 +36,7 @@ import com.farzin.imdb.models.tvDetail.Season
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.viewmodel.EpisodeGuideViewModel
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -109,7 +110,7 @@ fun EpisodeGuideScreen(
                                 selectedTabIndex = index
                             },
                             selectedContentColor = MaterialTheme.colorScheme.imdbYellow,
-                            unselectedContentColor = Color.Gray,
+                            unselectedContentColor = MaterialTheme.colorScheme.strongGray,
                             text = {
                                 Row {
                                     Text(

@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +33,7 @@ import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -159,7 +159,10 @@ fun TVCastSection(
                         CastCardItem(
                             profilePath = profilePath,
                             character = character,
-                            name = name
+                            name = name,
+                            onCardClicked = {
+                                navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
+                            }
                         )
                     }
 
@@ -191,7 +194,7 @@ fun TVCastSection(
                     Text(
                         text = director,
                         style = MaterialTheme.typography.titleLarge,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.strongGray,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp)
@@ -221,7 +224,7 @@ fun TVCastSection(
                     Text(
                         text = writer,
                         style = MaterialTheme.typography.titleLarge,
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.strongGray,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 10.dp)
