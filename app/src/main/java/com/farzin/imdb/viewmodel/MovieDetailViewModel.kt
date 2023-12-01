@@ -7,6 +7,7 @@ import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.movieDetail.MovieCastAndCrewModel
 import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
+import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.ImagesTVModel
@@ -30,6 +31,7 @@ class MovieDetailViewModel @Inject constructor(private val repo: MovieDetailRepo
         MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     val movieReviews = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
     val movieImages = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
+    val videosMovie = MutableStateFlow<NetworkResult<VideosModel>>(NetworkResult.Loading())
 
 
     fun getMovieDetails(movieId: Int) {
@@ -119,6 +121,30 @@ class MovieDetailViewModel @Inject constructor(private val repo: MovieDetailRepo
 
             movieImages.emit(repo.getImagesForMovie(movieId))
 
+        }
+    }
+
+    fun getVideosForMovie(movieId: Int) {
+        viewModelScope.launch {
+            videosMovie.emit(repo.getVideosForMovie(movieId))
+        }
+    }
+
+    val youtubeVideos = videosMovie.map { networkResult ->
+        when (networkResult) {
+            is NetworkResult.Success -> {
+                val items = networkResult.data?.results
+                val filteredItems = items?.filter { video -> video.site == "YouTube" }
+                NetworkResult.Success("Success", filteredItems)
+            }
+
+            is NetworkResult.Error -> {
+                NetworkResult.Error(message = "Error", data = null)
+            }
+
+            is NetworkResult.Loading -> {
+                NetworkResult.Loading()
+            }
         }
     }
 

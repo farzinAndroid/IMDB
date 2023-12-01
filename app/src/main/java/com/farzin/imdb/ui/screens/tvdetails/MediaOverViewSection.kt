@@ -51,7 +51,7 @@ fun MediaOverViewSection(
             painter = rememberAsyncImagePainter(ImageHelper.appendImage(posterPath)),
             contentDescription = "",
             modifier = Modifier
-                .weight(0.3f)
+                .weight(0.35f)
                 .height(170.dp)
                 .padding(horizontal = 4.dp),
             contentScale = ContentScale.FillBounds
@@ -60,7 +60,7 @@ fun MediaOverViewSection(
 
         Column(
             modifier = Modifier
-                .weight(0.7f)
+                .weight(0.65f)
                 .padding(start = 4.dp),
             horizontalAlignment = Alignment.Start,
         ) {

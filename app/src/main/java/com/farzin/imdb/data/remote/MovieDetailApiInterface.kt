@@ -4,6 +4,7 @@ import com.farzin.imdb.models.home.TrendingMoviesForWeek
 import com.farzin.imdb.models.movieDetail.MovieCastAndCrewModel
 import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
+import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.ImagesTVModel
@@ -90,6 +91,17 @@ interface MovieDetailApiInterface {
         ) movieId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
     ):Response<ImagesTVModel>
+
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideosForMovie(
+        @Path(
+            "movie_id",
+            encoded = false
+        ) movieId:Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+    ):Response<VideosModel>
+
 
 
 }

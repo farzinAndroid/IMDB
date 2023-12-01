@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.farzin.imdb"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.farzin.imdb"
         minSdk = 25
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -109,7 +110,14 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.3.0")
 
     // paging
-//    implementation ("androidx.paging:paging-runtime-ktx:3.3.0-alpha02")
-//    implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation ("androidx.paging:paging-runtime-ktx:3.3.0-alpha02")
+    implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
+
+    // youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    //fragment
+    implementation ("androidx.fragment:fragment-ktx:1.5.6")
+
 
 }

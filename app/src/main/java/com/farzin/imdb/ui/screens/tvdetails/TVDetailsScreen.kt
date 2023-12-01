@@ -67,7 +67,7 @@ fun TVDetailsScreen(
     var rating by remember { mutableStateOf(0.0) }
     var voteCount by remember { mutableStateOf(0) }
     var userRating by remember { mutableStateOf(0) }
-    var spokenLangList by remember {mutableStateOf<List<SpokenLanguage>>(emptyList()) }
+    var spokenLangList by remember { mutableStateOf<List<SpokenLanguage>>(emptyList()) }
     var productionCountry by remember { mutableStateOf<List<ProductionCountry>>(emptyList()) }
     var networks by remember { mutableStateOf<List<Network>>(emptyList()) }
     var originCountry by remember { mutableStateOf<List<String>>(emptyList()) }
@@ -178,7 +178,7 @@ fun TVDetailsScreen(
                         numberOfEpisode = numberOfEpisode,
                         isMovie = false,
                         onEpisodeGuideClicked = {
-                            navController.navigate(Screens.EpisodeGuide.route+"?id=$tvId")
+                            navController.navigate(Screens.EpisodeGuide.route + "?id=$tvId")
                         }
                     )
                 }
@@ -256,6 +256,14 @@ fun TVDetailsScreen(
                 item { TVCastSection(mediaId = tvId, navController = navController) }
                 item { TVRecommendedSection(mediaId = tvId, navController = navController) }
                 item { TVImageSection(mediaId = tvId) }
+                item {
+                    MediaVideoSection(
+                        mediaId = tvId,
+                        mediaType = "tv",
+                        poster = posterPath,
+                        navController = navController
+                    )
+                }
                 item {
                     TVCommentSection(
                         mediaId = tvId,

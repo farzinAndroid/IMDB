@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
+import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
@@ -30,6 +31,7 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
         MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
     val imagesForTV = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
     val reviewsTV = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
+    val videosTV = MutableStateFlow<NetworkResult<VideosModel>>(NetworkResult.Loading())
 
 
     fun getTVDetails(seriesId: Int) {
@@ -112,6 +114,30 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
     fun getReviewsForTV(seriesId: Int, page: Int) {
         viewModelScope.launch {
             reviewsTV.emit(repo.getReviewsForTV(seriesId, page))
+        }
+    }
+
+    fun getVideosForTV(seriesId: Int) {
+        viewModelScope.launch {
+            videosTV.emit(repo.getVideosForTV(seriesId))
+        }
+    }
+
+    val youtubeVideos = videosTV.map { networkResult ->
+        when (networkResult) {
+            is NetworkResult.Success -> {
+                val items = networkResult.data?.results
+                val filteredItems = items?.filter { video -> video.site == "YouTube" }
+                NetworkResult.Success("Success", filteredItems)
+            }
+
+            is NetworkResult.Error -> {
+                NetworkResult.Error(message = "Error", data = null)
+            }
+
+            is NetworkResult.Loading -> {
+                NetworkResult.Loading()
+            }
         }
     }
 

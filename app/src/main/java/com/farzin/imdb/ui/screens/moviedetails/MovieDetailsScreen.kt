@@ -36,6 +36,7 @@ import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTitleSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaOverViewSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaPosterSection
+import com.farzin.imdb.ui.screens.tvdetails.MediaVideoSection
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -250,6 +251,14 @@ fun MovieDetailsScreen(
                 item { MovieCastSection(mediaId = movieId, navController = navController) }
                 item { MovieRecommendedSection(mediaId = movieId, navController = navController) }
                 item { MovieImageSection(mediaId = movieId) }
+                item {
+                    MediaVideoSection(
+                        mediaId = movieId,
+                        mediaType = "movie",
+                        poster = posterPath,
+                        navController = navController
+                    )
+                }
                 item {
                     MovieCommentSection(
                         mediaId = movieId,

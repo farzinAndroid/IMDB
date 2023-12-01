@@ -1,6 +1,7 @@
 package com.farzin.imdb.data.remote
 
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
+import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
@@ -95,6 +96,17 @@ interface TVDetailApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("page") page: Int
     ):Response<TVReviewModel>
+
+
+    @GET("tv/{series_id}/videos")
+    suspend fun getVideosForTV(
+        @Path(
+            "series_id",
+            encoded = false
+        ) seriesId:Int,
+        @Query("api_key") apiKey: String = Constants.API_KEY,
+    ):Response<VideosModel>
+
 
 
 }

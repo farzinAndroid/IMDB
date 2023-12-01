@@ -1,9 +1,10 @@
 package com.farzin.imdb.repository
 
 import com.farzin.imdb.data.remote.BaseApiResponse
-import com.farzin.imdb.data.remote.TVDetailApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.data.remote.TVDetailApiInterface
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
+import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
@@ -54,6 +55,10 @@ class TVDetailRepo @Inject constructor(private val api: TVDetailApiInterface) : 
         safeApiCall {
             api.getReviewsForTV(seriesId, page = page)
         }
+
+    suspend fun getVideosForTV(seriesId: Int) : NetworkResult<VideosModel> = safeApiCall {
+        api.getVideosForTV(seriesId = seriesId)
+    }
 
 
 }
