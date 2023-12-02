@@ -53,7 +53,7 @@ fun MediaVideoSection(
         LaunchedEffect(true) {
             tvDetailViewModel.getVideosForTV(mediaId)
 
-            tvDetailViewModel.youtubeVideos.collectLatest { result->
+            tvDetailViewModel.youtubeVideos.collectLatest { result ->
                 when (result) {
                     is NetworkResult.Success -> {
                         loading = false
@@ -72,13 +72,11 @@ fun MediaVideoSection(
         }
 
 
-
-
     } else {
         LaunchedEffect(true) {
             movieDetailViewModel.getVideosForMovie(mediaId)
 
-            movieDetailViewModel.youtubeVideos.collectLatest { result->
+            movieDetailViewModel.youtubeVideos.collectLatest { result ->
                 when (result) {
                     is NetworkResult.Success -> {
                         loading = false
@@ -147,8 +145,9 @@ fun MediaVideoSection(
                                 type = it.type ?: "",
                                 onClick = {
                                     val intent = Intent(ctx, PlayActivity::class.java)
-                                    intent.putExtra("key",it.key)
+                                    intent.putExtra("key", it.key)
                                     ctx.startActivity(intent)
+//                                    navController.navigate(Screens.Video.route+"?key=${it.key}")
 
                                 }
                             )
@@ -163,6 +162,6 @@ fun MediaVideoSection(
             }
         }
     }
-
-
 }
+
+

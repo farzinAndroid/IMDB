@@ -14,6 +14,7 @@ import com.farzin.imdb.ui.screens.episode_guide.EpisodeGuideScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
+import com.farzin.imdb.ui.screens.play_video.VideoPlayerScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
 import com.farzin.imdb.ui.screens.search.SearchScreen
 import com.farzin.imdb.ui.screens.service.ServiceScreen
@@ -216,6 +217,25 @@ fun SetUpNavGraph(
             it.arguments!!.getInt("id").let { id ->
                 CastDetailScreen(
                     id = id,
+                    navController = navController,
+                )
+            }
+        }
+
+        composable(
+            route = Screens.Video.route + "?key={key}",
+            arguments = listOf(
+                navArgument("key") {
+                    nullable = false
+                    defaultValue = " "
+                    type = NavType.StringType
+                }
+            )
+        ) {
+
+            it.arguments!!.getString("key")?.let { key ->
+                VideoPlayerScreen(
+                    key = key,
                     navController = navController,
                 )
             }

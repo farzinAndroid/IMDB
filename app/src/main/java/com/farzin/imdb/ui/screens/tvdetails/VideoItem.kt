@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
@@ -38,20 +39,21 @@ fun VideoItem(
     poster: String,
     title: String,
     type: String,
-    onClick:()->Unit
+    onClick: () -> Unit,
 ) {
 
-    
+
     MySpacerWidth(width = 10.dp)
-    
+
     Column {
         Card(
             modifier = Modifier
-                .width(150.dp)
-                .height(150.dp)
+                .width(170.dp)
+                .height(160.dp)
                 .clickable { onClick() },
             shape = Shapes().medium,
-            elevation = CardDefaults.cardElevation(4.dp)
+            elevation = CardDefaults.cardElevation(4.dp),
+            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.sectionContainerBackground)
         ) {
 
             Column(
@@ -65,12 +67,15 @@ fun VideoItem(
                         .weight(0.6f),
                     contentAlignment = Alignment.BottomStart
                 ) {
+
                     Image(
                         painter = rememberAsyncImagePainter(ImageHelper.appendImage(poster)),
                         contentDescription = "",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier.fillMaxSize()
                     )
+
+
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
 
@@ -115,10 +120,10 @@ fun VideoItem(
 
             }
 
-        }  
-        
+        }
+
         MySpacerHeight(height = 8.dp)
     }
-  
+
 
 }

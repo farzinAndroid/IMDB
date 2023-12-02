@@ -116,8 +116,10 @@ dependencies {
     // youtube player
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 
-    //fragment
-    implementation ("androidx.fragment:fragment-ktx:1.5.6")
+    // exo player
+    implementation ("androidx.media3:media3-exoplayer:1.2.0")
+    implementation ("androidx.media3:media3-exoplayer-dash:1.2.0")
+    implementation ("androidx.media3:media3-ui:1.2.0")
 
 
 }
