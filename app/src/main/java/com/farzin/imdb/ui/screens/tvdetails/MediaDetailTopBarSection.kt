@@ -34,7 +34,8 @@ import com.farzin.imdb.utils.Constants
 @Composable
 fun MediaDetailTopBarSection(
     name: String,
-    onClick:()->Unit
+    shouldHaveThreeDotMenu:Boolean = true,
+    onClick:()->Unit,
 ) {
 
     val rotate = if (Constants.USER_LANG == Constants.PERSIAN)
@@ -83,17 +84,16 @@ fun MediaDetailTopBarSection(
 
         }
 
-        Icon(
-            imageVector = Icons.Filled.MoreVert,
-            contentDescription = "",
-            modifier = Modifier
-                .size(30.dp)
-                .padding(end = 8.dp)
-                .weight(0.1f),
+        if (shouldHaveThreeDotMenu){
+            Icon(
+                imageVector = Icons.Filled.MoreVert,
+                contentDescription = "",
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(end = 8.dp)
+                    .weight(0.1f),
 
-        )
-
-
+                )
+        }
     }
-
 }

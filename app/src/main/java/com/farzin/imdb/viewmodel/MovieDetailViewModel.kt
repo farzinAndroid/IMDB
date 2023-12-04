@@ -10,7 +10,7 @@ import com.farzin.imdb.models.movieDetail.RatedMovieModel
 import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
 import com.farzin.imdb.repository.MovieDetailRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +30,7 @@ class MovieDetailViewModel @Inject constructor(private val repo: MovieDetailRepo
     val movieRecommendation =
         MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
     val movieReviews = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
-    val movieImages = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
+    val movieImages = MutableStateFlow<NetworkResult<ImagesModel>>(NetworkResult.Loading())
     val videosMovie = MutableStateFlow<NetworkResult<VideosModel>>(NetworkResult.Loading())
 
 

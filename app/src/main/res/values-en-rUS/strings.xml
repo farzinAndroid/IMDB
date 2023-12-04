@@ -104,4 +104,12 @@
     <string name="known_for">Known for</string>
     <string name="place_of_birth">Place of birth</string>
     <string name="alternate_names">Alternate Names</string>
+    <string name="images">Images</string>
+    <string name="action_and_adventure">Action &amp; Adventure</string>
+    <string name="kids">Kids</string>
+    <string name="news">News</string>
+    <string name="reality">Reality</string>
+    <string name="soape">Soap</string>
+    <string name="talk">Talk</string>
+    <string name="war_and_politic">War &amp; Politics</string>
 </resources>

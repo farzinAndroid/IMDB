@@ -5,7 +5,7 @@ import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.RatedTVModel
 import com.farzin.imdb.models.tvDetail.TVDetailModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
@@ -84,7 +84,7 @@ interface TVDetailApiInterface {
             encoded = false
         ) seriesId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-    ):Response<ImagesTVModel>
+    ):Response<ImagesModel>
 
 
     @GET("tv/{series_id}/reviews")

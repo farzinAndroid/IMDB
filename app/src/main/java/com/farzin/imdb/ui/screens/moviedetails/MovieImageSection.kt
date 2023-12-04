@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -22,14 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.Backdrop
 import com.farzin.imdb.models.tvDetail.Logo
 import com.farzin.imdb.models.tvDetail.Poster
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.screens.tvdetails.ImageItem
-import com.farzin.imdb.ui.screens.tvdetails.ShowMoreItem
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -38,6 +40,9 @@ import com.farzin.imdb.viewmodel.MovieDetailViewModel
 fun MovieImageSection(
     mediaId: Int,
     movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
+    navController: NavController,
+    onImageClick:()->Unit,
+    onImageClickCallBack:(String)->Unit
 ) {
 
     LaunchedEffect(true) {
@@ -49,14 +54,14 @@ fun MovieImageSection(
     var imageBackdropList by remember { mutableStateOf<List<Backdrop>>(emptyList()) }
     var imageLogoList by remember { mutableStateOf<List<Logo>>(emptyList()) }
     var imagePosterList by remember { mutableStateOf<List<Poster>>(emptyList()) }
-    var imageNumber by remember { mutableStateOf(0) }
+    var imageNumber by remember { mutableIntStateOf(0) }
 
 
     val result by movieDetailViewModel.movieImages.collectAsState()
     when (result) {
         is NetworkResult.Success -> {
             loading = false
-            imageBackdropList = result.data?.backdrops?.take(20) ?: emptyList()
+            imageBackdropList = result.data?.backdrops?.take(10) ?: emptyList()
             imageLogoList = result.data?.logos ?: emptyList()
             imagePosterList = result.data?.posters ?: emptyList()
             imageNumber = result.data?.posters?.size ?: 0
@@ -103,8 +108,12 @@ fun MovieImageSection(
                     isHaveAnotherText = true,
                     headerSubtitle = "${stringResource(R.string.see_all)} $imageNumber ${
                         stringResource(
-                            R.string.photos)
+                            R.string.photos
+                        )
                     }",
+                    headerOnClick = {
+                        navController.navigate(Screens.ImageList.route + "?id=${mediaId}?mediaType=movie")
+                    }
                 )
 
 
@@ -117,10 +126,14 @@ fun MovieImageSection(
                         .fillMaxWidth()
                 ) {
                     items(imageBackdropList) {
-                        ImageItem(path = it.file_path)
+                        ImageItem(
+                            path = it.file_path,
+                            onClick = {
+                                onImageClickCallBack(it.file_path)
+                                onImageClick()
+                            }
+                        )
                     }
-
-                    item{ ShowMoreItem(200.dp,150.dp){} }
 
                 }
 

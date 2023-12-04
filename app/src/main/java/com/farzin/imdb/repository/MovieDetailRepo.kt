@@ -10,7 +10,7 @@ import com.farzin.imdb.models.movieDetail.RatedMovieModel
 import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class MovieDetailRepo @Inject constructor(private val api:MovieDetailApiInterfac
         api.getMovieReviews(movieId = movieId)
     }
 
-    suspend fun getImagesForMovie(movieId: Int) : NetworkResult<ImagesTVModel> = safeApiCall {
+    suspend fun getImagesForMovie(movieId: Int) : NetworkResult<ImagesModel> = safeApiCall {
         api.getImagesForMovie(movieId = movieId)
     }
 

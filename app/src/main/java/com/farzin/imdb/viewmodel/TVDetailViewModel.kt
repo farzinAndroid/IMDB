@@ -8,7 +8,7 @@ import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.RatedTVModel
 import com.farzin.imdb.models.tvDetail.TVDetailModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
@@ -29,7 +29,7 @@ class TVDetailViewModel @Inject constructor(private val repo: TVDetailRepo) : Vi
     val castAndCrew = MutableStateFlow<NetworkResult<CastAndCrewModelTV>>(NetworkResult.Loading())
     val recommendedTVShows =
         MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
-    val imagesForTV = MutableStateFlow<NetworkResult<ImagesTVModel>>(NetworkResult.Loading())
+    val imagesForTV = MutableStateFlow<NetworkResult<ImagesModel>>(NetworkResult.Loading())
     val reviewsTV = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
     val videosTV = MutableStateFlow<NetworkResult<VideosModel>>(NetworkResult.Loading())
 

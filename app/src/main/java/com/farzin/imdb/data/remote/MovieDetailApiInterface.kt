@@ -7,7 +7,7 @@ import com.farzin.imdb.models.movieDetail.RatedMovieModel
 import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
@@ -90,7 +90,7 @@ interface MovieDetailApiInterface {
             encoded = false
         ) movieId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
-    ):Response<ImagesTVModel>
+    ):Response<ImagesModel>
 
 
     @GET("movie/{movie_id}/videos")

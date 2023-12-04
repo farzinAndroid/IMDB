@@ -121,5 +121,10 @@ dependencies {
     implementation ("androidx.media3:media3-exoplayer-dash:1.2.0")
     implementation ("androidx.media3:media3-ui:1.2.0")
 
+    // zoomable image
+//    implementation("me.saket.telephoto:zoomable:0.7.1")
+    implementation("me.saket.telephoto:zoomable-image-coil:0.7.1")
+
+
 
 }

@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,13 +36,13 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.HomeGenre
 import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
+import com.farzin.imdb.utils.Util
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,30 +54,11 @@ fun GenresMovieSection(
 ) {
 
 
-    var selectedTabIndex by remember { mutableStateOf(0) }
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
     val scope = rememberCoroutineScope()
 
-    val homeGenres = listOf(
-        HomeGenre(28, stringResource(R.string.action)),
-        HomeGenre(12, stringResource(R.string.adventure)),
-        HomeGenre(16, stringResource(R.string.animation)),
-        HomeGenre(35, stringResource(R.string.comedy)),
-        HomeGenre(80, stringResource(R.string.crime)),
-        HomeGenre(99, stringResource(R.string.documentary)),
-        HomeGenre(18, stringResource(R.string.drama)),
-        HomeGenre(10751, stringResource(R.string.family)),
-        HomeGenre(14, stringResource(R.string.fantasy)),
-        HomeGenre(36, stringResource(R.string.history)),
-        HomeGenre(27, stringResource(R.string.horror)),
-        HomeGenre(10402, stringResource(R.string.music)),
-        HomeGenre(9648, stringResource(R.string.mystery)),
-        HomeGenre(10749, stringResource(R.string.romance)),
-        HomeGenre(878, stringResource(R.string.science_fiction)),
-        HomeGenre(10770, stringResource(R.string.tv_movie)),
-        HomeGenre(53, stringResource(R.string.thriller)),
-        HomeGenre(10752, stringResource(R.string.war)),
-        HomeGenre(37, stringResource(R.string.western))
-    )
+    val movieGenre = Util(LocalContext.current).movieGenres
+
 
 
     //load movies based on those genre
@@ -159,7 +142,7 @@ fun GenresMovieSection(
                     }
                 ) {
 
-                    homeGenres.take(6).forEachIndexed { index, genre ->
+                    movieGenre.take(6).forEachIndexed { index, genre ->
 
                         Tab(
                             selected = selectedTabIndex == index,
@@ -187,7 +170,7 @@ fun GenresMovieSection(
                     0 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[0].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[0].id.toString())
                         }
 
                         LazyRow(
@@ -228,7 +211,7 @@ fun GenresMovieSection(
                     1 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[1].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[1].id.toString())
                         }
 
                         LazyRow(
@@ -268,7 +251,7 @@ fun GenresMovieSection(
 
                     2 -> {
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[2].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[2].id.toString())
                         }
 
                         LazyRow(
@@ -309,7 +292,7 @@ fun GenresMovieSection(
                     3 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[3].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[3].id.toString())
                         }
 
                         LazyRow(
@@ -350,7 +333,7 @@ fun GenresMovieSection(
                     4 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[4].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[4].id.toString())
                         }
 
                         LazyRow(
@@ -391,7 +374,7 @@ fun GenresMovieSection(
                     5 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[5].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[5].id.toString())
                         }
 
                         LazyRow(
@@ -432,7 +415,7 @@ fun GenresMovieSection(
                     6 -> {
 
                         LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, homeGenres[6].id.toString())
+                            getMovieBasedOnGenre(homeViewModel, movieGenre[6].id.toString())
                         }
 
                         LazyRow(

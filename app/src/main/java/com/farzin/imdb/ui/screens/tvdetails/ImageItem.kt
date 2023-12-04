@@ -1,6 +1,7 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +18,8 @@ import com.farzin.imdb.utils.ImageHelper
 
 @Composable
 fun ImageItem(
-    path:String
+    path:String,
+    onClick:()->Unit
 ) {
 
 
@@ -25,7 +27,8 @@ fun ImageItem(
         modifier = Modifier
             .height(150.dp)
             .width(200.dp)
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 10.dp)
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(4.dp),
         shape = Shapes().small
     ) {

@@ -8,7 +8,7 @@ import com.farzin.imdb.models.movieDetail.VideosModel
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.models.tvDetail.AddRatingModel
 import com.farzin.imdb.models.tvDetail.CastAndCrewModelTV
-import com.farzin.imdb.models.tvDetail.ImagesTVModel
+import com.farzin.imdb.models.tvDetail.ImagesModel
 import com.farzin.imdb.models.tvDetail.RatedTVModel
 import com.farzin.imdb.models.tvDetail.TVDetailModel
 import com.farzin.imdb.models.tvDetail.TVReviewModel
@@ -46,7 +46,7 @@ class TVDetailRepo @Inject constructor(private val api: TVDetailApiInterface) : 
             api.getRecommendedTVShows(seriesId)
         }
 
-    suspend fun getImagesForTV(seriesId:Int) : NetworkResult<ImagesTVModel> =
+    suspend fun getImagesForTV(seriesId:Int) : NetworkResult<ImagesModel> =
         safeApiCall {
             api.getImagesForTV(seriesId)
         }

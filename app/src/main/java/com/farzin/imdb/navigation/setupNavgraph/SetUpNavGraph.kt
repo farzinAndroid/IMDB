@@ -12,6 +12,7 @@ import com.farzin.imdb.ui.screens.all_cast.AllTVCast
 import com.farzin.imdb.ui.screens.cast_detail.CastDetailScreen
 import com.farzin.imdb.ui.screens.episode_guide.EpisodeGuideScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
+import com.farzin.imdb.ui.screens.images_screen.ImagesListScreen
 import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
 import com.farzin.imdb.ui.screens.play_video.VideoPlayerScreen
@@ -240,6 +241,35 @@ fun SetUpNavGraph(
                 )
             }
         }
+
+
+        composable(
+            route = Screens.ImageList.route + "?id={id}?mediaType={mediaType}",
+            arguments = listOf(
+                navArgument("id") {
+                    nullable = false
+                    defaultValue = 0
+                    type = NavType.IntType
+                },
+                navArgument("mediaType") {
+                    nullable = false
+                    defaultValue = " "
+                    type = NavType.StringType
+                }
+            )
+        ) {
+
+            it.arguments!!.getInt("id").let { id ->
+                it.arguments!!.getString("mediaType")?.let { mediaType ->
+                    ImagesListScreen(
+                        mediaId = id,
+                        navController = navController,
+                        mediaType = mediaType
+                    )
+                }
+            }
+        }
+
 
     }
 

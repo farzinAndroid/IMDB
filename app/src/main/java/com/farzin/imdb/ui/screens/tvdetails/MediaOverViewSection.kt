@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -26,10 +27,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
+import com.farzin.imdb.models.home.HomeGenre
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.utils.ImageHelper
+import com.farzin.imdb.utils.Util
 
 @Composable
 fun MediaOverViewSection(
@@ -37,8 +40,17 @@ fun MediaOverViewSection(
     posterPath: String,
     overView: String,
     bornDate: String = "",
-    deathDate:String = ""
+    deathDate:String = "",
+    mediaType:String = ""
 ) {
+
+    val tvGenres = Util(LocalContext.current).tvGenres
+    val movieGenres = Util(LocalContext.current).movieGenres
+
+    val filteredGenres = if (mediaType == "movie")
+        filterGenres(genres,movieGenres)
+    else
+        filterGenres(genres,tvGenres)
 
     Row(
         modifier = Modifier
@@ -69,7 +81,7 @@ fun MediaOverViewSection(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                items(genres, key = { it.id }) {
+                items(filteredGenres, key = { it.id }) {
                     MediaDetailGenreItem(it.name)
                 }
             }
@@ -169,4 +181,20 @@ fun MediaOverViewSection(
 
     }
 
+}
+
+private fun filterGenres(
+    genresFromServer: List<Genre>,
+    genresFromUtil: List<HomeGenre>
+): List<HomeGenre> {
+    val filteredGenres = mutableListOf<HomeGenre>()
+
+    for (genreFromServer in genresFromServer) {
+        val matchingGenreFromUtil = genresFromUtil.find { it.id == genreFromServer.id }
+        if (matchingGenreFromUtil != null) {
+            filteredGenres.add(matchingGenreFromUtil)
+        }
+    }
+
+    return filteredGenres
 }

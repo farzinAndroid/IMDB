@@ -1,6 +1,6 @@
 package com.farzin.imdb.models.tvDetail
 
-data class ImagesTVModel(
+data class ImagesModel(
     val backdrops: List<Backdrop>,
     val id: Int,
     val logos: List<Logo>,
