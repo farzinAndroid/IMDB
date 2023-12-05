@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,6 +20,7 @@ import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.Cast
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
+import com.farzin.imdb.viewmodel.ProfileViewModel
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
@@ -26,6 +28,7 @@ fun AllTVCast(
     id: Int,
     navController: NavController,
     tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
 
     var tvCast by remember { mutableStateOf<List<Cast>>(emptyList()) }
@@ -34,7 +37,7 @@ fun AllTVCast(
     var name by remember { mutableStateOf("") }
     var profilePath by remember { mutableStateOf("") }
     var character by remember { mutableStateOf("") }
-    var numberOfEpisode by remember { mutableStateOf(0) }
+    var numberOfEpisode by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(id) {
         tvDetailViewModel.getTVCastAndCrew(id)
@@ -65,7 +68,8 @@ fun AllTVCast(
 
         item {
             MediaDetailTopBarSection(
-                name = stringResource(R.string.cast)
+                name = stringResource(R.string.cast),
+                shouldHaveThreeDotMenu = false
             ) {
                 navController.popBackStack()
             }
@@ -85,7 +89,9 @@ fun AllTVCast(
                 numberOfEpisode = numberOfEpisode,
                 onCardClicked = {
                     navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
-                }
+                },
+                job = cast.known_for_department,
+                id = cast.id
             )
         }
     }

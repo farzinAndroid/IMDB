@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun TVCastSection(
     tvDetailViewModel: TVDetailViewModel = hiltViewModel(),
     mediaId: Int,
-    navController: NavController
+    navController: NavController,
 ) {
 
     LaunchedEffect(true) {
@@ -52,6 +52,9 @@ fun TVCastSection(
     var loading by remember { mutableStateOf(false) }
     var director by remember { mutableStateOf("") }
     var writer by remember { mutableStateOf("") }
+
+
+    var isSavedInFav by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(true) {
@@ -76,7 +79,7 @@ fun TVCastSection(
         }
     }
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         tvDetailViewModel.writersList.collectLatest { writers ->
 
             writer = when (writers) {
@@ -97,7 +100,6 @@ fun TVCastSection(
             }
         }
     }
-
 
 
     var castList by remember { mutableStateOf<List<Cast>>(emptyList()) }
@@ -144,7 +146,11 @@ fun TVCastSection(
                 horizontalAlignment = Alignment.Start
             ) {
 
-                SectionStickyHeader(stringResource(R.string.cast))
+                SectionStickyHeader(stringResource(R.string.cast),
+                    isHaveAnotherText = true,
+                    headerSubtitle = stringResource(R.string.see_all),
+                    headerOnClick = {navController.navigate(Screens.AllCastTV.route + "?id=${mediaId}")}
+                    )
 
                 MySpacerHeight(height = 8.dp)
 
@@ -154,28 +160,24 @@ fun TVCastSection(
                 ) {
                     items(castList) { cast ->
                         name = cast.name
-                        character = cast.roles.filter { it.character.isNotBlank() }.joinToString { it.character }
+                        character = cast.roles.filter { it.character.isNotBlank() }
+                            .joinToString { it.character }
                         profilePath = cast.profile_path.toString()
                         CastCardItem(
                             profilePath = profilePath,
                             character = character,
                             name = name,
                             onCardClicked = {
-                                navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
-                            }
+                                navController.navigate(Screens.PersonDetail.route + "?id=${cast.id}")
+                            },
+                            id = cast.id,
+                            job = cast.known_for_department
                         )
                     }
-
-                    item {
-                        ShowMoreItem(){
-                            navController.navigate(Screens.AllCastTV.route + "?id=${mediaId}")
-                        }
-                    }
-
                 }
 
 
-                if (director != ""){
+                if (director != "") {
                     MySpacerHeight(height = 12.dp)
 
                     Text(
@@ -204,7 +206,7 @@ fun TVCastSection(
                     )
                 }
 
-                if (writer != ""){
+                if (writer != "") {
 
                     MySpacerHeight(height = 12.dp)
 

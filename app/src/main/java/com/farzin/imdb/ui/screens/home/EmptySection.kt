@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,9 +24,10 @@ import com.farzin.imdb.utils.IMDBButton
 @Composable
 fun EmptySection(
     onClick: () -> Unit,
-    title: String,
-    subtitle: String,
-    buttonText: String,
+    title: String = "",
+    subtitle: String = "",
+    buttonText: String = "",
+    isHaveButton:Boolean = true
 ) {
     Column(
         modifier = Modifier
@@ -52,21 +54,20 @@ fun EmptySection(
             textAlign = TextAlign.Center
         )
 
-        IMDBButton(
-            text = buttonText,
-            onClick = { onClick() },
-            elevation = ButtonDefaults.buttonElevation(4.dp),
-            containerColor = MaterialTheme.colorScheme.imdbYellow,
-            textColor = MaterialTheme.colorScheme.darkText,
-            fontWeight = FontWeight.Normal,
-            modifier = Modifier
-                .height(50.dp)
-                .padding(top = 12.dp),
-            style = MaterialTheme.typography.titleLarge
+        if (isHaveButton){
+            IMDBButton(
+                text = buttonText,
+                onClick = { onClick() },
+                elevation = ButtonDefaults.buttonElevation(4.dp),
+                containerColor = MaterialTheme.colorScheme.imdbYellow,
+                textColor = Color.Black,
+                fontWeight = FontWeight.Normal,
+                modifier = Modifier
+                    .height(50.dp)
+                    .padding(top = 12.dp),
+                style = MaterialTheme.typography.titleLarge
 
-        )
-
+            )
+        }
     }
-
-
 }

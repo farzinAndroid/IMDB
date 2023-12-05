@@ -146,7 +146,11 @@ fun MovieCastSection(
                 horizontalAlignment = Alignment.Start
             ) {
 
-                SectionStickyHeader(stringResource(R.string.cast))
+                SectionStickyHeader(stringResource(R.string.cast),
+                    isHaveAnotherText = true,
+                    headerSubtitle = stringResource(R.string.see_all),
+                    headerOnClick = {navController.navigate(Screens.AllCastMovie.route + "?id=${mediaId}")}
+                )
 
                 MySpacerHeight(height = 8.dp)
 
@@ -164,7 +168,9 @@ fun MovieCastSection(
                             name = name,
                             onCardClicked = {
                                 navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
-                            }
+                            },
+                            id = cast.id,
+                            job = cast.known_for_department
                         )
                     }
 

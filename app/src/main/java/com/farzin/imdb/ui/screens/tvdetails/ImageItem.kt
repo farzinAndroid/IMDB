@@ -12,7 +12,9 @@ import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.utils.ImageHelper
 
@@ -34,7 +36,14 @@ fun ImageItem(
     ) {
 
         Image(
-            painter = rememberAsyncImagePainter(ImageHelper.appendImage(path)),
+            painter = rememberAsyncImagePainter(
+                ImageHelper.appendImage(path),
+                imageLoader = ImageLoader.Builder(LocalContext.current)
+                    .crossfade(true)
+                    .crossfade(500)
+                    .build(),
+                contentScale = ContentScale.FillBounds
+            ),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxSize(),

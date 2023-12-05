@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.IMDBButton
 import com.farzin.imdb.utils.MySpacerHeight
@@ -180,7 +181,7 @@ fun LoginSection(
                 focusedElevation = 4.dp,
             ),
             containerColor =MaterialTheme.colorScheme.imdbYellow,
-            textColor =MaterialTheme.colorScheme.darkText,
+            textColor = Color.Black,
             fontWeight =FontWeight.Light,
             modifier = Modifier
                 .fillMaxWidth()

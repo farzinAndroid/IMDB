@@ -112,4 +112,7 @@
     <string name="soape">Soap</string>
     <string name="talk">Talk</string>
     <string name="war_and_politic">War &amp; Politics</string>
+    <string name="fav_celebs">Favorite Celebs</string>
+    <string name="your_celebs_empty">Your favorite people list is empty</string>
+    <string name="add_your_fav_celeb">Add your favorite actors, to stay up to date on their latest projects</string>
 </resources>

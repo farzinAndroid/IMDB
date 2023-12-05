@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.models.home.HomeGenre
@@ -60,7 +61,14 @@ fun MediaOverViewSection(
     ) {
 
         Image(
-            painter = rememberAsyncImagePainter(ImageHelper.appendImage(posterPath)),
+            painter = rememberAsyncImagePainter(
+                ImageHelper.appendImage(posterPath),
+                imageLoader = ImageLoader.Builder(LocalContext.current)
+                    .crossfade(true)
+                    .crossfade(500)
+                    .build(),
+                contentScale = ContentScale.FillBounds
+            ),
             contentDescription = "",
             modifier = Modifier
                 .weight(0.35f)

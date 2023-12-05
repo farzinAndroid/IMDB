@@ -6,12 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.database.PersonDBModel
 import com.farzin.imdb.models.profile.AccountDetail
 import com.farzin.imdb.models.profile.RequestToken
 import com.farzin.imdb.models.profile.SessionId
 import com.farzin.imdb.repository.ProfileRepo
 import com.farzin.imdb.ui.screens.profile.ProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -24,9 +26,13 @@ class ProfileViewModel @Inject constructor(private val repo: ProfileRepo) : View
 
     var screenState by mutableStateOf(ProfileState.NOTLOGGED)
 
+
+    var isSaved by mutableStateOf(false)
+
     val initialRequestToken = MutableStateFlow<NetworkResult<RequestToken>>(NetworkResult.Loading())
     val sessionId = MutableStateFlow<NetworkResult<SessionId>>(NetworkResult.Loading())
     val accountDetail = MutableStateFlow<NetworkResult<AccountDetail>>(NetworkResult.Loading())
+    val allPerson = repo.allPerson
 
 
     fun getInitialRequestToken() {
@@ -54,6 +60,24 @@ class ProfileViewModel @Inject constructor(private val repo: ProfileRepo) : View
             }
         }
 
+    }
+
+
+    fun addPerson(person: PersonDBModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.addPerson(person)
+        }
+    }
+
+    fun removePerson(person: PersonDBModel){
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.removePerson(person)
+        }
+    }
+
+
+    fun getId(id:Int) : Int{
+        return repo.getId(id)
     }
 
 

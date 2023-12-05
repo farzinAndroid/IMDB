@@ -1,10 +1,15 @@
 package com.farzin.imdb.repository
 
+import com.farzin.imdb.data.database.PersonDao
 import com.farzin.imdb.data.remote.BaseApiResponse
 import com.farzin.imdb.data.remote.ProfileApiInterface
+import com.farzin.imdb.models.database.PersonDBModel
 import javax.inject.Inject
 
-class ProfileRepo @Inject constructor(private val api: ProfileApiInterface) : BaseApiResponse() {
+class ProfileRepo @Inject constructor(
+    private val api: ProfileApiInterface,
+    private val dao:PersonDao
+) : BaseApiResponse() {
 
 
     suspend fun getInitialRequestToken() =
@@ -33,5 +38,12 @@ class ProfileRepo @Inject constructor(private val api: ProfileApiInterface) : Ba
             api.getAccountDetails(sessionId=sessionId)
         }
 
+    val allPerson = dao.getAllPersons()
+
+    suspend fun removePerson(person: PersonDBModel) = dao.removePerson(person)
+
+    suspend fun addPerson(person: PersonDBModel) = dao.addPerson(person)
+
+    fun getId(id:Int) : Int = dao.getId(id)
 
 }

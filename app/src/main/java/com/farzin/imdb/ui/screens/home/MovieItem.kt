@@ -22,11 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
@@ -77,7 +79,14 @@ fun MovieItem(
             ) {
 
                 Image(
-                    painter = rememberAsyncImagePainter(ImageHelper.appendImage(posterPath)),
+                    painter = rememberAsyncImagePainter(
+                        ImageHelper.appendImage(posterPath),
+                        imageLoader = ImageLoader.Builder(LocalContext.current)
+                            .crossfade(true)
+                            .crossfade(500)
+                            .build(),
+                        contentScale = ContentScale.FillBounds
+                    ),
                     contentDescription = "",
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds

@@ -20,12 +20,14 @@ import com.farzin.imdb.models.movieDetail.Cast
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
+import com.farzin.imdb.viewmodel.ProfileViewModel
 
 @Composable
 fun AllMovieCast(
     id: Int,
     navController: NavController,
     movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
 
 
@@ -35,7 +37,6 @@ fun AllMovieCast(
     var name by remember { mutableStateOf("") }
     var profilePath by remember { mutableStateOf("") }
     var character by remember { mutableStateOf("") }
-
 
     LaunchedEffect(id) {
         movieDetailViewModel.getMovieCastAndCrew(id)
@@ -64,7 +65,8 @@ fun AllMovieCast(
 
         item {
             MediaDetailTopBarSection(
-                name = stringResource(R.string.cast)
+                name = stringResource(R.string.cast),
+                shouldHaveThreeDotMenu = false
             ) {
                 navController.popBackStack()
             }
@@ -81,7 +83,9 @@ fun AllMovieCast(
                 character = character,
                 onCardClicked = {
                     navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
-                }
+                },
+                job = cast.known_for_department,
+                id = cast.id
             )
         }
     }

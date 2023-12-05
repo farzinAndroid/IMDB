@@ -17,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
@@ -47,7 +49,14 @@ fun MediaPosterSection(
 
 
         Image(
-            painter = rememberAsyncImagePainter(ImageHelper.appendImage(picturePath)),
+            painter = rememberAsyncImagePainter(
+                ImageHelper.appendImage(picturePath),
+                imageLoader = ImageLoader.Builder(LocalContext.current)
+                    .crossfade(true)
+                    .crossfade(500)
+                    .build(),
+                contentScale = ContentScale.FillBounds
+            ),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxSize(),

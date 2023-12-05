@@ -33,6 +33,7 @@ fun Profile(
         item { ProfileTopBar {navController.navigate(Screens.Settings.route)} }
         item { WatchListTVSection(navController=navController) }
         item { WatchListMovieSection(navController=navController) }
+        item { FavoritePersonSection(navController=navController) }
     }
 
 

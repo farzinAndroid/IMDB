@@ -153,7 +153,8 @@ private fun ImageListItem(
             imageLoader = ImageLoader.Builder(ctx)
                 .crossfade(true)
                 .crossfade(500)
-                .build()
+                .build(),
+            contentScale = ContentScale.FillBounds
         ),
         contentDescription = "",
         modifier = Modifier

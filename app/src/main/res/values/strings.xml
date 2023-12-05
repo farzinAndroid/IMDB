@@ -111,6 +111,9 @@
     <string name="soape">آبکی</string>
     <string name="talk">تاک شو</string>
     <string name="war_and_politic">جنگ و سیاست</string>
+    <string name="fav_celebs">سلبریتی‌های مورد علاقه</string>
+    <string name="your_celebs_empty">لیست سلبریتی های شما خالیست</string>
+    <string name="add_your_fav_celeb">بازیگران مورد علاقه خود را اضافه کنید تا از آخرین پروژه های آن ها با خبر شوید</string>
 
 
 
