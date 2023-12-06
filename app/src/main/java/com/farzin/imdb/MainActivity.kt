@@ -21,6 +21,7 @@ import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
 import com.farzin.imdb.ui.theme.IMDBTheme
 import com.farzin.imdb.utils.AppConfig
+import com.farzin.imdb.utils.ChangeStatusBarColor
 import com.farzin.imdb.utils.Constants.ENGLISH
 import com.farzin.imdb.utils.Constants.USER_LANG
 import com.farzin.imdb.utils.InitialRequestToken
@@ -44,6 +45,8 @@ class MainActivity : ComponentActivity() {
 
                     val navController = rememberNavController()
                     val vm = viewModels<DataStoreViewModel>()
+
+                    ChangeStatusBarColor()
 
                     InitialRequestToken()
                     AppConfig()

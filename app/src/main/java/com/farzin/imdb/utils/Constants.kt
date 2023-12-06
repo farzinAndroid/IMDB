@@ -10,6 +10,7 @@ object Constants {
     const val TABLE_NAME = "person_table"
     const val TIME_OUT: Long = 60
     const val API_KEY = "f32d28d55d5dd0e1803d5ad8b51d4958"
+    const val TMDB_WEBSITE = "https://www.themoviedb.org/signup?language=en-GB"
     var REQUEST_TOKEN = ""
     var SESSION_ID = ""
     const val IMAGE_APPEND = "https://image.tmdb.org/t/p/original"

@@ -114,6 +114,10 @@
     <string name="fav_celebs">سلبریتی‌های مورد علاقه</string>
     <string name="your_celebs_empty">لیست سلبریتی های شما خالیست</string>
     <string name="add_your_fav_celeb">بازیگران مورد علاقه خود را اضافه کنید تا از آخرین پروژه های آن ها با خبر شوید</string>
+    <string name="please_login_to_see_watchlist">لطفا به اکانت خود وارد شوید تا لیست تماشا را ببینید</string>
+    <string name="please_login_to_see_fav_person">لطفا به اکانت خود وارد شوید تا سلبریتی های مورد علاقه را ببینید </string>
+    <string name="dont_have_acc">اکانتی ندارید؟</string>
+    <string name="create_one">ساخت اکانت در وب‌سایت</string>
 
 
 

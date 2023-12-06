@@ -31,8 +31,8 @@ import com.farzin.imdb.MainActivity
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.ui.screens.profile.ProfileState
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.IMDBButton
 import com.farzin.imdb.utils.MyDividerHorizontal
@@ -139,42 +139,45 @@ fun SettingsScreen(
 
         MyDividerHorizontal()
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            IMDBButton(
-                text = stringResource(R.string.logout),
-                onClick = {
-                    dataStoreViewModel.saveSessionId("")
-                    Constants.SESSION_ID = ""
-                    dataStoreViewModel.saveAccountId("")
-                    Constants.ACC_ID = ""
-                    profileViewModel.screenState = ProfileState.NOTLOGGED
-                    scope.launch {
-                        profileViewModel.getInitialRequestToken()
+        if (Constants.SESSION_ID.isNotEmpty()){
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                IMDBButton(
+                    text = stringResource(R.string.logout),
+                    onClick = {
+                        dataStoreViewModel.saveSessionId("")
+                        Constants.SESSION_ID = ""
+                        dataStoreViewModel.saveAccountId("")
+                        Constants.ACC_ID = ""
+                        profileViewModel.screenState = ProfileState.NOTLOGGED
+                        scope.launch {
+                            profileViewModel.getInitialRequestToken()
 
-                        profileViewModel.initialRequestToken.collectLatest { reqToken ->
-                            when (reqToken) {
-                                is NetworkResult.Success -> {
-                                    reqToken.data?.request_token?.let {
-                                        Constants.REQUEST_TOKEN = it
-                                        Log.e("TAG","this id from setting composable $it")
+                            profileViewModel.initialRequestToken.collectLatest { reqToken ->
+                                when (reqToken) {
+                                    is NetworkResult.Success -> {
+                                        reqToken.data?.request_token?.let {
+                                            Constants.REQUEST_TOKEN = it
+                                            Log.e("TAG","this id from setting composable $it")
+                                        }
                                     }
+                                    else->{}
                                 }
-                                else->{}
                             }
-                        }
 
+
+                        }
+                        navController.popBackStack()
 
                     }
-                    navController.popBackStack()
-
-                }
-            )
+                )
+            }
         }
+
 
 
     }

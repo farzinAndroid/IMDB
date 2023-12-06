@@ -20,6 +20,7 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.IMDBButton
+import com.farzin.imdb.utils.MySpacerHeight
 
 @Composable
 fun EmptySection(
@@ -69,5 +70,8 @@ fun EmptySection(
 
             )
         }
+        
+        MySpacerHeight(height = 16.dp)
+        
     }
 }

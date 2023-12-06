@@ -2,8 +2,11 @@ package com.farzin.imdb.ui.screens.profile
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,13 +28,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.Constants
@@ -45,6 +52,7 @@ import kotlinx.coroutines.launch
 fun LoginSection(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
 
@@ -67,6 +75,7 @@ fun LoginSection(
                 sessionIdText = sessionId
             }
         }
+
         is NetworkResult.Error -> {}
         is NetworkResult.Loading -> {}
     }
@@ -99,6 +108,7 @@ fun LoginSection(
 
 
 
+    val localUriHandler = LocalUriHandler.current
 
 
     Column(
@@ -165,7 +175,7 @@ fun LoginSection(
         MySpacerHeight(height = 16.dp)
 
         IMDBButton(
-            text =stringResource(R.string.login) ,
+            text = stringResource(R.string.login),
             onClick = {
                 coroutineScope.launch {
                     profileViewModel.getSessionId(
@@ -180,16 +190,47 @@ fun LoginSection(
                 defaultElevation = 2.dp,
                 focusedElevation = 4.dp,
             ),
-            containerColor =MaterialTheme.colorScheme.imdbYellow,
+            containerColor = MaterialTheme.colorScheme.imdbYellow,
             textColor = Color.Black,
-            fontWeight =FontWeight.Light,
+            fontWeight = FontWeight.Light,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(horizontal = 30.dp),
-            style =MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge
 
         )
+
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp)
+                .padding(top = 16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.dont_have_acc),
+                color = MaterialTheme.colorScheme.darkText,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold
+
+            )
+
+
+            Text(
+                text = stringResource(R.string.create_one),
+                color = MaterialTheme.colorScheme.Cyan,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .clickable {localUriHandler.openUri(Constants.TMDB_WEBSITE) },
+                fontWeight = FontWeight.SemiBold,
+                textDecoration = TextDecoration.Underline
+
+            )
+        }
 
 
 

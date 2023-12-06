@@ -18,8 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
-import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.selectedColor
 import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
@@ -52,7 +52,7 @@ fun ProfileTopBar(onClick:()->Unit) {
             MySpacerWidth(width = 24.dp)
 
             Text(
-                text = "Hi ${Constants.USER_NAME}",
+                text = Constants.USER_NAME,
                 style = MaterialTheme.typography.displayMedium,
                 color = MaterialTheme.colorScheme.darkText,
                 modifier = Modifier

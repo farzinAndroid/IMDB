@@ -22,6 +22,7 @@ import com.farzin.imdb.ui.theme.Cyan
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
 
@@ -85,7 +86,7 @@ fun MediaDetailTitleSection(
 
 
             Text(
-                text = DateHelper.extractYearFromDate(date),
+                text = DigitHelper.digitByLang(DateHelper.extractYearFromDate(date)),
                 modifier = Modifier
                     .wrapContentWidth(),
                 style = MaterialTheme.typography.titleSmall,
@@ -99,7 +100,7 @@ fun MediaDetailTitleSection(
             if (runTimeList.isNotEmpty()) {
                 runTimeList.forEachIndexed { index, time ->
                     Text(
-                        text = "${time}m",
+                        text = "${DigitHelper.digitByLang(time.toString())}m",
                         modifier = Modifier
                             .wrapContentWidth(),
                         style = MaterialTheme.typography.titleSmall,
@@ -120,15 +121,6 @@ fun MediaDetailTitleSection(
                     }
 
                 }
-            } else {
-                Text(
-                    text = "${runTime}m",
-                    modifier = Modifier
-                        .wrapContentWidth(),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.strongGray,
-                    fontWeight = FontWeight.Normal
-                )
             }
 
 
@@ -158,7 +150,7 @@ fun MediaDetailTitleSection(
                 MySpacerWidth(width = 8.dp)
 
                 Text(
-                    text = "$numberOfEpisode ${stringResource(R.string.episodes)}",
+                    text = "${DigitHelper.digitByLang(numberOfEpisode.toString())} ${stringResource(R.string.episodes)}",
                     modifier = Modifier
                         .wrapContentWidth(),
                     style = MaterialTheme.typography.titleSmall,

@@ -34,6 +34,7 @@ import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -53,10 +54,6 @@ fun TVCastSection(
     var director by remember { mutableStateOf("") }
     var writer by remember { mutableStateOf("") }
 
-
-    var isSavedInFav by remember { mutableStateOf(false) }
-
-
     LaunchedEffect(true) {
         tvDetailViewModel.directorsList.collectLatest { directors ->
 
@@ -69,7 +66,7 @@ fun TVCastSection(
                         val firstFourDirectors = directorList.take(4).joinToString { it.name }
                         val remainingDirectorsCount = directorList.size - 4
                         val remainingDirectors =
-                            if (remainingDirectorsCount > 0) " and $remainingDirectorsCount others" else ""
+                            if (remainingDirectorsCount > 0) " and ${DigitHelper.digitByLang(remainingDirectorsCount.toString())} others" else ""
                         "$firstFourDirectors$remainingDirectors"
                     }
                 }
@@ -84,15 +81,15 @@ fun TVCastSection(
 
             writer = when (writers) {
                 is NetworkResult.Success -> {
-                    val directorList = (writers.data ?: emptyList())
-                    if (directorList.isEmpty()) {
+                    val writersList = (writers.data ?: emptyList())
+                    if (writersList.isEmpty()) {
                         ""
                     } else {
-                        val firstFourDirectors = directorList.take(4).joinToString { it.name }
-                        val remainingDirectorsCount = directorList.size - 4
-                        val remainingDirectors =
-                            if (remainingDirectorsCount > 0) " and $remainingDirectorsCount others" else ""
-                        "$firstFourDirectors$remainingDirectors"
+                        val firstFourWriters = writersList.take(4).joinToString { it.name }
+                        val remainingWritersCount = writersList.size - 4
+                        val remainingWriters =
+                            if (remainingWritersCount > 0) " and ${DigitHelper.digitByLang(remainingWritersCount.toString())} others" else ""
+                        "$firstFourWriters$remainingWriters"
                     }
                 }
 

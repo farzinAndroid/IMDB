@@ -29,6 +29,8 @@ import com.farzin.imdb.ui.screens.home.EmptySection
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.screens.tvdetails.CastCardItem
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.Constants
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.ProfileViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -78,15 +80,26 @@ fun FavoritePersonSection(
             ) {
 
                 SectionStickyHeader(
-                    headerTitle = "${stringResource(R.string.fav_celebs)} ${favPersonList.size}",
+                    headerTitle = "${stringResource(R.string.fav_celebs)} ${DigitHelper.digitByLang(favPersonList.size.toString())}",
                 )
 
                 MySpacerHeight(height = 8.dp)
 
-                if (favPersonList.isEmpty()) {
+                if (favPersonList.isEmpty() && Constants.SESSION_ID.isNotEmpty()) {
+
                     EmptySection(
-                        onClick = {},
+                        onClick = {
+                            navController.navigate(Screens.Search.route)
+                        },
                         title = stringResource(R.string.your_celebs_empty),
+                        subtitle = stringResource(R.string.add_your_fav_celeb),
+                        isHaveButton = false
+                    )
+
+                } else if (Constants.SESSION_ID == "" && favPersonList.isEmpty()) {
+                    EmptySection(
+                        onClick = {navController.navigate(Screens.Profile.route)},
+                        title = stringResource(R.string.please_login_to_see_fav_person),
                         subtitle = stringResource(R.string.add_your_fav_celeb),
                         isHaveButton = false
                     )

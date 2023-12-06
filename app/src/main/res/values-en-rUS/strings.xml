@@ -115,4 +115,8 @@
     <string name="fav_celebs">Favorite Celebs</string>
     <string name="your_celebs_empty">Your favorite people list is empty</string>
     <string name="add_your_fav_celeb">Add your favorite actors, to stay up to date on their latest projects</string>
+    <string name="please_login_to_see_watchlist">Please login to see your watchlist</string>
+    <string name="please_login_to_see_fav_person">Please login to see your favorite celebs</string>
+    <string name="dont_have_acc">Don\'t have an account?</string>
+    <string name="create_one">Create one at TMDB</string>
 </resources>

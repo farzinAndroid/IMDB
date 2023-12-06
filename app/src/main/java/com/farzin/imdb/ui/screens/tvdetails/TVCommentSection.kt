@@ -46,6 +46,7 @@ import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.starBlue
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.TVDetailViewModel
@@ -155,7 +156,7 @@ fun TVCommentSection(
                                         color = MaterialTheme.colorScheme.darkText
                                     )
                                 ) {
-                                    append("/10")
+                                    append("/${DigitHelper.digitByLang("10")}")
                                 }
 
                             }
@@ -186,7 +187,7 @@ fun TVCommentSection(
                                             color = MaterialTheme.colorScheme.darkText
                                         )
                                     ) {
-                                        append(userRating.toString())
+                                        append(DigitHelper.digitByLang(userRating.toString()))
                                     }
 
 
@@ -198,7 +199,7 @@ fun TVCommentSection(
                                             color = MaterialTheme.colorScheme.darkText
                                         )
                                     ) {
-                                        append("/10")
+                                        append("/${DigitHelper.digitByLang("10")}")
                                     }
 
                                 }

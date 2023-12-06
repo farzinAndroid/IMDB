@@ -17,6 +17,7 @@ import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
 import com.farzin.imdb.ui.screens.play_video.VideoPlayerScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
+import com.farzin.imdb.ui.screens.profile.WebScreen
 import com.farzin.imdb.ui.screens.search.SearchScreen
 import com.farzin.imdb.ui.screens.service.ServiceScreen
 import com.farzin.imdb.ui.screens.settings.SettingsScreen
@@ -268,6 +269,11 @@ fun SetUpNavGraph(
                     )
                 }
             }
+        }
+
+
+        composable(Screens.WebView.route) {
+            WebScreen()
         }
 
 

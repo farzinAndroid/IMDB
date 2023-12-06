@@ -47,10 +47,10 @@ fun Login(navController: NavController) {
     ) {
 
 
-        item { LoginTopBar() }
+        item { LoginTopBar(navController) }
 
 
-        item { LoginSection() }
+        item { LoginSection(navController=navController) }
 
 
     }

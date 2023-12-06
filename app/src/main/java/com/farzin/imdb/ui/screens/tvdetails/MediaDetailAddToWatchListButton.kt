@@ -73,13 +73,13 @@ fun MediaDetailAddToWatchListButton(
                         contentDescription = "",
                         modifier = Modifier
                             .size(16.dp),
-                        tint = MaterialTheme.colorScheme.darkText
+                        tint = Color.Black
                     )
 
                     Text(
                         text = buttonText,
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.darkText,
+                        color = Color.Black,
                         modifier = Modifier
                             .padding(start = 8.dp)
                     )

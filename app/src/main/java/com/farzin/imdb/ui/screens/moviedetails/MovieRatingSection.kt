@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,6 +39,7 @@ import com.farzin.imdb.ui.theme.font_standard
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.ui.theme.strongGray
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -58,8 +60,8 @@ fun MovieRatingSection(
 
     var loading by remember { mutableStateOf(false) }
     var isRated by remember { mutableStateOf(false) }
-    var userRating by remember { mutableStateOf(0) }
-    var matchingIndex by remember { mutableStateOf(-1) }
+    var userRating by remember { mutableIntStateOf(0) }
+    var matchingIndex by remember { mutableIntStateOf(-1) }
 
 
     val result by movieDetailViewModel.ratedMovies.collectAsState()
@@ -138,7 +140,7 @@ fun MovieRatingSection(
                             color = MaterialTheme.colorScheme.darkText
                         )
                     ) {
-                        append("/10")
+                        append("/${DigitHelper.digitByLang("10")}")
                     }
                 },
                 modifier = Modifier
@@ -147,7 +149,7 @@ fun MovieRatingSection(
 
 
             Text(
-                text = voteCount.toString(),
+                text = DigitHelper.digitByLang(voteCount.toString()),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.Thin,
@@ -200,7 +202,7 @@ fun MovieRatingSection(
                                 color = MaterialTheme.colorScheme.darkText
                             )
                         ) {
-                            append("$userRating")
+                            append(DigitHelper.digitByLang(userRating.toString()))
                         }
 
                         withStyle(
@@ -211,7 +213,7 @@ fun MovieRatingSection(
                                 color = MaterialTheme.colorScheme.darkText
                             )
                         ) {
-                            append("/10")
+                            append("/${DigitHelper.digitByLang("10")}")
                         }
                     },
                     modifier = Modifier

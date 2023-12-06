@@ -1,6 +1,5 @@
 package com.farzin.imdb.ui.screens.service
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -117,7 +116,6 @@ fun Service(
                 isSelected = service == selectedService,
                 onClick = {
                     selectedService = service
-                    Toast.makeText(context, service.id.toString(), Toast.LENGTH_SHORT).show()
                     dataStoreViewModel.saveServiceId(service.id)
                 }
             )

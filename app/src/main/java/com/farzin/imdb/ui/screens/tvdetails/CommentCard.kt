@@ -28,6 +28,7 @@ import com.farzin.imdb.models.tvDetail.TVReviewModelResult
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerWidth
 
 @Composable
@@ -80,7 +81,7 @@ fun CommentCard(
                     )
 
                     Text(
-                        text ="${item.author_details.rating}",
+                        text = DigitHelper.digitByLang(item.author_details.rating.toString()),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.darkText,
                     )

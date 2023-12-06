@@ -100,7 +100,7 @@ fun MediaDetailSection(
                         )
 
                         Text(
-                            text = releaseDate,
+                            text = DigitHelper.digitByLang(releaseDate),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray
@@ -249,7 +249,7 @@ fun MediaDetailSection(
 
 
                         Text(
-                            text = DigitHelper.digitBySeparator(budget.toString()),
+                            text = DigitHelper.digitByLang(DigitHelper.digitBySeparator(budget.toString())),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray
@@ -280,7 +280,7 @@ fun MediaDetailSection(
 
 
                         Text(
-                            text = DigitHelper.digitBySeparator(revenue.toString()),
+                            text = DigitHelper.digitByLang(DigitHelper.digitBySeparator(revenue.toString())),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Thin,
                             color = MaterialTheme.colorScheme.strongGray

@@ -81,7 +81,7 @@ fun TVRatingBottomSheet(
     ) {
 
         Text(
-            text = "${stringResource(R.string.rate_desc)} $name?",
+            text = "${stringResource(R.string.rate_desc)} $name",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp)
@@ -110,9 +110,6 @@ fun TVRatingBottomSheet(
                 IconButton(
                     onClick = {
                         selectedStars = index + 1
-                        Toast
-                            .makeText(context, selectedStars.toString(), Toast.LENGTH_SHORT)
-                            .show()
                     },
                     modifier = Modifier
                         .size(26.dp)

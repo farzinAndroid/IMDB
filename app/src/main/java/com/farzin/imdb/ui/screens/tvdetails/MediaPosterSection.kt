@@ -24,6 +24,7 @@ import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.ImageHelper
 
 @Composable
@@ -41,7 +42,7 @@ fun MediaPosterSection(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(220.dp)
+            .height(250.dp)
             .padding(top = 8.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
@@ -94,14 +95,14 @@ fun MediaPosterSection(
 
             if (!isMovie) {
                 Text(
-                    text = "($startYearText-$endYearText)",
+                    text = "(${DigitHelper.digitByLang(startYearText)}-${DigitHelper.digitByLang(endYearText)})",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.SemiBold
                 )
             } else {
                 Text(
-                    text = "(${DateHelper.extractYearFromDate(startYear)})",
+                    text = "(${DigitHelper.digitByLang(DateHelper.extractYearFromDate(startYear))})",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.strongGray,
                     fontWeight = FontWeight.SemiBold

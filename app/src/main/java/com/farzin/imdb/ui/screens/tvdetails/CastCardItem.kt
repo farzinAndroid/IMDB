@@ -37,12 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.farzin.imdb.models.database.PersonDBModel
 import com.farzin.imdb.ui.theme.darkText
@@ -106,10 +104,6 @@ fun CastCardItem(
                 Image(
                     painter = rememberAsyncImagePainter(
                         ImageHelper.appendImage(profilePath),
-                        imageLoader = ImageLoader.Builder(LocalContext.current)
-                            .crossfade(true)
-                            .crossfade(500)
-                            .build(),
                         contentScale = ContentScale.FillBounds
                     ),
                     contentDescription = "",

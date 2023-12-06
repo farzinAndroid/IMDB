@@ -2,6 +2,7 @@ package com.farzin.imdb.utils
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,11 +29,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.ProfileViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -115,7 +117,7 @@ fun IMDBButton(
     onClick:()->Unit,
     containerColor:Color = MaterialTheme.colorScheme.imdbYellow,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
-    textColor:Color = MaterialTheme.colorScheme.darkText,
+    textColor:Color = Color.Black,
     fontWeight: FontWeight = FontWeight.Normal,
     style: TextStyle = MaterialTheme.typography.titleLarge,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(2.dp)
@@ -132,6 +134,26 @@ fun IMDBButton(
             style = style,
             color = textColor,
             fontWeight = fontWeight,
+        )
+    }
+
+}
+
+
+
+@Composable
+fun ChangeStatusBarColor() {
+    val systemUiController = rememberSystemUiController()
+
+    val statusBarColor = if (isSystemInDarkTheme()) {
+        Color.Black
+    } else {
+        Color.White
+    }
+
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = statusBarColor
         )
     }
 

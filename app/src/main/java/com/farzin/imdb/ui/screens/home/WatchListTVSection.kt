@@ -4,7 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -29,6 +29,7 @@ import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.WatchListTVResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -41,7 +42,7 @@ import kotlinx.coroutines.launch
 fun WatchListTVSection(
     homeViewModel: HomeViewModel = hiltViewModel(),
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
 
     val scope = rememberCoroutineScope()
@@ -77,12 +78,12 @@ fun WatchListTVSection(
 
         MySpacerHeight(height = 20.dp)
 
-        val height = if (watchListTVList.isEmpty()) 350.dp else 480.dp
+
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(height),
+                .wrapContentHeight(),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
@@ -109,12 +110,24 @@ fun WatchListTVSection(
 
                 MySpacerHeight(height = 8.dp)
 
-                if (watchListTVList.isEmpty()) {
+                if (watchListTVList.isEmpty() && Constants.SESSION_ID.isNotEmpty()) {
+
                     EmptySection(
-                        onClick = {},
+                        onClick = {
+                            navController.navigate(Screens.Search.route)
+                        },
                         title = stringResource(R.string.empty_watchlist_title),
                         subtitle = stringResource(R.string.empty_watchlist_subtitle),
                         buttonText = stringResource(R.string.empty_watchlist_button_text)
+                    )
+
+                } else if (Constants.SESSION_ID == "" && watchListTVList.isEmpty()) {
+                    EmptySection(
+                        onClick = {navController.navigate(Screens.Profile.route)},
+                        title = stringResource(R.string.please_login_to_see_watchlist),
+                        subtitle = stringResource(R.string.empty_watchlist_subtitle),
+                        isHaveButton = true,
+                        buttonText = stringResource(R.string.login)
                     )
                 } else {
 
@@ -124,8 +137,8 @@ fun WatchListTVSection(
                     ) {
                         items(
                             watchListTVList,
-                            key = {it.id}
-                        ) {item->
+                            key = { it.id }
+                        ) { item ->
 
 
                             MovieItem(
@@ -159,6 +172,7 @@ fun WatchListTVSection(
 
                 }
 
+                MySpacerHeight(height = 16.dp)
 
             }
 

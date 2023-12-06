@@ -32,6 +32,7 @@ import com.farzin.imdb.models.tvDetail.Poster
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 
@@ -105,7 +106,7 @@ fun TVImageSection(
                 SectionStickyHeader(
                     headerTitle = stringResource(R.string.photos),
                     isHaveAnotherText = true,
-                    headerSubtitle = "${stringResource(R.string.see_all)} $imageNumber ${
+                    headerSubtitle = "${stringResource(R.string.see_all)} ${DigitHelper.digitByLang(imageNumber.toString())} ${
                         stringResource(
                             R.string.photos
                         )

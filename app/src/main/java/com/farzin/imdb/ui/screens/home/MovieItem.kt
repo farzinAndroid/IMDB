@@ -36,6 +36,7 @@ import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
@@ -166,7 +167,7 @@ fun MovieItem(
                 )
             }else{
                 Text(
-                    text = DateHelper.extractYearFromDate(releaseDate),
+                    text = DigitHelper.digitByLang(DateHelper.extractYearFromDate(releaseDate)),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier

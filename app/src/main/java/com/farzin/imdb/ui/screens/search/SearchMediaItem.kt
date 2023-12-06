@@ -30,6 +30,7 @@ import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DateHelper
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MyDividerHorizontal
 
@@ -97,7 +98,7 @@ fun SearchMediaItem(
 
 
             Text(
-                text = DateHelper.extractYearFromDate(startYear),
+                text = DigitHelper.digitByLang(DateHelper.extractYearFromDate(startYear)),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.strongGray,
                 fontWeight = FontWeight.Normal,
