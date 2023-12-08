@@ -1,6 +1,5 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,8 +25,8 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.movieDetail.VideoResult
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
-import com.farzin.imdb.ui.screens.play_video.PlayActivity
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -144,10 +143,7 @@ fun MediaVideoSection(
                                 title = it.name ?: "",
                                 type = it.type ?: "",
                                 onClick = {
-                                    val intent = Intent(ctx, PlayActivity::class.java)
-                                    intent.putExtra("key", it.key)
-                                    ctx.startActivity(intent)
-//                                    navController.navigate(Screens.Video.route+"?key=${it.key}")
+                                    navController.navigate(Screens.Video.route+"?key=${it.key}")
 
                                 }
                             )
