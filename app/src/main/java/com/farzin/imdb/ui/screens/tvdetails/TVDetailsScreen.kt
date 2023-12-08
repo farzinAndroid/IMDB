@@ -5,6 +5,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -22,8 +24,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
@@ -38,6 +42,7 @@ import com.farzin.imdb.ui.screens.cast_detail.ImageScreenState
 import com.farzin.imdb.ui.screens.images_screen.ImageFullScreen
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.utils.MyLoadingFullScreen
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.ImageScreenViewModel
 import com.farzin.imdb.viewmodel.TVDetailViewModel
@@ -149,170 +154,178 @@ fun TVDetailsScreen(
     )
 
 
-    when (imageScreenViewModel.imageScreenState) {
-        ImageScreenState.IMAGE_LIST -> {
-            ModalBottomSheetLayout(
-                sheetContent = {
-                    TVRatingBottomSheet(name, tvId)
-                },
-                sheetState = sheetState
+    if (loading){
+        MyLoadingFullScreen(
+            modifier = Modifier.fillMaxWidth()
+                .height(LocalConfiguration.current.screenHeightDp.dp)
+        )
+    }else{
+        when (imageScreenViewModel.imageScreenState) {
+            ImageScreenState.IMAGE_LIST -> {
+                ModalBottomSheetLayout(
+                    sheetContent = {
+                        TVRatingBottomSheet(name, tvId)
+                    },
+                    sheetState = sheetState
 
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.TopCenter
                 ) {
-                    LazyColumn(
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.appBackGround)
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.TopCenter
                     ) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.appBackGround)
+                        ) {
 
-                        stickyHeader {
-                            MediaDetailTopBarSection(
-                                name = name,
-                                onClick = {
-                                    navController.popBackStack()
-                                }
-                            )
-                        }
-
-
-                        item {
-                            MediaDetailTitleSection(
-                                name = name,
-                                date = date,
-                                status = status,
-                                runTimeList = runTime,
-                                numberOfEpisode = numberOfEpisode,
-                                isMovie = false,
-                                onEpisodeGuideClicked = {
-                                    navController.navigate(Screens.EpisodeGuide.route + "?id=$tvId")
-                                }
-                            )
-                        }
-                        item {
-                            MediaPosterSection(
-                                picturePath = picturePath,
-                                startYear = startYear,
-                                endYear = endYear,
-                                isMovie = false,
-                                name = name
-                            )
-                        }
-                        item {
-
-                            if (overView.isEmpty())
-                                overView = stringResource(R.string.no_overView)
-
-                            MediaOverViewSection(
-                                genres = genres,
-                                overView = overView,
-                                posterPath = posterPath,
-                                mediaType = "tv"
-                            )
-                        }
-                        item {
-                            MediaDetailAddToWatchListButton(
-                                buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
-                                buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
-                                onClick = {
-                                    if (isInWatchList) {
-                                        scope.launch {
-                                            homeViewModel.addToWatchList(
-                                                AddToWatchListRequest(
-                                                    media_type = "tv",
-                                                    media_id = tvId,
-                                                    watchlist = false
-                                                )
-                                            )
-                                            isInWatchList = false
-                                        }
-                                    } else {
-                                        scope.launch {
-                                            homeViewModel.addToWatchList(
-                                                AddToWatchListRequest(
-                                                    media_type = "tv",
-                                                    media_id = tvId,
-                                                    watchlist = true
-                                                )
-                                            )
-                                            isInWatchList = true
-                                        }
+                            stickyHeader {
+                                MediaDetailTopBarSection(
+                                    name = name,
+                                    onClick = {
+                                        navController.popBackStack()
                                     }
-                                },
-                                isInWatchList = isInWatchList
-                            )
+                                )
+                            }
 
-                        }
 
-                        item {
-                            TVRatingSection(
-                                rating = String.format("%.1f", rating),
-                                voteCount = voteCount,
-                                mediaId = tvId,
-                                onClick = {
-                                    scope.launch {
-                                        if (sheetState.isVisible)
-                                            sheetState.hide() else sheetState.show()
+                            item {
+                                MediaDetailTitleSection(
+                                    name = name,
+                                    date = date,
+                                    status = status,
+                                    runTimeList = runTime,
+                                    numberOfEpisode = numberOfEpisode,
+                                    isMovie = false,
+                                    onEpisodeGuideClicked = {
+                                        navController.navigate(Screens.EpisodeGuide.route + "?id=$tvId")
                                     }
-                                },
-                                userRatingCallBack = {
-                                    userRating = it
-                                }
-                            )
-                        }
+                                )
+                            }
+                            item {
+                                MediaPosterSection(
+                                    picturePath = picturePath,
+                                    startYear = startYear,
+                                    endYear = endYear,
+                                    isMovie = false,
+                                    name = name
+                                )
+                            }
+                            item {
 
-                        item { TVCastSection(mediaId = tvId, navController = navController) }
-                        item { TVRecommendedSection(mediaId = tvId, navController = navController) }
-                        item {
-                            TVImageSection(
-                                mediaId = tvId,
-                                navController = navController,
-                                onImageClickCallBack = { path ->
-                                    imageFullScreenPath = path
-                                },
-                                onImageClick = {
-                                    imageScreenViewModel.imageScreenState =
-                                        ImageScreenState.IMAGE_FULLSCREEN
-                                }
-                            )
-                        }
-                        item {
-                            MediaVideoSection(
-                                mediaId = tvId,
-                                mediaType = "tv",
-                                poster = posterPath,
-                                navController = navController
-                            )
-                        }
-                        item {
-                            TVCommentSection(
-                                mediaId = tvId,
-                                rating = String.format("%.1f", rating),
-                                userRating = userRating,
-                                navController = navController
-                            )
-                        }
-                        item {
-                            MediaDetailSection(
-                                spokenLangList = spokenLangList,
-                                productionCountry = productionCountry,
-                                networks = networks,
-                                originCountry = originCountry,
-                                releaseDate = startYear
-                            )
+                                if (overView.isEmpty())
+                                    overView = stringResource(R.string.no_overView)
+
+                                MediaOverViewSection(
+                                    genres = genres,
+                                    overView = overView,
+                                    posterPath = posterPath,
+                                    mediaType = "tv"
+                                )
+                            }
+                            item {
+                                MediaDetailAddToWatchListButton(
+                                    buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
+                                    buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
+                                    onClick = {
+                                        if (isInWatchList) {
+                                            scope.launch {
+                                                homeViewModel.addToWatchList(
+                                                    AddToWatchListRequest(
+                                                        media_type = "tv",
+                                                        media_id = tvId,
+                                                        watchlist = false
+                                                    )
+                                                )
+                                                isInWatchList = false
+                                            }
+                                        } else {
+                                            scope.launch {
+                                                homeViewModel.addToWatchList(
+                                                    AddToWatchListRequest(
+                                                        media_type = "tv",
+                                                        media_id = tvId,
+                                                        watchlist = true
+                                                    )
+                                                )
+                                                isInWatchList = true
+                                            }
+                                        }
+                                    },
+                                    isInWatchList = isInWatchList
+                                )
+
+                            }
+
+                            item {
+                                TVRatingSection(
+                                    rating = String.format("%.1f", rating),
+                                    voteCount = voteCount,
+                                    mediaId = tvId,
+                                    onClick = {
+                                        scope.launch {
+                                            if (sheetState.isVisible)
+                                                sheetState.hide() else sheetState.show()
+                                        }
+                                    },
+                                    userRatingCallBack = {
+                                        userRating = it
+                                    }
+                                )
+                            }
+
+                            item { TVCastSection(mediaId = tvId, navController = navController) }
+                            item { TVRecommendedSection(mediaId = tvId, navController = navController) }
+                            item {
+                                TVImageSection(
+                                    mediaId = tvId,
+                                    navController = navController,
+                                    onImageClickCallBack = { path ->
+                                        imageFullScreenPath = path
+                                    },
+                                    onImageClick = {
+                                        imageScreenViewModel.imageScreenState =
+                                            ImageScreenState.IMAGE_FULLSCREEN
+                                    }
+                                )
+                            }
+                            item {
+                                MediaVideoSection(
+                                    mediaId = tvId,
+                                    mediaType = "tv",
+                                    poster = posterPath,
+                                    navController = navController
+                                )
+                            }
+                            item {
+                                TVCommentSection(
+                                    mediaId = tvId,
+                                    rating = String.format("%.1f", rating),
+                                    userRating = userRating,
+                                    navController = navController
+                                )
+                            }
+                            item {
+                                MediaDetailSection(
+                                    spokenLangList = spokenLangList,
+                                    productionCountry = productionCountry,
+                                    networks = networks,
+                                    originCountry = originCountry,
+                                    releaseDate = startYear
+                                )
+                            }
                         }
                     }
+
+
                 }
+            }
 
-
+            ImageScreenState.IMAGE_FULLSCREEN -> {
+                ImageFullScreen(path = imageFullScreenPath)
             }
         }
-
-        ImageScreenState.IMAGE_FULLSCREEN -> {
-            ImageFullScreen(path = imageFullScreenPath)
-        }
     }
+
 }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -47,6 +48,7 @@ import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.DigitHelper
+import com.farzin.imdb.utils.My3DotsLoading
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.TVDetailViewModel
@@ -115,64 +117,29 @@ fun TVCommentSection(
 
                 SectionStickyHeader(stringResource(R.string.user_review))
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp)
-                        .padding(bottom = 12.dp)
-                ) {
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                if (loading){
+                    My3DotsLoading(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                    )
+                }else{
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp)
+                            .padding(bottom = 12.dp)
+                    ) {
 
-                        Icon(
-                            painter = painterResource(R.drawable.star_unfill),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .size(26.dp),
-                            tint = MaterialTheme.colorScheme.imdbYellow
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
 
-                        MySpacerWidth(width = 4.dp)
-
-                        Text(
-                            text = buildAnnotatedString {
-                                withStyle(
-                                    style = SpanStyle(
-                                        fontFamily = font_standard,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 30.sp,
-                                        color = MaterialTheme.colorScheme.darkText
-                                    )
-                                ) {
-                                    append(rating)
-                                }
-
-
-                                withStyle(
-                                    style = SpanStyle(
-                                        fontFamily = font_standard,
-                                        fontWeight = FontWeight.Normal,
-                                        fontSize = 20.sp,
-                                        color = MaterialTheme.colorScheme.darkText
-                                    )
-                                ) {
-                                    append("/${DigitHelper.digitByLang("10")}")
-                                }
-
-                            }
-                        )
-
-
-                        MySpacerWidth(width = 24.dp)
-
-
-                        if (userRating != 0) {
                             Icon(
                                 painter = painterResource(R.drawable.star_unfill),
                                 contentDescription = "",
                                 modifier = Modifier
                                     .size(26.dp),
-                                tint = MaterialTheme.colorScheme.starBlue
+                                tint = MaterialTheme.colorScheme.imdbYellow
                             )
 
                             MySpacerWidth(width = 4.dp)
@@ -187,7 +154,7 @@ fun TVCommentSection(
                                             color = MaterialTheme.colorScheme.darkText
                                         )
                                     ) {
-                                        append(DigitHelper.digitByLang(userRating.toString()))
+                                        append(rating)
                                     }
 
 
@@ -204,53 +171,94 @@ fun TVCommentSection(
 
                                 }
                             )
+
+
+                            MySpacerWidth(width = 24.dp)
+
+
+                            if (userRating != 0) {
+                                Icon(
+                                    painter = painterResource(R.drawable.star_unfill),
+                                    contentDescription = "",
+                                    modifier = Modifier
+                                        .size(26.dp),
+                                    tint = MaterialTheme.colorScheme.starBlue
+                                )
+
+                                MySpacerWidth(width = 4.dp)
+
+                                Text(
+                                    text = buildAnnotatedString {
+                                        withStyle(
+                                            style = SpanStyle(
+                                                fontFamily = font_standard,
+                                                fontWeight = FontWeight.Bold,
+                                                fontSize = 30.sp,
+                                                color = MaterialTheme.colorScheme.darkText
+                                            )
+                                        ) {
+                                            append(DigitHelper.digitByLang(userRating.toString()))
+                                        }
+
+
+                                        withStyle(
+                                            style = SpanStyle(
+                                                fontFamily = font_standard,
+                                                fontWeight = FontWeight.Normal,
+                                                fontSize = 20.sp,
+                                                color = MaterialTheme.colorScheme.darkText
+                                            )
+                                        ) {
+                                            append("/${DigitHelper.digitByLang("10")}")
+                                        }
+
+                                    }
+                                )
+                            }
                         }
                     }
-                }
 
-                MySpacerHeight(height = 8.dp)
+                    MySpacerHeight(height = 8.dp)
 
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
 
-                    if (reviewList.isEmpty()) {
-                        item {
-                            MediaNoCommentCard()
+                        if (reviewList.isEmpty()) {
+                            item {
+                                MediaNoCommentCard()
+                            }
+                        } else {
+                            items(reviewList) {
+                                CommentCard(
+                                    item = it,
+                                    onClick = {
+                                    }
+                                )
+                            }
                         }
-                    } else {
-                        items(reviewList) {
-                            CommentCard(
-                                item = it,
-                                onClick = {
-                                }
+                    }
+
+                    MySpacerHeight(height = 20.dp)
+
+
+                    if (!reviewList.isNullOrEmpty()){
+                        TextButton(
+                            onClick = { navController.navigate(Screens.TVComment.route+"?id=${mediaId}") }
+                        ) {
+                            Text(
+                                text = stringResource(R.string.view_all_comments),
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.Cyan,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .fillMaxWidth(),
+                                textAlign = TextAlign.Start
                             )
                         }
                     }
                 }
-
-                MySpacerHeight(height = 20.dp)
-
-
-                if (!reviewList.isNullOrEmpty()){
-                    TextButton(
-                        onClick = { navController.navigate(Screens.TVComment.route+"?id=${mediaId}") }
-                    ) {
-                        Text(
-                            text = stringResource(R.string.view_all_comments),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.Cyan,
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                                .fillMaxWidth(),
-                            textAlign = TextAlign.Start
-                        )
-                    }
-                }
-
-
-
             }
         }
     }

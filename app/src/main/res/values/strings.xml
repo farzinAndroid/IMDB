@@ -118,6 +118,9 @@
     <string name="please_login_to_see_fav_person">لطفا به اکانت خود وارد شوید تا سلبریتی های مورد علاقه را ببینید </string>
     <string name="dont_have_acc">اکانتی ندارید؟</string>
     <string name="create_one">ساخت اکانت در وب‌سایت</string>
+    <string name="please_wait">لطفا صبر کنید</string>
+    <string name="sucess_login">عملیات لاگین با موفقیت انجام شد</string>
+    <string name="failed_login">عملیات لاگین با شکست مواجه شد</string>
 
 
 

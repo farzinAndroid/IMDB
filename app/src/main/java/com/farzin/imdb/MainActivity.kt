@@ -19,12 +19,12 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
 import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
+import com.farzin.imdb.ui.screens.profile.InitialRequestToken
 import com.farzin.imdb.ui.theme.IMDBTheme
 import com.farzin.imdb.utils.AppConfig
 import com.farzin.imdb.utils.ChangeStatusBarColor
 import com.farzin.imdb.utils.Constants.ENGLISH
 import com.farzin.imdb.utils.Constants.USER_LANG
-import com.farzin.imdb.utils.InitialRequestToken
 import com.farzin.imdb.utils.LocaleUtils
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import dagger.hilt.android.AndroidEntryPoint

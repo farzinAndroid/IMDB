@@ -119,4 +119,7 @@
     <string name="please_login_to_see_fav_person">Please login to see your favorite celebs</string>
     <string name="dont_have_acc">Don\'t have an account?</string>
     <string name="create_one">Create one at TMDB</string>
+    <string name="please_wait">Please wait</string>
+    <string name="sucess_login">Login successful</string>
+    <string name="failed_login">Login failed</string>
 </resources>

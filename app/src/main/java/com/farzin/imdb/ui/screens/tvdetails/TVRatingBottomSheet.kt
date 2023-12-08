@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -52,7 +53,7 @@ fun TVRatingBottomSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var selectedStars by remember { mutableStateOf(0) }
+    var selectedStars by remember { mutableIntStateOf(0) }
     var message by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
 
@@ -145,12 +146,22 @@ fun TVRatingBottomSheet(
             shape = Shapes().extraSmall,
             enabled = selectedStars != 0
         ) {
-            Text(
-                text = stringResource(R.string.rate),
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
+            if(loading){
+                Text(
+                    text = stringResource(R.string.please_wait),
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    color = Color.White
+                )
+            }else{
+                Text(
+                    text = stringResource(R.string.rate),
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center,
+                    color = Color.White
+                )
+            }
+
         }
 
 

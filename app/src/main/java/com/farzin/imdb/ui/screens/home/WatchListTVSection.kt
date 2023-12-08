@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -30,6 +31,7 @@ import com.farzin.imdb.models.home.WatchListTVResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.Constants
+import com.farzin.imdb.utils.My3DotsLoading
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.DataStoreViewModel
 import com.farzin.imdb.viewmodel.HomeViewModel
@@ -110,67 +112,79 @@ fun WatchListTVSection(
 
                 MySpacerHeight(height = 8.dp)
 
-                if (watchListTVList.isEmpty() && Constants.SESSION_ID.isNotEmpty()) {
 
-                    EmptySection(
-                        onClick = {
-                            navController.navigate(Screens.Search.route)
-                        },
-                        title = stringResource(R.string.empty_watchlist_title),
-                        subtitle = stringResource(R.string.empty_watchlist_subtitle),
-                        buttonText = stringResource(R.string.empty_watchlist_button_text)
-                    )
-
-                } else if (Constants.SESSION_ID == "" && watchListTVList.isEmpty()) {
-                    EmptySection(
-                        onClick = {navController.navigate(Screens.Profile.route)},
-                        title = stringResource(R.string.please_login_to_see_watchlist),
-                        subtitle = stringResource(R.string.empty_watchlist_subtitle),
-                        isHaveButton = true,
-                        buttonText = stringResource(R.string.login)
+                if (loading) {
+                    My3DotsLoading(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
                     )
                 } else {
 
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        items(
-                            watchListTVList,
-                            key = { it.id }
-                        ) { item ->
+                    if (watchListTVList.isEmpty() && Constants.SESSION_ID.isNotEmpty()) {
+
+                        EmptySection(
+                            onClick = {
+                                navController.navigate(Screens.Search.route)
+                            },
+                            title = stringResource(R.string.empty_watchlist_title),
+                            subtitle = stringResource(R.string.empty_watchlist_subtitle),
+                            buttonText = stringResource(R.string.empty_watchlist_button_text)
+                        )
+
+                    } else if (Constants.SESSION_ID == "" && watchListTVList.isEmpty()) {
+                        EmptySection(
+                            onClick = { navController.navigate(Screens.Profile.route) },
+                            title = stringResource(R.string.please_login_to_see_watchlist),
+                            subtitle = stringResource(R.string.empty_watchlist_subtitle),
+                            isHaveButton = true,
+                            buttonText = stringResource(R.string.login)
+                        )
+                    } else {
+
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            items(
+                                watchListTVList,
+                                key = { it.id }
+                            ) { item ->
 
 
-                            MovieItem(
-                                posterPath = item.poster_path ?: "",
-                                voteAverage = item.vote_average,
-                                name = item.name,
-                                releaseDate = item.first_air_date ?: "",
-                                onCardClicked = {
-                                    navController.navigate(
-                                        Screens.TVDetails.route + "?id=${item.id}"
-                                    )
-                                },
-                                onAddButtonClicked = {
-                                    homeViewModel.addToWatchList(
-                                        AddToWatchListRequest(
-                                            media_id = item.id,
-                                            media_type = "tv",
-                                            watchlist = false
+                                MovieItem(
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.name,
+                                    releaseDate = item.first_air_date ?: "",
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.TVDetails.route + "?id=${item.id}"
                                         )
-                                    )
-                                    scope.launch {
-                                        delay(200)
-                                        homeViewModel.getWatchListTV()
-                                    }
-                                },
-                                isFromWatchlist = true,
-                                modifier = Modifier.animateItemPlacement()
-                            )
+                                    },
+                                    onAddButtonClicked = {
+                                        homeViewModel.addToWatchList(
+                                            AddToWatchListRequest(
+                                                media_id = item.id,
+                                                media_type = "tv",
+                                                watchlist = false
+                                            )
+                                        )
+                                        scope.launch {
+                                            delay(200)
+                                            homeViewModel.getWatchListTV()
+                                        }
+                                    },
+                                    isFromWatchlist = true,
+                                    modifier = Modifier.animateItemPlacement()
+                                )
+                            }
                         }
-                    }
 
+                    }
                 }
+
+
 
                 MySpacerHeight(height = 16.dp)
 

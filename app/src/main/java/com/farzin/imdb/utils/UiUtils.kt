@@ -1,8 +1,9 @@
 package com.farzin.imdb.utils
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,26 +16,23 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.farzin.imdb.data.remote.NetworkResult
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.strongGray
-import com.farzin.imdb.viewmodel.DataStoreViewModel
-import com.farzin.imdb.viewmodel.ProfileViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
@@ -47,45 +45,6 @@ fun MySpacerHeight(height: Dp) {
     Spacer(modifier = Modifier.height(height))
 }
 
-@Composable
-fun InitialRequestToken(
-    profileViewModel: ProfileViewModel = hiltViewModel(),
-    dataStoreViewModel: DataStoreViewModel= hiltViewModel(),
-) {
-
-    var loading by remember { mutableStateOf(false) }
-
-    if (dataStoreViewModel.getSessionId().isNullOrEmpty() || dataStoreViewModel.getAccountId().isNullOrEmpty()){
-        LaunchedEffect(true) {
-            profileViewModel.getInitialRequestToken()
-
-            profileViewModel.initialRequestToken.collectLatest { reqToken ->
-                when (reqToken) {
-                    is NetworkResult.Success -> {
-                        loading = false
-                        reqToken.data?.request_token?.let {
-                            Constants.REQUEST_TOKEN = it
-                            Log.e("TAG","this id from composable $it")
-                        }
-                    }
-
-                    is NetworkResult.Error -> {
-                        loading = false
-                    }
-
-                    is NetworkResult.Loading -> {
-                        loading = true
-                    }
-                }
-            }
-
-
-        }
-    }
-
-
-
-}
 
 @Composable
 fun MyDividerHorizontal(modifier: Modifier = Modifier) {
@@ -98,6 +57,7 @@ fun MyDividerHorizontal(modifier: Modifier = Modifier) {
     )
 
 }
+
 @Composable
 fun MyDividerVertical(modifier: Modifier = Modifier) {
 
@@ -113,11 +73,11 @@ fun MyDividerVertical(modifier: Modifier = Modifier) {
 
 @Composable
 fun IMDBButton(
-    text:String,
-    onClick:()->Unit,
-    containerColor:Color = MaterialTheme.colorScheme.imdbYellow,
+    text: String,
+    onClick: () -> Unit,
+    containerColor: Color = MaterialTheme.colorScheme.imdbYellow,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
-    textColor:Color = Color.Black,
+    textColor: Color = Color.Black,
     fontWeight: FontWeight = FontWeight.Normal,
     style: TextStyle = MaterialTheme.typography.titleLarge,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(2.dp)
@@ -140,7 +100,6 @@ fun IMDBButton(
 }
 
 
-
 @Composable
 fun ChangeStatusBarColor() {
     val systemUiController = rememberSystemUiController()
@@ -157,4 +116,62 @@ fun ChangeStatusBarColor() {
         )
     }
 
+}
+
+
+@Composable
+fun LoadingMovie() {
+
+    if (isSystemInDarkTheme()) {
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading1))
+
+        LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
+    } else {
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading2))
+
+        LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
+    }
+
+
+}
+
+@Composable
+fun LoadingDots() {
+
+    if (isSystemInDarkTheme()) {
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dotsdark))
+
+        LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
+    } else {
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dots))
+
+        LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
+    }
+
+
+}
+
+
+@Composable
+fun MyLoadingFullScreen(modifier: Modifier = Modifier) {
+
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LoadingMovie()
+    }
+
+}
+
+@Composable
+fun My3DotsLoading(modifier: Modifier = Modifier) {
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LoadingDots()
+    }
 }

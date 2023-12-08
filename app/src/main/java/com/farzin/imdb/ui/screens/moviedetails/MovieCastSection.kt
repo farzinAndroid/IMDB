@@ -3,6 +3,7 @@ package com.farzin.imdb.ui.screens.moviedetails
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -36,6 +37,7 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
 import com.farzin.imdb.utils.DigitHelper
+import com.farzin.imdb.utils.My3DotsLoading
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -154,87 +156,97 @@ fun MovieCastSection(
 
                 MySpacerHeight(height = 8.dp)
 
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    items(castList) { cast ->
-                        name = cast.name
-                        character = cast.character
-                        profilePath = cast.profile_path.toString()
-                        CastCardItem(
-                            profilePath = profilePath,
-                            character = character,
-                            name = name,
-                            onCardClicked = {
-                                navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
-                            },
-                            id = cast.id,
-                            job = cast.known_for_department
+
+                if (loading){
+                    My3DotsLoading(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                    )
+                }else{
+                    LazyRow(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        items(castList) { cast ->
+                            name = cast.name
+                            character = cast.character
+                            profilePath = cast.profile_path.toString()
+                            CastCardItem(
+                                profilePath = profilePath,
+                                character = character,
+                                name = name,
+                                onCardClicked = {
+                                    navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
+                                },
+                                id = cast.id,
+                                job = cast.known_for_department
+                            )
+                        }
+
+                    }
+
+
+                    if (director != ""){
+                        MySpacerHeight(height = 12.dp)
+
+                        Text(
+                            text = stringResource(R.string.directors),
+                            style = MaterialTheme.typography.displaySmall,
+                            color = MaterialTheme.colorScheme.darkText,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+
+
+                        Text(
+                            text = director,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.strongGray,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp)
+                                .padding(vertical = 4.dp),
+                            textAlign = TextAlign.Start,
+                            maxLines = 2,
                         )
                     }
 
+                    if (writer != ""){
+
+                        MySpacerHeight(height = 12.dp)
+
+                        Text(
+                            text = stringResource(R.string.writers),
+                            style = MaterialTheme.typography.displaySmall,
+                            color = MaterialTheme.colorScheme.darkText,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp),
+                            textAlign = TextAlign.Start,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+
+
+                        Text(
+                            text = writer,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.strongGray,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 10.dp)
+                                .padding(vertical = 4.dp),
+                            textAlign = TextAlign.Start,
+                            maxLines = 2,
+                        )
+                    }
                 }
 
-
-                if (director != ""){
-                    MySpacerHeight(height = 12.dp)
-
-                    Text(
-                        text = stringResource(R.string.directors),
-                        style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.darkText,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-
-
-                    Text(
-                        text = director,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.strongGray,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp)
-                            .padding(vertical = 4.dp),
-                        textAlign = TextAlign.Start,
-                        maxLines = 2,
-                    )
-                }
-
-                if (writer != ""){
-
-                    MySpacerHeight(height = 12.dp)
-
-                    Text(
-                        text = stringResource(R.string.writers),
-                        style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.darkText,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp),
-                        textAlign = TextAlign.Start,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-
-
-                    Text(
-                        text = writer,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.strongGray,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 10.dp)
-                            .padding(vertical = 4.dp),
-                        textAlign = TextAlign.Start,
-                        maxLines = 2,
-                    )
-                }
             }
         }
     }

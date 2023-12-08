@@ -1,6 +1,7 @@
 package com.farzin.imdb.ui.screens.profile
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,7 +53,7 @@ import kotlinx.coroutines.launch
 fun LoginSection(
     profileViewModel: ProfileViewModel = hiltViewModel(),
     dataStoreViewModel: DataStoreViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
 
 
@@ -63,27 +64,37 @@ fun LoginSection(
     var userName by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    var loading by remember { mutableStateOf(false) }
+    var sessionResultLoading by remember { mutableStateOf(false) }
+    var accountDetailLoading by remember { mutableStateOf(false) }
 
 
     val sessionResult by profileViewModel.sessionId.collectAsState()
     when (sessionResult) {
         is NetworkResult.Success -> {
+            sessionResultLoading = false
             sessionResult.data?.session_id?.let { sessionId ->
                 dataStoreViewModel.saveSessionId(sessionId)
                 Constants.SESSION_ID = sessionId
                 sessionIdText = sessionId
+                Toast.makeText(context, stringResource(R.string.sucess_login),Toast.LENGTH_SHORT).show()
             }
         }
 
-        is NetworkResult.Error -> {}
-        is NetworkResult.Loading -> {}
+        is NetworkResult.Error -> {
+            sessionResultLoading = false
+            Toast.makeText(context, stringResource(R.string.failed_login),Toast.LENGTH_SHORT).show()
+        }
+
+        is NetworkResult.Loading -> {
+            sessionResultLoading = true
+        }
     }
 
 
     val accountDetailResult by profileViewModel.accountDetail.collectAsState()
     when (accountDetailResult) {
         is NetworkResult.Success -> {
+            accountDetailLoading = false
             accountDetailResult.data?.let {
                 accIdText = it.id.toString()
                 userName = it.username
@@ -96,19 +107,18 @@ fun LoginSection(
         }
 
         is NetworkResult.Error -> {
+            accountDetailLoading = false
             Log.e("TAG", "error")
         }
 
-        is NetworkResult.Loading -> {}
+        is NetworkResult.Loading -> {
+            accountDetailLoading = true
+        }
     }
 
 
-
-
-
-
-
     val localUriHandler = LocalUriHandler.current
+
 
 
     Column(
@@ -225,13 +235,12 @@ fun LoginSection(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable {localUriHandler.openUri(Constants.TMDB_WEBSITE) },
+                    .clickable { localUriHandler.openUri(Constants.TMDB_WEBSITE) },
                 fontWeight = FontWeight.SemiBold,
                 textDecoration = TextDecoration.Underline
 
             )
         }
-
 
 
     }

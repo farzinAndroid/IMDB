@@ -31,6 +31,7 @@ import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.home.MovieItem
 import com.farzin.imdb.ui.screens.home.SectionStickyHeader
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.My3DotsLoading
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -101,37 +102,46 @@ fun MovieRecommendedSection(
 
                     MySpacerHeight(height = 8.dp)
 
-                    LazyRow(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        items(recommendedList) { item ->
-                            MovieItem(
-                                posterPath = item.poster_path ?: "",
-                                voteAverage = item.vote_average,
-                                name = item.title,
-                                releaseDate = item.release_date,
-                                onCardClicked = {
-                                    navController.navigate(
-                                        Screens.MovieDetails.route + "?id=${item.id}"
-                                    )
-                                },
-                                onAddButtonClicked = {
-                                    homeViewModel.addToWatchList(
-                                        AddToWatchListRequest(
-                                            media_id = item.id,
-                                            media_type = "movie",
-                                            watchlist = true
+                    if (loading){
+                        My3DotsLoading(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp)
+                        )
+                    }else{
+                        LazyRow(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            items(recommendedList) { item ->
+                                MovieItem(
+                                    posterPath = item.poster_path ?: "",
+                                    voteAverage = item.vote_average,
+                                    name = item.title,
+                                    releaseDate = item.release_date,
+                                    onCardClicked = {
+                                        navController.navigate(
+                                            Screens.MovieDetails.route + "?id=${item.id}"
                                         )
-                                    )
-                                    scope.launch {
-                                        delay(200)
-                                        homeViewModel.getWatchListMovie()
+                                    },
+                                    onAddButtonClicked = {
+                                        homeViewModel.addToWatchList(
+                                            AddToWatchListRequest(
+                                                media_id = item.id,
+                                                media_type = "movie",
+                                                watchlist = true
+                                            )
+                                        )
+                                        scope.launch {
+                                            delay(200)
+                                            homeViewModel.getWatchListMovie()
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            }
                         }
                     }
+
                 }
 
 

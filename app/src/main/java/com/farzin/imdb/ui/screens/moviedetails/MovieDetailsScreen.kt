@@ -4,6 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -22,8 +24,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
@@ -44,6 +48,7 @@ import com.farzin.imdb.ui.screens.tvdetails.MediaPosterSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaVideoSection
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.utils.MyLoadingFullScreen
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.ImageScreenViewModel
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
@@ -152,171 +157,179 @@ fun MovieDetailsScreen(
     )
 
 
-    when (imageScreenViewModel.imageScreenState) {
-        ImageScreenState.IMAGE_LIST -> {
-            ModalBottomSheetLayout(
-                sheetContent = {
-                    MovieRatingBottomSheet(name, movieId)
-                },
-                sheetState = sheetState
+    if (loading){
+        MyLoadingFullScreen(
+            modifier = Modifier.fillMaxWidth()
+                .height(LocalConfiguration.current.screenHeightDp.dp)
+        )
+    }else{
+        when (imageScreenViewModel.imageScreenState) {
+            ImageScreenState.IMAGE_LIST -> {
+                ModalBottomSheetLayout(
+                    sheetContent = {
+                        MovieRatingBottomSheet(name, movieId)
+                    },
+                    sheetState = sheetState
 
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.TopCenter
                 ) {
-                    LazyColumn(
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.appBackGround)
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.TopCenter
                     ) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.appBackGround)
+                        ) {
 
-                        stickyHeader {
-                            MediaDetailTopBarSection(
-                                name = name,
-                                onClick = {
-                                    navController.popBackStack()
-                                },
-                            )
-                        }
+                            stickyHeader {
+                                MediaDetailTopBarSection(
+                                    name = name,
+                                    onClick = {
+                                        navController.popBackStack()
+                                    },
+                                )
+                            }
 
 
-                        item {
-                            MediaDetailTitleSection(
-                                name = name,
-                                date = date,
-                                status = status,
-                                isMovie = true,
-                                runTime = runTime
-                            )
-                        }
-                        item {
-                            MediaPosterSection(
-                                picturePath = picturePath,
-                                isMovie = true,
-                                name = name,
-                                startYear = date
-                            )
-                        }
-                        item {
+                            item {
+                                MediaDetailTitleSection(
+                                    name = name,
+                                    date = date,
+                                    status = status,
+                                    isMovie = true,
+                                    runTime = runTime
+                                )
+                            }
+                            item {
+                                MediaPosterSection(
+                                    picturePath = picturePath,
+                                    isMovie = true,
+                                    name = name,
+                                    startYear = date
+                                )
+                            }
+                            item {
 
-                            if (overView.isEmpty())
-                                overView = stringResource(R.string.no_overView)
+                                if (overView.isEmpty())
+                                    overView = stringResource(R.string.no_overView)
 
-                            MediaOverViewSection(
-                                genres = genres,
-                                overView = overView,
-                                posterPath = posterPath,
-                                mediaType = "movie"
-                            )
-                        }
-                        item {
-                            MediaDetailAddToWatchListButton(
-                                buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
-                                buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
-                                onClick = {
-                                    if (isInWatchList) {
-                                        scope.launch {
-                                            homeViewModel.addToWatchList(
-                                                AddToWatchListRequest(
-                                                    media_type = "movie",
-                                                    media_id = movieId,
-                                                    watchlist = false
+                                MediaOverViewSection(
+                                    genres = genres,
+                                    overView = overView,
+                                    posterPath = posterPath,
+                                    mediaType = "movie"
+                                )
+                            }
+                            item {
+                                MediaDetailAddToWatchListButton(
+                                    buttonBackGround = MaterialTheme.colorScheme.imdbYellow,
+                                    buttonBorderColor = MaterialTheme.colorScheme.imdbYellow,
+                                    onClick = {
+                                        if (isInWatchList) {
+                                            scope.launch {
+                                                homeViewModel.addToWatchList(
+                                                    AddToWatchListRequest(
+                                                        media_type = "movie",
+                                                        media_id = movieId,
+                                                        watchlist = false
+                                                    )
                                                 )
-                                            )
-                                            isInWatchList = false
-                                        }
-                                    } else {
-                                        scope.launch {
-                                            homeViewModel.addToWatchList(
-                                                AddToWatchListRequest(
-                                                    media_type = "movie",
-                                                    media_id = movieId,
-                                                    watchlist = true
+                                                isInWatchList = false
+                                            }
+                                        } else {
+                                            scope.launch {
+                                                homeViewModel.addToWatchList(
+                                                    AddToWatchListRequest(
+                                                        media_type = "movie",
+                                                        media_id = movieId,
+                                                        watchlist = true
+                                                    )
                                                 )
-                                            )
-                                            isInWatchList = true
+                                                isInWatchList = true
+                                            }
                                         }
+                                    },
+                                    isInWatchList = isInWatchList
+                                )
+
+                            }
+
+                            item {
+                                MovieRatingSection(
+                                    rating = String.format("%.1f", rating),
+                                    voteCount = voteCount,
+                                    mediaId = movieId,
+                                    onClick = {
+                                        scope.launch {
+                                            if (sheetState.isVisible)
+                                                sheetState.hide() else sheetState.show()
+                                        }
+                                    },
+                                    userRatingCallBack = {
+                                        userRating = it
                                     }
-                                },
-                                isInWatchList = isInWatchList
-                            )
-
-                        }
-
-                        item {
-                            MovieRatingSection(
-                                rating = String.format("%.1f", rating),
-                                voteCount = voteCount,
-                                mediaId = movieId,
-                                onClick = {
-                                    scope.launch {
-                                        if (sheetState.isVisible)
-                                            sheetState.hide() else sheetState.show()
+                                )
+                            }
+                            item { MovieCastSection(mediaId = movieId, navController = navController) }
+                            item {
+                                MovieRecommendedSection(
+                                    mediaId = movieId,
+                                    navController = navController
+                                )
+                            }
+                            item {
+                                MovieImageSection(
+                                    mediaId = movieId,
+                                    navController = navController,
+                                    onImageClickCallBack = { path ->
+                                        imageFullScreenPath = path
+                                    },
+                                    onImageClick = {
+                                        imageScreenViewModel.imageScreenState =
+                                            ImageScreenState.IMAGE_FULLSCREEN
                                     }
-                                },
-                                userRatingCallBack = {
-                                    userRating = it
-                                }
-                            )
-                        }
-                        item { MovieCastSection(mediaId = movieId, navController = navController) }
-                        item {
-                            MovieRecommendedSection(
-                                mediaId = movieId,
-                                navController = navController
-                            )
-                        }
-                        item {
-                            MovieImageSection(
-                                mediaId = movieId,
-                                navController = navController,
-                                onImageClickCallBack = { path ->
-                                    imageFullScreenPath = path
-                                },
-                                onImageClick = {
-                                    imageScreenViewModel.imageScreenState =
-                                        ImageScreenState.IMAGE_FULLSCREEN
-                                }
-                            )
-                        }
-                        item {
-                            MediaVideoSection(
-                                mediaId = movieId,
-                                mediaType = "movie",
-                                poster = posterPath,
-                                navController = navController
-                            )
-                        }
-                        item {
-                            MovieCommentSection(
-                                mediaId = movieId,
-                                rating = String.format("%.1f", rating),
-                                userRating = userRating,
-                                navController = navController
-                            )
-                        }
-                        item {
-                            MediaDetailSection(
-                                spokenLangList = spokenLangList,
-                                productionCountry = productionCountry,
-                                releaseDate = releaseDate,
-                                budget = budget,
-                                revenue = revenue
-                            )
-                        }
+                                )
+                            }
+                            item {
+                                MediaVideoSection(
+                                    mediaId = movieId,
+                                    mediaType = "movie",
+                                    poster = posterPath,
+                                    navController = navController
+                                )
+                            }
+                            item {
+                                MovieCommentSection(
+                                    mediaId = movieId,
+                                    rating = String.format("%.1f", rating),
+                                    userRating = userRating,
+                                    navController = navController
+                                )
+                            }
+                            item {
+                                MediaDetailSection(
+                                    spokenLangList = spokenLangList,
+                                    productionCountry = productionCountry,
+                                    releaseDate = releaseDate,
+                                    budget = budget,
+                                    revenue = revenue
+                                )
+                            }
 
+                        }
                     }
+
+
                 }
+            }
 
-
+            ImageScreenState.IMAGE_FULLSCREEN -> {
+                ImageFullScreen(path = imageFullScreenPath)
             }
         }
-
-        ImageScreenState.IMAGE_FULLSCREEN -> {
-            ImageFullScreen(path = imageFullScreenPath)
-        }
     }
+
 
 }
