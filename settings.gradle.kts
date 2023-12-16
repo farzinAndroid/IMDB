@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://repo.repsy.io/mvn/chrynan/public")
     }
 }
 

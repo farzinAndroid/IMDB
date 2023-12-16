@@ -54,7 +54,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.9.20")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -114,12 +114,14 @@ dependencies {
     implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
 
     // youtube player
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation("io.github.ilyapavlovskii:youtubeplayer-compose:2023.11.16")
+//    implementation("com.chrynan.uri:uri-core:0.3.3")
+//    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 
     // exo player
-    implementation ("androidx.media3:media3-exoplayer:1.2.0")
-    implementation ("androidx.media3:media3-exoplayer-dash:1.2.0")
-    implementation ("androidx.media3:media3-ui:1.2.0")
+//    implementation ("androidx.media3:media3-exoplayer:1.2.0")
+//    implementation ("androidx.media3:media3-exoplayer-dash:1.2.0")
+//    implementation ("androidx.media3:media3-ui:1.2.0")
 
     // zoomable image
 //    implementation("me.saket.telephoto:zoomable:0.7.1")

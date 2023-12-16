@@ -139,11 +139,11 @@ fun LoadingMovie() {
 fun LoadingDots() {
 
     if (isSystemInDarkTheme()) {
-        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dotsdark))
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dots))
 
         LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
     } else {
-        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dots))
+        val lottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading3dotsdark))
 
         LottieAnimation(composition = lottie, iterations = LottieConstants.IterateForever)
     }
