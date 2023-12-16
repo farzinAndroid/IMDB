@@ -37,6 +37,8 @@ fun EmptySection(
         verticalArrangement = Arrangement.Center
     ) {
 
+        MySpacerHeight(height = 16.dp)
+
         Text(
             text = title,
             style = MaterialTheme.typography.displayMedium,

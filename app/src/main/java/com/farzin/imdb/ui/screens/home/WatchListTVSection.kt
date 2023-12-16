@@ -186,7 +186,7 @@ fun WatchListTVSection(
 
 
 
-                MySpacerHeight(height = 16.dp)
+                MySpacerHeight(height = 20.dp)
 
             }
 

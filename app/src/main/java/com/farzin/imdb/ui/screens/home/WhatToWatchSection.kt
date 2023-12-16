@@ -3,7 +3,7 @@ package com.farzin.imdb.ui.screens.home
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -88,14 +88,12 @@ fun WhatToWatchSection(
 
         MySpacerHeight(height = 16.dp)
 
-        val height = if (dataStoreViewModel.getServiceId() == null ||
-            dataStoreViewModel.getServiceId() == 0
-        ) 350.dp else 480.dp
+
 
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(height),
+                .wrapContentHeight(),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp
             ),
@@ -167,6 +165,9 @@ fun WhatToWatchSection(
                             )
                         }
                     }
+
+
+                    MySpacerHeight(height = 20.dp)
                 }
 
             }

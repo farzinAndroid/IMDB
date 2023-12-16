@@ -15,7 +15,7 @@ interface PersonDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addPerson(person: PersonDBModel)
 
-    @Query("select * from person_table order by id desc")
+    @Query("select * from person_table")
     fun getAllPersons() : Flow<List<PersonDBModel>>
 
     @Delete
