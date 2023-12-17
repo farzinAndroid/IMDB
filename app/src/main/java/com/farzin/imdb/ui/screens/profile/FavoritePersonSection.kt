@@ -96,13 +96,6 @@ fun FavoritePersonSection(
                         isHaveButton = false
                     )
 
-                } else if (Constants.SESSION_ID == "" && favPersonList.isEmpty()) {
-                    EmptySection(
-                        onClick = {navController.navigate(Screens.Profile.route)},
-                        title = stringResource(R.string.please_login_to_see_fav_person),
-                        subtitle = stringResource(R.string.add_your_fav_celeb),
-                        isHaveButton = false
-                    )
                 } else {
 
                     LazyRow(

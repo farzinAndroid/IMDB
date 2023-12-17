@@ -1,14 +1,17 @@
 package com.farzin.imdb.repository
 
+import com.farzin.imdb.data.database.FavoriteDao
 import com.farzin.imdb.data.database.PersonDao
 import com.farzin.imdb.data.remote.BaseApiResponse
 import com.farzin.imdb.data.remote.ProfileApiInterface
+import com.farzin.imdb.models.database.FavoriteDBModel
 import com.farzin.imdb.models.database.PersonDBModel
 import javax.inject.Inject
 
 class ProfileRepo @Inject constructor(
     private val api: ProfileApiInterface,
-    private val dao:PersonDao
+    private val personDao:PersonDao,
+    private val favoriteDao: FavoriteDao
 ) : BaseApiResponse() {
 
 
@@ -38,12 +41,23 @@ class ProfileRepo @Inject constructor(
             api.getAccountDetails(sessionId=sessionId)
         }
 
-    val allPerson = dao.getAllPersons()
+    val allPerson = personDao.getAllPersons()
 
-    suspend fun removePerson(person: PersonDBModel) = dao.removePerson(person)
+    suspend fun removePerson(person: PersonDBModel) = personDao.removePerson(person)
 
-    suspend fun addPerson(person: PersonDBModel) = dao.addPerson(person)
+    suspend fun addPerson(person: PersonDBModel) = personDao.addPerson(person)
 
-    fun getId(id:Int) : Int = dao.getId(id)
+    fun getPersonId(id:Int) : Int = personDao.getId(id)
+
+
+
+
+    val allFavorites = favoriteDao.getAllFavorites()
+
+    suspend fun removeFavorites(favorite: FavoriteDBModel) = favoriteDao.removeFavorite(favorite)
+
+    suspend fun addFavorites(favorite: FavoriteDBModel) = favoriteDao.addFavorite(favorite)
+
+    fun getFavoriteId(id:Int) : Int = favoriteDao.getId(id)
 
 }

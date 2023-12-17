@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,6 +43,7 @@ fun TrendingMoviesForWeekSection(
 
 
     val scope = rememberCoroutineScope()
+    val ctx = LocalContext.current
 
     var trendingMoviesList by remember {
         mutableStateOf<List<TrendingMoviesForWeekResult>>(
@@ -130,6 +133,8 @@ fun TrendingMoviesForWeekSection(
                                 scope.launch {
                                     delay(200)
                                     homeViewModel.getWatchListMovie()
+                                    Toast.makeText(ctx,ctx.getString(R.string.added_to_watchList),
+                                        Toast.LENGTH_SHORT).show()
                                 }
                             }
                         )

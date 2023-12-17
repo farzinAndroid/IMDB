@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -61,6 +62,7 @@ fun TrendingTVShowsForDaySection(
 
 
     val scope = rememberCoroutineScope()
+    val ctx = LocalContext.current
 
     var trendingTVShowsForDay by remember {
         mutableStateOf<List<TrendingTVShowsForDayResult>>(
@@ -215,8 +217,10 @@ fun TrendingTVShowsForDaySection(
                                             )
                                         )
                                         scope.launch {
-                                            delay(100)
+                                            delay(200)
                                             homeViewModel.getWatchListTV()
+                                            Toast.makeText(ctx,ctx.getString(R.string.added_to_watchList),
+                                                Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 )

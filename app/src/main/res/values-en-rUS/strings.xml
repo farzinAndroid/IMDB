@@ -126,4 +126,7 @@
     <string name="rating_successful">Rating was successful</string>
     <string name="rating_unsuccessful">Rating was not successful</string>
     <string name="special">Special</string>
+    <string name="fav_media">Favorite Movies and TVs</string>
+    <string name="fav_media_empty">Your favorites are empty</string>
+    <string name="add_your_fav_media">Add your favorite movie or TV show for an easier access</string>
 </resources>

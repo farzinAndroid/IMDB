@@ -105,7 +105,6 @@ fun ImagesListScreen(
 
                     MediaDetailTopBarSection(
                         name = stringResource(R.string.images),
-                        shouldHaveThreeDotMenu = false,
                         onClick = {navController.popBackStack()}
                     )
 

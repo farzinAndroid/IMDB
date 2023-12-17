@@ -39,9 +39,10 @@ fun Profile(
                 }
             }
         }
+        item { FavoriteTVMovieSection(navController = navController) }
+        item { FavoritePersonSection(navController = navController) }
         item { WatchListTVSection(navController = navController) }
         item { WatchListMovieSection(navController = navController) }
-        item { FavoritePersonSection(navController = navController) }
     }
 
 

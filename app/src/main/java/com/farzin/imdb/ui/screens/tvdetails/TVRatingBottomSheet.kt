@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.AddRating
-import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.ui.theme.darkBlue
 import com.farzin.imdb.ui.theme.starBlue
 import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
@@ -93,7 +94,7 @@ fun TVRatingBottomSheet(
             fontWeight = FontWeight.Normal,
             maxLines = 2,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.darkText
+            color = Color.Black
         )
 
         // stars
@@ -153,7 +154,11 @@ fun TVRatingBottomSheet(
                 .padding(horizontal = 16.dp)
                 .padding(vertical = 8.dp),
             shape = Shapes().extraSmall,
-            enabled = selectedStars != 0
+            enabled = selectedStars != 0,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.darkBlue,
+                disabledContainerColor = Color.Gray
+            )
         ) {
             Text(
                 text = stringResource(R.string.rate),

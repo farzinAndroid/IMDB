@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.database.FavoriteDBModel
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.models.tvDetail.Network
@@ -45,7 +46,9 @@ import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.MyLoadingFullScreen
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.ImageScreenViewModel
+import com.farzin.imdb.viewmodel.ProfileViewModel
 import com.farzin.imdb.viewmodel.TVDetailViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -57,10 +60,19 @@ fun TVDetailsScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     navController: NavController,
     imageScreenViewModel: ImageScreenViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    var isInFavorite by remember { mutableStateOf(false) }
+    LaunchedEffect(tvId) {
+        scope.launch(Dispatchers.IO) {
+            isInFavorite = profileViewModel.getFavoriteId(tvId) == tvId
+        }
+    }
+
 
     var loading by remember { mutableStateOf(false) }
 
@@ -154,12 +166,13 @@ fun TVDetailsScreen(
     )
 
 
-    if (loading){
+    if (loading) {
         MyLoadingFullScreen(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(LocalConfiguration.current.screenHeightDp.dp)
         )
-    }else{
+    } else {
         when (imageScreenViewModel.imageScreenState) {
             ImageScreenState.IMAGE_LIST -> {
                 ModalBottomSheetLayout(
@@ -180,12 +193,46 @@ fun TVDetailsScreen(
                                 .background(MaterialTheme.colorScheme.appBackGround)
                         ) {
 
+
                             stickyHeader {
                                 MediaDetailTopBarSection(
                                     name = name,
                                     onClick = {
                                         navController.popBackStack()
-                                    }
+                                    },
+                                    shouldHaveLikeButton = true,
+                                    likeButtonOnClick = {
+
+
+                                        if (isInFavorite){
+                                            profileViewModel.removeFavorite(
+                                                FavoriteDBModel(
+                                                    id = tvId,
+                                                    image = posterPath,
+                                                    name = name,
+                                                    year = startYear,
+                                                    rating = rating,
+                                                    isMovie = false
+                                                )
+                                            )
+
+                                            isInFavorite = false
+                                        }else{
+                                            profileViewModel.addFavorite(
+                                                FavoriteDBModel(
+                                                    id = tvId,
+                                                    image = posterPath,
+                                                    name = name,
+                                                    year = startYear,
+                                                    rating = rating,
+                                                    isMovie = false
+                                                )
+                                            )
+                                            isInFavorite = true
+                                        }
+
+                                    },
+                                    isFavorite = isInFavorite
                                 )
                             }
 
@@ -276,7 +323,12 @@ fun TVDetailsScreen(
                             }
 
                             item { TVCastSection(mediaId = tvId, navController = navController) }
-                            item { TVRecommendedSection(mediaId = tvId, navController = navController) }
+                            item {
+                                TVRecommendedSection(
+                                    mediaId = tvId,
+                                    navController = navController
+                                )
+                            }
                             item {
                                 TVImageSection(
                                     mediaId = tvId,

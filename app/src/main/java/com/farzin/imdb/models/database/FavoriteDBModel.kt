@@ -4,11 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.farzin.imdb.utils.Constants
 
-@Entity(tableName = Constants.PERSON_TABLE_NAME)
-data class PersonDBModel(
+@Entity(tableName = Constants.MEDIA_TABLE_NAME)
+data class FavoriteDBModel(
     @PrimaryKey
     val id:Int = 0,
     val name:String,
-    val job:String,
-    val image:String
+    val year:String,
+    val image:String,
+    val rating:Double,
+    val isMovie:Boolean
 )

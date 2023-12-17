@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.cast_detail
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaOverViewSection
 import com.farzin.imdb.viewmodel.CastDetailViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CastDetailScreen(
     id: Int,
@@ -68,10 +70,8 @@ fun CastDetailScreen(
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-        item {
-            MediaDetailTopBarSection(name = name) {
-                navController.popBackStack()
-            }
+        stickyHeader {
+            MediaDetailTopBarSection(name = name, onClick = { navController.popBackStack() })
         }
 
         item {

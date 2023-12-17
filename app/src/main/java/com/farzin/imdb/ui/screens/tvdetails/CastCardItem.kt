@@ -72,7 +72,7 @@ fun CastCardItem(
 
     LaunchedEffect(true) {
         scope.launch(Dispatchers.IO) {
-            isSaved = profileViewModel.getId(id) == id
+            isSaved = profileViewModel.getPersonId(id) == id
         }
     }
 

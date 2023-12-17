@@ -86,10 +86,11 @@ fun EpisodeGuideScreen(
         Column {
 
             MediaDetailTopBarSection(
-                name = stringResource(R.string.episodes)
-            ) {
-                navController.popBackStack()
-            }
+                name = stringResource(R.string.episodes),
+                onClick = {
+                    navController.popBackStack()
+                }
+            )
 
             ScrollableTabRow(
                 selectedTabIndex = selectedTabIndex,
@@ -115,14 +116,14 @@ fun EpisodeGuideScreen(
                             unselectedContentColor = MaterialTheme.colorScheme.strongGray,
                             text = {
                                 Row {
-                                    if (season.season_number == 0){
+                                    if (season.season_number == 0) {
                                         Text(
                                             text = stringResource(R.string.special),
                                             style = MaterialTheme.typography.titleLarge,
                                             fontWeight = FontWeight.SemiBold,
                                             color = MaterialTheme.colorScheme.darkText,
                                         )
-                                    }else{
+                                    } else {
                                         Text(
                                             text = season.season_number.toString(),
                                             style = MaterialTheme.typography.titleLarge,

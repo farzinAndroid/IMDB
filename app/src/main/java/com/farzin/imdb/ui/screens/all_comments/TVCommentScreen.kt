@@ -65,19 +65,18 @@ fun TVCommentScreen(
             horizontalAlignment = Alignment.Start
         ) {
 
-            LazyColumn(){
+            LazyColumn() {
 
                 item {
-                    MediaDetailTopBarSection(name = stringResource(R.string.user_review)) {
-                        navController.popBackStack()
-                    }
+                    MediaDetailTopBarSection(name = stringResource(R.string.user_review),
+                        onClick = { navController.popBackStack() })
                 }
 
                 item {
                     CommentResultSection(totalResult)
                 }
 
-                items(reviewList){comment->
+                items(reviewList) { comment ->
                     CommentItem(comment)
                 }
             }

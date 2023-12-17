@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -58,6 +59,7 @@ fun GenresMovieSection(
     val scope = rememberCoroutineScope()
 
     val movieGenre = Util(LocalContext.current).movieGenres
+    val ctx = LocalContext.current
 
 
     //load movies based on those genre
@@ -201,6 +203,8 @@ fun GenresMovieSection(
                                 scope.launch {
                                     delay(200)
                                     homeViewModel.getWatchListMovie()
+                                    Toast.makeText(ctx,ctx.getString(R.string.added_to_watchList),
+                                        Toast.LENGTH_SHORT).show()
                                 }
                             }
                         )

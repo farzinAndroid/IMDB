@@ -125,6 +125,9 @@
     <string name="rating_successful">امتیاز دادن با موفقیت انجام شد</string>
     <string name="rating_unsuccessful">امتیاز دادن با موفقیت انجام نشد</string>
     <string name="special">اختصاصی</string>
+    <string name="fav_media">سریال‌ها و فیلم‌های مورد علاقه</string>
+    <string name="fav_media_empty">لیست شما خالیست</string>
+    <string name="add_your_fav_media">سریال‌ها و فیلم‌های مورد علاقه خود را اضافه کنید تا سریع‌تر به آن‌ها دسترسی داشته باشید</string>
 
 
 

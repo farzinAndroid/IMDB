@@ -66,10 +66,9 @@ fun AllMovieCast(
         item {
             MediaDetailTopBarSection(
                 name = stringResource(R.string.cast),
-                shouldHaveThreeDotMenu = false
-            ) {
-                navController.popBackStack()
-            }
+                shouldHaveLikeButton = false, onClick = {
+                    navController.popBackStack()
+                })
         }
 
         items(movieCast) { cast ->
@@ -82,7 +81,7 @@ fun AllMovieCast(
                 profilePath = profilePath,
                 character = character,
                 onCardClicked = {
-                    navController.navigate(Screens.PersonDetail.route+"?id=${cast.id}")
+                    navController.navigate(Screens.PersonDetail.route + "?id=${cast.id}")
                 },
                 job = cast.known_for_department,
                 id = cast.id

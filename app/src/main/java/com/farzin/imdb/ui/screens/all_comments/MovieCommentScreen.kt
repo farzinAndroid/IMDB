@@ -66,13 +66,13 @@ fun MovieCommentScreen(
             horizontalAlignment = Alignment.Start
         ) {
 
-            var isClicked by remember { mutableStateOf(false) }
+
             LazyColumn() {
 
                 item {
-                    MediaDetailTopBarSection(name = stringResource(R.string.user_review)) {
-                        navController.popBackStack()
-                    }
+                    MediaDetailTopBarSection(name = stringResource(R.string.user_review),
+                        onClick = { navController.popBackStack() }
+                    )
                 }
 
                 item {

@@ -69,10 +69,9 @@ fun AllTVCast(
         item {
             MediaDetailTopBarSection(
                 name = stringResource(R.string.cast),
-                shouldHaveThreeDotMenu = false
-            ) {
-                navController.popBackStack()
-            }
+                shouldHaveLikeButton = false,
+                onClick = {navController.popBackStack()}
+            )
         }
 
         items(tvCast) { cast ->

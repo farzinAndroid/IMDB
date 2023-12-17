@@ -2,6 +2,7 @@ package com.farzin.imdb.di
 
 import android.content.Context
 import androidx.room.Room
+import com.farzin.imdb.data.database.FavoriteDao
 import com.farzin.imdb.data.database.IMDBDatabase
 import com.farzin.imdb.data.database.PersonDao
 import com.farzin.imdb.utils.Constants
@@ -23,10 +24,16 @@ object DatabaseModule {
         c,
         IMDBDatabase::class.java,
         Constants.DB_NAME
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
 
     @Provides
-    fun providePersonDaoModule(database:IMDBDatabase) : PersonDao = database.getPersonDao()
+    fun providePersonDaoModule(database: IMDBDatabase): PersonDao = database.getPersonDao()
+
+
+    @Provides
+    fun provideFavoriteDaoModule(database: IMDBDatabase): FavoriteDao = database.getFavoriteDao()
 
 }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.database.FavoriteDBModel
 import com.farzin.imdb.models.database.PersonDBModel
 import com.farzin.imdb.models.profile.AccountDetail
 import com.farzin.imdb.models.profile.RequestToken
@@ -26,13 +27,11 @@ class ProfileViewModel @Inject constructor(private val repo: ProfileRepo) : View
 
     var screenState by mutableStateOf(ProfileState.NOTLOGGED)
 
-
-    var isSaved by mutableStateOf(false)
-
     val initialRequestToken = MutableStateFlow<NetworkResult<RequestToken>>(NetworkResult.Loading())
     val sessionId = MutableStateFlow<NetworkResult<SessionId>>(NetworkResult.Loading())
     val accountDetail = MutableStateFlow<NetworkResult<AccountDetail>>(NetworkResult.Loading())
     val allPerson = repo.allPerson
+    val allFavorites = repo.allFavorites
 
 
     fun getInitialRequestToken() {
@@ -76,9 +75,26 @@ class ProfileViewModel @Inject constructor(private val repo: ProfileRepo) : View
     }
 
 
-    fun getId(id:Int) : Int{
-        return repo.getId(id)
+    fun getPersonId(id:Int) : Int{
+        return repo.getPersonId(id)
     }
+
+
+
+    fun addFavorite(favorite: FavoriteDBModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.addFavorites(favorite)
+        }
+    }
+
+    fun removeFavorite(favorite: FavoriteDBModel){
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.removeFavorites(favorite)
+        }
+    }
+
+
+    fun getFavoriteId(id:Int) = repo.getFavoriteId(id)
 
 
 }

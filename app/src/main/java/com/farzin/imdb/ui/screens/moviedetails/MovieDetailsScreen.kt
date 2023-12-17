@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
+import com.farzin.imdb.models.database.FavoriteDBModel
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.models.tvDetail.ProductionCountry
@@ -51,6 +52,8 @@ import com.farzin.imdb.utils.MyLoadingFullScreen
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.ImageScreenViewModel
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
+import com.farzin.imdb.viewmodel.ProfileViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -62,10 +65,18 @@ fun MovieDetailsScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
     imageScreenViewModel: ImageScreenViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    var isInFavorite by remember { mutableStateOf(false) }
+    LaunchedEffect(movieId) {
+        scope.launch(Dispatchers.IO) {
+            isInFavorite = profileViewModel.getFavoriteId(movieId) == movieId
+        }
+    }
 
     var loading by remember { mutableStateOf(false) }
 
@@ -158,7 +169,8 @@ fun MovieDetailsScreen(
 
     if (loading){
         MyLoadingFullScreen(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(LocalConfiguration.current.screenHeightDp.dp)
         )
     }else{
@@ -188,6 +200,41 @@ fun MovieDetailsScreen(
                                     onClick = {
                                         navController.popBackStack()
                                     },
+                                    shouldHaveLikeButton = true,
+                                    likeButtonOnClick = {
+
+
+                                        if (isInFavorite){
+                                            profileViewModel.removeFavorite(
+                                                FavoriteDBModel(
+                                                    id = movieId,
+                                                    image = posterPath,
+                                                    name = name,
+                                                    year = releaseDate,
+                                                    rating = rating,
+                                                    isMovie = true
+                                                )
+                                            )
+
+                                            isInFavorite = false
+
+                                        }else{
+                                            profileViewModel.addFavorite(
+                                                FavoriteDBModel(
+                                                    id = movieId,
+                                                    image = posterPath,
+                                                    name = name,
+                                                    year = releaseDate,
+                                                    rating = rating,
+                                                    isMovie = true
+                                                )
+                                            )
+
+                                            isInFavorite = true
+
+                                        }
+                                    },
+                                    isFavorite = isInFavorite
                                 )
                             }
 
