@@ -115,12 +115,22 @@ fun EpisodeGuideScreen(
                             unselectedContentColor = MaterialTheme.colorScheme.strongGray,
                             text = {
                                 Row {
-                                    Text(
-                                        text = season.season_number.toString(),
-                                        style = MaterialTheme.typography.titleLarge,
-                                        fontWeight = FontWeight.SemiBold,
-                                        color = MaterialTheme.colorScheme.darkText,
-                                    )
+                                    if (season.season_number == 0){
+                                        Text(
+                                            text = stringResource(R.string.special),
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.SemiBold,
+                                            color = MaterialTheme.colorScheme.darkText,
+                                        )
+                                    }else{
+                                        Text(
+                                            text = season.season_number.toString(),
+                                            style = MaterialTheme.typography.titleLarge,
+                                            fontWeight = FontWeight.SemiBold,
+                                            color = MaterialTheme.colorScheme.darkText,
+                                        )
+                                    }
+
                                 }
                             },
                         )

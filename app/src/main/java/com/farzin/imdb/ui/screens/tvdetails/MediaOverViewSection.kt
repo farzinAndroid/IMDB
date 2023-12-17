@@ -31,6 +31,7 @@ import com.farzin.imdb.models.home.HomeGenre
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.font_standard
+import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.Util
 
@@ -126,7 +127,7 @@ fun MediaOverViewSection(
                                 color = MaterialTheme.colorScheme.darkText
                             )
                         ) {
-                            append(" $bornDate")
+                            append(" ${DigitHelper.digitByLang(bornDate)}")
                         }
                     },
                     style = MaterialTheme.typography.bodySmall,

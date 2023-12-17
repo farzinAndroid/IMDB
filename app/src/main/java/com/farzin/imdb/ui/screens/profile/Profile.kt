@@ -20,7 +20,7 @@ fun Profile(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         getWatchLists(homeViewModel)
     }
 
@@ -29,22 +29,26 @@ fun Profile(
         modifier = Modifier
             .fillMaxSize()
             .padding(bottom = 60.dp)
-    ){
-        item { ProfileTopBar {navController.navigate(Screens.Settings.route)} }
-        item { WatchListTVSection(navController=navController) }
-        item { WatchListMovieSection(navController=navController) }
-        item { FavoritePersonSection(navController=navController) }
+    ) {
+        item {
+            ProfileTopBar {
+                navController.navigate(Screens.Settings.route) {
+                    popUpTo(Screens.Profile.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
+        item { WatchListTVSection(navController = navController) }
+        item { WatchListMovieSection(navController = navController) }
+        item { FavoritePersonSection(navController = navController) }
     }
-
-
-
-
 
 
 }
 
 
-private fun getWatchLists(homeViewModel: HomeViewModel){
+private fun getWatchLists(homeViewModel: HomeViewModel) {
     homeViewModel.getWatchListTV()
     homeViewModel.getWatchListMovie()
 }

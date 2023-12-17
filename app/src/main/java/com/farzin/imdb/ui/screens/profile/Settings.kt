@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.settings
+package com.farzin.imdb.ui.screens.profile
 
 import android.app.Activity
 import android.content.Intent
@@ -30,7 +30,6 @@ import androidx.navigation.NavController
 import com.farzin.imdb.MainActivity
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.ui.screens.profile.ProfileState
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.utils.Constants
@@ -171,8 +170,8 @@ fun SettingsScreen(
 
 
                         }
-                        navController.popBackStack()
 
+                        navController.popBackStack()
                     }
                 )
             }

@@ -71,7 +71,10 @@ class MainActivity : ComponentActivity() {
                                 BottomNav(
                                     navController = navController,
                                     onItemClick = {
-                                        navController.navigate(it.route)
+                                        navController.navigate(it.route){
+                                            launchSingleTop = true
+                                            popUpTo(it.route){inclusive = true}
+                                        }
                                     }
                                 )
                             },

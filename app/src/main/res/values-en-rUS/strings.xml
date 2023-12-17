@@ -125,4 +125,5 @@
     <string name="please_login">Please login to your account first</string>
     <string name="rating_successful">Rating was successful</string>
     <string name="rating_unsuccessful">Rating was not successful</string>
+    <string name="special">Special</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.tvcomment
+package com.farzin.imdb.ui.screens.all_comments
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

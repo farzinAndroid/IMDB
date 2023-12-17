@@ -1,4 +1,4 @@
-package com.farzin.imdb.ui.screens.moviecomment
+package com.farzin.imdb.ui.screens.all_comments
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -19,11 +20,8 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.TVReviewModelResult
-import com.farzin.imdb.ui.screens.tvcomment.CommentItem
-import com.farzin.imdb.ui.screens.tvcomment.CommentResultSection
 import com.farzin.imdb.ui.screens.tvdetails.MediaDetailTopBarSection
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
-import com.farzin.imdb.viewmodel.TVDetailViewModel
 
 @Composable
 fun MovieCommentScreen(
@@ -39,7 +37,7 @@ fun MovieCommentScreen(
 
     var loading by remember { mutableStateOf(false) }
     var reviewList by remember { mutableStateOf<List<TVReviewModelResult>>(emptyList()) }
-    var totalResult by remember { mutableStateOf(0) }
+    var totalResult by remember { mutableIntStateOf(0) }
 
 
     val result by movieDetailViewModel.movieReviews.collectAsState()
@@ -68,7 +66,8 @@ fun MovieCommentScreen(
             horizontalAlignment = Alignment.Start
         ) {
 
-            LazyColumn(){
+            var isClicked by remember { mutableStateOf(false) }
+            LazyColumn() {
 
                 item {
                     MediaDetailTopBarSection(name = stringResource(R.string.user_review)) {
@@ -80,7 +79,7 @@ fun MovieCommentScreen(
                     CommentResultSection(totalResult)
                 }
 
-                items(reviewList){comment->
+                items(reviewList) { comment ->
                     CommentItem(comment)
                 }
             }

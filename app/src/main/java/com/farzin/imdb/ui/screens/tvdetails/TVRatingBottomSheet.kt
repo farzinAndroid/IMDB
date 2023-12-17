@@ -155,22 +155,12 @@ fun TVRatingBottomSheet(
             shape = Shapes().extraSmall,
             enabled = selectedStars != 0
         ) {
-            if(loading){
-                Text(
-                    text = stringResource(R.string.please_wait),
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-            }else{
-                Text(
-                    text = stringResource(R.string.rate),
-                    style = MaterialTheme.typography.titleLarge,
-                    textAlign = TextAlign.Center,
-                    color = Color.White
-                )
-            }
-
+            Text(
+                text = stringResource(R.string.rate),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
         }
 
 

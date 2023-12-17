@@ -9,19 +9,19 @@ import androidx.navigation.navArgument
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.screens.all_cast.AllMovieCast
 import com.farzin.imdb.ui.screens.all_cast.AllTVCast
+import com.farzin.imdb.ui.screens.all_comments.MovieCommentScreen
+import com.farzin.imdb.ui.screens.all_comments.TVCommentScreen
 import com.farzin.imdb.ui.screens.cast_detail.CastDetailScreen
 import com.farzin.imdb.ui.screens.episode_guide.EpisodeGuideScreen
 import com.farzin.imdb.ui.screens.home.HomeScreen
 import com.farzin.imdb.ui.screens.images_screen.ImagesListScreen
-import com.farzin.imdb.ui.screens.moviecomment.MovieCommentScreen
 import com.farzin.imdb.ui.screens.moviedetails.MovieDetailsScreen
 import com.farzin.imdb.ui.screens.play_video.VideoPlayerScreen
 import com.farzin.imdb.ui.screens.profile.ProfileScreen
+import com.farzin.imdb.ui.screens.profile.SettingsScreen
 import com.farzin.imdb.ui.screens.profile.WebScreen
 import com.farzin.imdb.ui.screens.search.SearchScreen
 import com.farzin.imdb.ui.screens.service.ServiceScreen
-import com.farzin.imdb.ui.screens.settings.SettingsScreen
-import com.farzin.imdb.ui.screens.tvcomment.TVCommentScreen
 import com.farzin.imdb.ui.screens.tvdetails.TVDetailsScreen
 
 

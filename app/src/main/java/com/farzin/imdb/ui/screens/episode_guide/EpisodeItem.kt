@@ -19,12 +19,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
@@ -46,6 +51,9 @@ fun EpisodeItem(
     name: String,
     overView: String,
 ) {
+
+    var isClicked by remember { mutableStateOf(false) }
+
 
     MyDividerHorizontal(modifier = Modifier.padding(horizontal = 10.dp))
 
@@ -122,7 +130,7 @@ fun EpisodeItem(
 
                 }
 
-                if (airDate != ""){
+                if (airDate != "") {
                     Text(
                         text = DateHelper.formatSimpleDate(airDate),
                         style = MaterialTheme.typography.titleMedium,
@@ -131,7 +139,6 @@ fun EpisodeItem(
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 }
-
 
 
             }
@@ -144,6 +151,11 @@ fun EpisodeItem(
                 fontWeight = FontWeight.Normal,
                 modifier = Modifier
                     .padding(start = 4.dp)
+                    .clickable {
+                        isClicked = !isClicked
+                    },
+                maxLines = if (isClicked) Int.MAX_VALUE else 6,
+                overflow = TextOverflow.Ellipsis
             )
 
 
