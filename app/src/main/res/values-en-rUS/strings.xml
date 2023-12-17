@@ -122,4 +122,7 @@
     <string name="please_wait">Please wait</string>
     <string name="sucess_login">Login successful</string>
     <string name="failed_login">Login failed</string>
+    <string name="please_login">Please login to your account first</string>
+    <string name="rating_successful">Rating was successful</string>
+    <string name="rating_unsuccessful">Rating was not successful</string>
 </resources>

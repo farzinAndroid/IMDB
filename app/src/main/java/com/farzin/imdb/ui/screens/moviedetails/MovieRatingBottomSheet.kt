@@ -1,4 +1,4 @@
-package com.farzin.imdb.models.movieDetail
+package com.farzin.imdb.ui.screens.moviedetails
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,6 +38,7 @@ import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.starBlue
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.MovieDetailViewModel
 import kotlinx.coroutines.delay
@@ -52,7 +54,7 @@ fun MovieRatingBottomSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var selectedStars by remember { mutableStateOf(0) }
+    var selectedStars by remember { mutableIntStateOf(0) }
     var message by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
 
@@ -66,6 +68,7 @@ fun MovieRatingBottomSheet(
 
         is NetworkResult.Error -> {
             loading = false
+            Toast.makeText(context,context.getString(R.string.rating_unsuccessful),Toast.LENGTH_SHORT).show()
         }
 
         is NetworkResult.Loading -> {
@@ -110,9 +113,6 @@ fun MovieRatingBottomSheet(
                 IconButton(
                     onClick = {
                         selectedStars = index + 1
-                        Toast
-                            .makeText(context, selectedStars.toString(), Toast.LENGTH_SHORT)
-                            .show()
                     },
                     modifier = Modifier
                         .size(26.dp)
@@ -131,14 +131,19 @@ fun MovieRatingBottomSheet(
 
         Button(
             onClick = {
-                scope.launch {
-                    movieDetailViewModel.addRating(AddRating(selectedStars),movieId)
+                if (Constants.SESSION_ID.isNotEmpty()){
+                    scope.launch {
+                        movieDetailViewModel.addRating(AddRating(selectedStars),movieId)
+                    }
+
+                    scope.launch {
+                        delay(2000)
+                        movieDetailViewModel.getRatedMovie()
+                    }
+                }else{
+                    Toast.makeText(context,context.getString(R.string.please_login),Toast.LENGTH_SHORT).show()
                 }
 
-                scope.launch {
-                    delay(2000)
-                    movieDetailViewModel.getRatedMovie()
-                }
             },
             modifier = Modifier
                 .fillMaxWidth()

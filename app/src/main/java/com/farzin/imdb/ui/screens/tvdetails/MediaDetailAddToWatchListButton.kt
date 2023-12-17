@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.farzin.imdb.R
 import com.farzin.imdb.ui.theme.darkText
+import com.farzin.imdb.utils.Constants
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
@@ -40,6 +41,10 @@ fun MediaDetailAddToWatchListButton(
 ) {
 
     var buttonText by remember { mutableStateOf("") }
+
+    var isLoggedIn by remember { mutableStateOf(false) }
+    isLoggedIn = Constants.SESSION_ID.isNotEmpty()
+
 
     Row(
         modifier = Modifier
@@ -58,7 +63,8 @@ fun MediaDetailAddToWatchListButton(
                 modifier = Modifier
                     .fillMaxSize(),
                 shape = Shapes().extraSmall,
-                elevation = ButtonDefaults.buttonElevation(4.dp)
+                elevation = ButtonDefaults.buttonElevation(4.dp),
+                enabled = isLoggedIn
             ) {
 
                 Row(

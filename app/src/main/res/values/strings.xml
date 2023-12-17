@@ -121,6 +121,9 @@
     <string name="please_wait">لطفا صبر کنید</string>
     <string name="sucess_login">عملیات لاگین با موفقیت انجام شد</string>
     <string name="failed_login">عملیات لاگین با شکست مواجه شد</string>
+    <string name="please_login">لطفا اول به اکانت خود وارد شوید</string>
+    <string name="rating_successful">امتیاز دادن با موفقیت انجام شد</string>
+    <string name="rating_unsuccessful">امتیاز دادن با موفقیت انجام نشد</string>
 
 
 

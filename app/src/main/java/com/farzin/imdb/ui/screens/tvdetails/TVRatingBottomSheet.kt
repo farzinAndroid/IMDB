@@ -38,6 +38,7 @@ import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.tvDetail.AddRating
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.starBlue
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.TVDetailViewModel
 import kotlinx.coroutines.delay
@@ -67,6 +68,7 @@ fun TVRatingBottomSheet(
 
         is NetworkResult.Error -> {
             loading = false
+            Toast.makeText(context,context.getString(R.string.rating_unsuccessful),Toast.LENGTH_SHORT).show()
         }
 
         is NetworkResult.Loading -> {
@@ -129,14 +131,21 @@ fun TVRatingBottomSheet(
 
         Button(
             onClick = {
-                scope.launch {
-                    tvDetailViewModel.addRating(tvId, AddRating(selectedStars))
+
+                if (Constants.SESSION_ID.isNotEmpty()){
+                    scope.launch {
+                        tvDetailViewModel.addRating(tvId, AddRating(selectedStars))
+                    }
+
+                    scope.launch {
+                        delay(2000)
+                        tvDetailViewModel.getRatedTV()
+                    }
+                }else{
+                    Toast.makeText(context,context.getString(R.string.please_login),Toast.LENGTH_SHORT).show()
                 }
 
-                scope.launch {
-                    delay(2000)
-                    tvDetailViewModel.getRatedTV()
-                }
+
             },
             modifier = Modifier
                 .fillMaxWidth()

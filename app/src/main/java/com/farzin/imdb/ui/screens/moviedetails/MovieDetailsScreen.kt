@@ -33,7 +33,6 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.movieDetail.MovieRatingBottomSheet
 import com.farzin.imdb.models.tvDetail.Genre
 import com.farzin.imdb.models.tvDetail.ProductionCountry
 import com.farzin.imdb.models.tvDetail.SpokenLanguage
