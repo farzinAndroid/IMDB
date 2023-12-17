@@ -1,5 +1,7 @@
 package com.farzin.imdb.ui.screens.home
 
+import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +37,7 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.DateHelper
 import com.farzin.imdb.utils.DigitHelper
 import com.farzin.imdb.utils.ImageHelper
@@ -47,14 +50,15 @@ fun MovieItem(
     onAddButtonClicked: () -> Unit = {},
     onCardClicked: () -> Unit = {},
     isFromWatchlist: Boolean = false,
-    posterPath:String,
-    voteAverage:Double,
-    name:String,
-    releaseDate:String = "",
-    modifier: Modifier = Modifier,
-    character:String = ""
+    posterPath: String,
+    voteAverage: Double,
+    name: String,
+    releaseDate: String = "",
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
+    character: String = "",
 ) {
 
+    val context = LocalContext.current
 
     MySpacerWidth(width = 10.dp)
 
@@ -100,7 +104,16 @@ fun MovieItem(
                     else
                         painterResource(R.drawable.add)
                 ) {
-                    onAddButtonClicked()
+                    if (Constants.SESSION_ID.isNotEmpty()) {
+                        onAddButtonClicked()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.please_login),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 }
             }
 
@@ -151,7 +164,7 @@ fun MovieItem(
 
             MySpacerHeight(height = 10.dp)
 
-            if (releaseDate == ""){
+            if (releaseDate == "") {
                 Text(
                     text = character,
                     style = MaterialTheme.typography.bodySmall,
@@ -161,11 +174,11 @@ fun MovieItem(
                         .weight(0.1f)
                         .padding(horizontal = 4.dp),
                     textAlign = TextAlign.Start,
-                    color =MaterialTheme.colorScheme.strongGray,
+                    color = MaterialTheme.colorScheme.strongGray,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-            }else{
+            } else {
                 Text(
                     text = DigitHelper.digitByLang(DateHelper.extractYearFromDate(releaseDate)),
                     style = MaterialTheme.typography.bodySmall,
@@ -178,7 +191,6 @@ fun MovieItem(
                     color = MaterialTheme.colorScheme.strongGray
                 )
             }
-
 
 
         }

@@ -60,7 +60,6 @@ fun GenresMovieSection(
     val movieGenre = Util(LocalContext.current).movieGenres
 
 
-
     //load movies based on those genre
     var movieLoading by remember { mutableStateOf(false) }
     var moviesBasedOnGenreList by remember {
@@ -139,317 +138,72 @@ fun GenresMovieSection(
                     contentColor = MaterialTheme.colorScheme.darkText,
                     divider = {
                         Divider(color = Color.Transparent)
+                    },
+                    tabs = {
+                        movieGenre.forEachIndexed { index, genre ->
+
+                            Tab(
+                                selected = selectedTabIndex == index,
+                                onClick = {
+                                    selectedTabIndex = index
+                                },
+                                content = {
+
+                                    GenreCard(
+                                        genreTitle = genre.name,
+                                        onClick = {
+                                            selectedTabIndex = index
+                                        }
+                                    )
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+
+                        }
                     }
-                ) {
+                )
 
-                    movieGenre.take(6).forEachIndexed { index, genre ->
+                val selectedGenre = movieGenre.getOrNull(selectedTabIndex)
+                if (selectedGenre != null) {
+                    val genreId = selectedGenre.id
 
-                        Tab(
-                            selected = selectedTabIndex == index,
-                            onClick = {
-                                selectedTabIndex = index
-                            },
-                            content = {
 
-                                GenreCard(
-                                    genreTitle = genre.name,
-                                    onClick = {
-                                        selectedTabIndex = index
-                                    }
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-
+                    LaunchedEffect(selectedTabIndex) {
+                        getMovieBasedOnGenre(homeViewModel, genreId.toString())
                     }
-
                 }
 
-                when (selectedTabIndex) {
-                    0 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[0].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .padding(top = 16.dp)
-                                .fillMaxWidth()
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
+                LazyRow(
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
+                ) {
+                    items(moviesBasedOnGenreList) { item ->
+                        MovieItem(
+                            posterPath = item.poster_path ?: "",
+                            voteAverage = item.vote_average,
+                            name = item.title,
+                            releaseDate = item.release_date,
+                            onCardClicked = {
+                                navController.navigate(
+                                    Screens.MovieDetails.route + "?id=${item.id}"
                                 )
-                            }
-                        }
-
-                    }
-
-                    1 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[1].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
+                            },
+                            onAddButtonClicked = {
+                                homeViewModel.addToWatchList(
+                                    AddToWatchListRequest(
+                                        media_id = item.id,
+                                        media_type = "movie",
+                                        watchlist = true
+                                    )
                                 )
+                                scope.launch {
+                                    delay(200)
+                                    homeViewModel.getWatchListMovie()
+                                }
                             }
-                        }
-
-                    }
-
-                    2 -> {
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[2].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
-                                )
-                            }
-                        }
-
-                    }
-
-                    3 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[3].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
-                                )
-                            }
-                        }
-
-                    }
-
-                    4 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[4].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
-                                )
-                            }
-                        }
-
-                    }
-
-                    5 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[5].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
-                                )
-                            }
-                        }
-
-                    }
-
-                    6 -> {
-
-                        LaunchedEffect(true) {
-                            getMovieBasedOnGenre(homeViewModel, movieGenre[6].id.toString())
-                        }
-
-                        LazyRow(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp)
-                        ) {
-                            items(moviesBasedOnGenreList) { item ->
-                                MovieItem(
-                                    posterPath = item.poster_path ?: "",
-                                    voteAverage = item.vote_average,
-                                    name = item.title,
-                                    releaseDate = item.release_date,
-                                    onCardClicked = {
-                                        navController.navigate(
-                                            Screens.MovieDetails.route + "?id=${item.id}"
-                                        )
-                                    },
-                                    onAddButtonClicked = {
-                                        homeViewModel.addToWatchList(
-                                            AddToWatchListRequest(
-                                                media_id = item.id,
-                                                media_type = "movie",
-                                                watchlist = true
-                                            )
-                                        )
-                                        scope.launch {
-                                            delay(200)
-                                            homeViewModel.getWatchListMovie()
-                                        }
-                                    }
-                                )
-                            }
-                        }
+                        )
                     }
                 }
             }

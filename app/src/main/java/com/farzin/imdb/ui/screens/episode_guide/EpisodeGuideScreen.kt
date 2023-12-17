@@ -19,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,11 +51,11 @@ fun EpisodeGuideScreen(
     episodeGuideViewModel: EpisodeGuideViewModel = hiltViewModel(),
 ) {
 
-    var selectedTabIndex by remember { mutableStateOf(0) }
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     var loading by remember { mutableStateOf(false) }
     var seasonList by remember { mutableStateOf<List<Season>>(emptyList()) }
-    var seasonNumber by remember { mutableStateOf(0) }
+    var seasonNumber by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(mediaId) {
         tvDetailViewModel.getTVDetails(mediaId)
@@ -138,7 +140,7 @@ fun EpisodeGuideScreen(
                 var episodeList by remember { mutableStateOf<List<Episode>>(emptyList()) }
                 var name by remember { mutableStateOf("") }
                 var airDate by remember { mutableStateOf("") }
-                var vote by remember { mutableStateOf(0.0) }
+                var vote by remember { mutableDoubleStateOf(0.0) }
                 var posterPath by remember { mutableStateOf("") }
                 var overView by remember { mutableStateOf("") }
 
