@@ -1,6 +1,7 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,7 @@ import com.farzin.imdb.ui.screens.cast_detail.ImageScreenState
 import com.farzin.imdb.ui.screens.images_screen.ImageFullScreen
 import com.farzin.imdb.ui.theme.appBackGround
 import com.farzin.imdb.ui.theme.imdbYellow
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.MyLoadingFullScreen
 import com.farzin.imdb.viewmodel.HomeViewModel
 import com.farzin.imdb.viewmodel.ImageScreenViewModel
@@ -72,6 +74,9 @@ fun TVDetailsScreen(
             isInFavorite = profileViewModel.getFavoriteId(tvId) == tvId
         }
     }
+
+    var isLoggedIn by remember { mutableStateOf(false) }
+    isLoggedIn = Constants.SESSION_ID.isNotEmpty()
 
 
     var loading by remember { mutableStateOf(false) }
@@ -204,32 +209,38 @@ fun TVDetailsScreen(
                                     likeButtonOnClick = {
 
 
-                                        if (isInFavorite){
-                                            profileViewModel.removeFavorite(
-                                                FavoriteDBModel(
-                                                    id = tvId,
-                                                    image = posterPath,
-                                                    name = name,
-                                                    year = startYear,
-                                                    rating = rating,
-                                                    isMovie = false
+                                        if (isLoggedIn){
+                                            if (isInFavorite){
+                                                profileViewModel.removeFavorite(
+                                                    FavoriteDBModel(
+                                                        id = tvId,
+                                                        image = posterPath,
+                                                        name = name,
+                                                        year = startYear,
+                                                        rating = rating,
+                                                        isMovie = false
+                                                    )
                                                 )
-                                            )
 
-                                            isInFavorite = false
-                                        }else{
-                                            profileViewModel.addFavorite(
-                                                FavoriteDBModel(
-                                                    id = tvId,
-                                                    image = posterPath,
-                                                    name = name,
-                                                    year = startYear,
-                                                    rating = rating,
-                                                    isMovie = false
+                                                isInFavorite = false
+                                            }else{
+                                                profileViewModel.addFavorite(
+                                                    FavoriteDBModel(
+                                                        id = tvId,
+                                                        image = posterPath,
+                                                        name = name,
+                                                        year = startYear,
+                                                        rating = rating,
+                                                        isMovie = false
+                                                    )
                                                 )
-                                            )
-                                            isInFavorite = true
+                                                isInFavorite = true
+                                            }
+                                        }else{
+                                            Toast.makeText(context,context.getString(R.string.please_login),Toast.LENGTH_SHORT)
+                                                .show()
                                         }
+
 
                                     },
                                     isFavorite = isInFavorite

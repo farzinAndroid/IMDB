@@ -152,6 +152,7 @@ fun SettingsScreen(
                         Constants.SESSION_ID = ""
                         dataStoreViewModel.saveAccountId("")
                         Constants.ACC_ID = ""
+                        Toast.makeText(context,context.getString(R.string.logged_out),Toast.LENGTH_SHORT).show()
                         profileViewModel.screenState = ProfileState.NOTLOGGED
                         scope.launch {
                             profileViewModel.getInitialRequestToken()

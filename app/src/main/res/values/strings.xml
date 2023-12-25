@@ -68,7 +68,7 @@
     <string name="added_to_watchList">به لیست تماشا اضافه شده</string>
     <string name="rate_this">امتیاز بدهید</string>
     <string name="your_rating">امتیاز شما</string>
-    <string name="no_overView">خلاصه ای وجود ندارد</string>
+    <string name="no_overView">متنی وجود ندارد</string>
     <string name="rate_desc">چه امتیازی میدهید به </string>
     <string name="rate">ثبت</string>
     <string name="cast">بازیگران</string>
@@ -82,7 +82,7 @@
     <string name="user_review">نظرات کاربران</string>
     <string name="users_rating">امتیاز کاربران</string>
     <string name="no_comment">نظری وجود ندارد</string>
-    <string name="details">ِجزئیات</string>
+    <string name="details">جزئیات</string>
     <string name="release_date">تاریخ انتشار</string>
     <string name="spoken_lang">زبان گفتاری</string>
     <string name="production_country">کشور سازنده</string>
@@ -127,6 +127,7 @@
     <string name="special">اختصاصی</string>
     <string name="fav_media">سریال‌ها و فیلم‌های مورد علاقه</string>
     <string name="fav_media_empty">لیست شما خالیست</string>
+    <string name="logged_out">از حساب خارج شدید</string>
     <string name="add_your_fav_media">سریال‌ها و فیلم‌های مورد علاقه خود را اضافه کنید تا سریع‌تر به آن‌ها دسترسی داشته باشید</string>
 
 

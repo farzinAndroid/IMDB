@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.compose.rememberNavController
+import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.navigation.bottomNavBar.BottomNav
 import com.farzin.imdb.navigation.setupNavgraph.SetUpNavGraph
 import com.farzin.imdb.ui.screens.profile.InitialRequestToken
@@ -73,7 +74,7 @@ class MainActivity : ComponentActivity() {
                                     onItemClick = {
                                         navController.navigate(it.route){
                                             launchSingleTop = true
-                                            popUpTo(it.route){inclusive = true}
+                                            popUpTo(Screens.Home.route)
                                         }
                                     }
                                 )

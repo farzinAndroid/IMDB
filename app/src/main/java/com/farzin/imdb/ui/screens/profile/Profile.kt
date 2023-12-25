@@ -33,6 +33,7 @@ fun Profile(
         item {
             ProfileTopBar {
                 navController.navigate(Screens.Settings.route) {
+                    launchSingleTop = true
                     popUpTo(Screens.Profile.route) {
                         inclusive = true
                     }

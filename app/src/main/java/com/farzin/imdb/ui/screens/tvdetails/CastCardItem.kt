@@ -1,5 +1,6 @@
 package com.farzin.imdb.ui.screens.tvdetails
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.MarqueeAnimationMode
@@ -37,16 +38,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.farzin.imdb.R
 import com.farzin.imdb.models.database.PersonDBModel
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.ui.theme.strongGray
+import com.farzin.imdb.utils.Constants
 import com.farzin.imdb.utils.ImageHelper
 import com.farzin.imdb.utils.MySpacerWidth
 import com.farzin.imdb.viewmodel.ProfileViewModel
@@ -67,6 +71,7 @@ fun CastCardItem(
 ) {
 
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     var isSaved by remember { mutableStateOf(false) }
 
@@ -75,6 +80,9 @@ fun CastCardItem(
             isSaved = profileViewModel.getPersonId(id) == id
         }
     }
+
+    var isLoggedIn by remember { mutableStateOf(false) }
+    isLoggedIn = Constants.SESSION_ID.isNotEmpty()
 
     val heart = if (isSaved) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder
 
@@ -118,26 +126,33 @@ fun CastCardItem(
                         .clip(CircleShape)
                         .background(Color.White.copy(0.5f))
                         .clickable {
-                            isSaved = !isSaved
-                            if (isSaved) {
-                                profileViewModel.addPerson(
-                                    PersonDBModel(
-                                        id = id,
-                                        job = job,
-                                        name = name,
-                                        image = profilePath
+                            if (isLoggedIn){
+                                isSaved = !isSaved
+                                if (isSaved) {
+                                    profileViewModel.addPerson(
+                                        PersonDBModel(
+                                            id = id,
+                                            job = job,
+                                            name = name,
+                                            image = profilePath
+                                        )
                                     )
-                                )
-                            } else {
-                                profileViewModel.removePerson(
-                                    PersonDBModel(
-                                        id = id,
-                                        job = job,
-                                        name = name,
-                                        image = profilePath
+                                } else {
+                                    profileViewModel.removePerson(
+                                        PersonDBModel(
+                                            id = id,
+                                            job = job,
+                                            name = name,
+                                            image = profilePath
+                                        )
                                     )
-                                )
+                                }
+                            }else{
+                                Toast.makeText(context,context.getString(R.string.please_login),
+                                    Toast.LENGTH_SHORT)
+                                    .show()
                             }
+
                         }
                 ) {
                     Icon(
