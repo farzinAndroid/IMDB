@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.farzin.imdb"
         minSdk = 25
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -63,7 +63,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.20")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -88,11 +88,11 @@ dependencies {
     //hilt di
     implementation ("com.google.dagger:hilt-android:2.44")
     kapt ("com.google.dagger:hilt-compiler:2.44")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 
     //compose navigation
-    implementation ("androidx.navigation:navigation-compose:2.6.0")
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
 
     //animation
     implementation ("com.airbnb.android:lottie-compose:5.2.0")
@@ -107,20 +107,20 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
     //datastore
-    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+    implementation ("androidx.datastore:datastore-preferences:1.1.0")
 
     //pager
     implementation ("com.google.accompanist:accompanist-pager:0.29.0-alpha")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.29.0-alpha")
 
     //room
-    implementation ("androidx.room:room-runtime:2.3.0")
-    kapt ("androidx.room:room-compiler:2.3.0")
-    implementation ("androidx.room:room-ktx:2.3.0")
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
 
     // paging
-    implementation ("androidx.paging:paging-runtime-ktx:3.3.0-alpha02")
-    implementation ("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation ("androidx.paging:paging-runtime-ktx:3.3.0-beta01")
+    implementation ("androidx.paging:paging-compose:3.3.0-beta01")
 
     // youtube player
     implementation("io.github.ilyapavlovskii:youtubeplayer-compose:2023.11.16")
