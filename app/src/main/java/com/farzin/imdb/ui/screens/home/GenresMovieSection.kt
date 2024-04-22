@@ -37,7 +37,7 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.models.home.MovieResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
@@ -65,7 +65,7 @@ fun GenresMovieSection(
     //load movies based on those genre
     var movieLoading by remember { mutableStateOf(false) }
     var moviesBasedOnGenreList by remember {
-        mutableStateOf<List<TrendingMoviesForWeekResult>>(
+        mutableStateOf<List<MovieResult>>(
             emptyList()
         )
     }

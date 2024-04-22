@@ -1,15 +1,16 @@
 package com.farzin.imdb.models.home
 
-data class TVBasedOnNetwork(
-    val page: Int = 0,
-    val results: List<TVBasedOnNetworkResult> = emptyList(),
+
+data class TVModel(
+    val page: Int? = 0,
+    val results: List<TVModelResult> = emptyList(),
     val total_pages: Int = 0,
     val total_results: Int = 0,
 )
 
-data class TVBasedOnNetworkResult(
+data class TVModelResult(
     val backdrop_path: String = "",
-    val first_air_date: String? = null,
+    val first_air_date: String = "",
     val genre_ids: List<Int> = emptyList(),
     val id: Int = 0,
     val name: String = "",

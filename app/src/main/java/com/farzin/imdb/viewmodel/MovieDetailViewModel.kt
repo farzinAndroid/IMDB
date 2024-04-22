@@ -3,7 +3,7 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.movieDetail.MovieCastAndCrewModel
 import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
@@ -28,7 +28,7 @@ class MovieDetailViewModel @Inject constructor(private val repo: MovieDetailRepo
     val castAndCrew =
         MutableStateFlow<NetworkResult<MovieCastAndCrewModel>>(NetworkResult.Loading())
     val movieRecommendation =
-        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
     val movieReviews = MutableStateFlow<NetworkResult<TVReviewModel>>(NetworkResult.Loading())
     val movieImages = MutableStateFlow<NetworkResult<ImagesModel>>(NetworkResult.Loading())
     val videosMovie = MutableStateFlow<NetworkResult<VideosModel>>(NetworkResult.Loading())

@@ -137,5 +137,9 @@ dependencies {
     implementation("me.saket.telephoto:zoomable-image-coil:0.7.1")
 
 
+    //paging3
+    implementation ("androidx.paging:paging-compose:3.3.0-beta01")
+
+
 
 }

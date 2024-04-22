@@ -3,7 +3,7 @@ package com.farzin.imdb.repository
 import com.farzin.imdb.data.remote.BaseApiResponse
 import com.farzin.imdb.data.remote.MovieDetailApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.movieDetail.MovieCastAndCrewModel
 import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
@@ -32,7 +32,7 @@ class MovieDetailRepo @Inject constructor(private val api:MovieDetailApiInterfac
         api.getMovieCastAndCrew(movieId = movieId)
     }
 
-    suspend fun getMovieRecommendation(movieId: Int) : NetworkResult<TrendingMoviesForWeek> = safeApiCall {
+    suspend fun getMovieRecommendation(movieId: Int) : NetworkResult<Movie> = safeApiCall {
         api.getMovieRecommendation(movieId = movieId)
     }
 

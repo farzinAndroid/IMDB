@@ -1,6 +1,6 @@
 package com.farzin.imdb.data.remote
 
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.utils.Constants
 import retrofit2.Response
@@ -14,7 +14,7 @@ interface SearchApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
         @Query("query") query: String
-    ):Response<TrendingMoviesForWeek>
+    ):Response<Movie>
 
 
     @GET("search/tv")

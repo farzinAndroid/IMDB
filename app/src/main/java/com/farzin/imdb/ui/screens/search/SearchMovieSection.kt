@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.models.home.MovieResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.SearchViewModel
@@ -39,7 +39,7 @@ fun SearchMovieSection(
     val scope = rememberCoroutineScope()
 
     var loading by remember { mutableStateOf(false) }
-    var searchMovieList by remember { mutableStateOf<List<TrendingMoviesForWeekResult>>(emptyList()) }
+    var searchMovieList by remember { mutableStateOf<List<MovieResult>>(emptyList()) }
 
     val result by searchViewModel.searchedMovies.collectAsState()
     when (result) {

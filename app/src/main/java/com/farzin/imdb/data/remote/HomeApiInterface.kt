@@ -2,10 +2,9 @@ package com.farzin.imdb.data.remote
 
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.AddToWatchListResult
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.home.NowPlayingModel
-import com.farzin.imdb.models.home.PopularTVModel
-import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.TVModel
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.home.WatchListTV
 import com.farzin.imdb.utils.Constants
@@ -30,14 +29,14 @@ interface HomeApiInterface {
     suspend fun getPopularTV(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
-    ): Response<PopularTVModel>
+    ): Response<TVModel>
 
 
     @GET("trending/movie/week")
     suspend fun getTrendingMoviesForWeek(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
-    ): Response<TrendingMoviesForWeek>
+    ): Response<Movie>
 
 
     @GET("discover/tv")
@@ -45,7 +44,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
         @Query("with_networks") withNetworks: Int,
-    ): Response<TVBasedOnNetwork>
+    ): Response<TVModel>
 
 
     @GET("movie/now_playing")
@@ -91,7 +90,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Query("language") language: String = Constants.USER_LANG,
-    ): Response<TrendingMoviesForWeek>
+    ): Response<Movie>
 
 
 
@@ -100,7 +99,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
         @Query("with_genres") genres: String,
-    ): Response<TrendingMoviesForWeek>
+    ): Response<Movie>
 
 
 }

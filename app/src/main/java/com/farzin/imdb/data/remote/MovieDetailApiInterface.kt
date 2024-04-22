@@ -1,6 +1,6 @@
 package com.farzin.imdb.data.remote
 
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.movieDetail.MovieCastAndCrewModel
 import com.farzin.imdb.models.movieDetail.MovieDetailModel
 import com.farzin.imdb.models.movieDetail.RatedMovieModel
@@ -71,7 +71,7 @@ interface MovieDetailApiInterface {
         ) movieId:Int,
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG
-    ):Response<TrendingMoviesForWeek>
+    ):Response<Movie>
 
 
     @GET("movie/{movie_id}/reviews")

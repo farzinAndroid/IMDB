@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TrendingMoviesForWeekResult
+import com.farzin.imdb.models.home.MovieResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.Constants
@@ -49,7 +49,7 @@ fun WatchListMovieSection(
     val scope = rememberCoroutineScope()
 
     var watchListMovieList by remember {
-        mutableStateOf<List<TrendingMoviesForWeekResult>>(emptyList())
+        mutableStateOf<List<MovieResult>>(emptyList())
     }
 
     var loading by remember { mutableStateOf(false) }

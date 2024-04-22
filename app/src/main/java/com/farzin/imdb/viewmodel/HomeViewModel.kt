@@ -5,10 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.AddToWatchListResult
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.home.NowPlayingModel
-import com.farzin.imdb.models.home.PopularTVModel
-import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.TVModel
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.home.WatchListTV
 import com.farzin.imdb.repository.HomeRepo
@@ -22,19 +21,19 @@ class HomeViewModel @Inject constructor(private val repo: HomeRepo) : ViewModel(
 
     var trendingTVShowsForDay =
         MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
-    var popularTV = MutableStateFlow<NetworkResult<PopularTVModel>>(NetworkResult.Loading())
+    var popularTV = MutableStateFlow<NetworkResult<TVModel>>(NetworkResult.Loading())
     var trendingMoviesForWeek =
-        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
     var tVBasedOnNetwork =
-        MutableStateFlow<NetworkResult<TVBasedOnNetwork>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<TVModel>>(NetworkResult.Loading())
     var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
     var addToWatchList =
         MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
     var watchListTV = MutableStateFlow<NetworkResult<WatchListTV>>(NetworkResult.Loading())
     var watchListMovie =
-        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
     var movieBasedOnGenre =
-        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
 
 
     fun getAllApiCallsForHome() {

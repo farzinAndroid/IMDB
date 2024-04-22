@@ -5,10 +5,9 @@ import com.farzin.imdb.data.remote.HomeApiInterface
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.models.home.AddToWatchListResult
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.home.NowPlayingModel
-import com.farzin.imdb.models.home.PopularTVModel
-import com.farzin.imdb.models.home.TVBasedOnNetwork
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.TVModel
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.models.home.WatchListTV
 import javax.inject.Inject
@@ -21,19 +20,19 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
         }
 
 
-    suspend fun getPopularTV(): NetworkResult<PopularTVModel> =
+    suspend fun getPopularTV(): NetworkResult<TVModel> =
         safeApiCall {
             api.getPopularTV()
         }
 
 
-    suspend fun getTrendingMoviesForWeek(): NetworkResult<TrendingMoviesForWeek> =
+    suspend fun getTrendingMoviesForWeek(): NetworkResult<Movie> =
         safeApiCall {
             api.getTrendingMoviesForWeek()
         }
 
 
-    suspend fun getTVBasedOnNetwork(netWorkId:Int): NetworkResult<TVBasedOnNetwork> =
+    suspend fun getTVBasedOnNetwork(netWorkId:Int): NetworkResult<TVModel> =
         safeApiCall {
             api.getTVBasedOnNetwork(withNetworks = netWorkId)
         }
@@ -56,14 +55,14 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
         }
 
 
-    suspend fun getWatchListMovie(): NetworkResult<TrendingMoviesForWeek> =
+    suspend fun getWatchListMovie(): NetworkResult<Movie> =
         safeApiCall {
             api.getWatchListMovie()
         }
 
 
 
-    suspend fun getMoviesBasedOnGenre(genre:String): NetworkResult<TrendingMoviesForWeek> =
+    suspend fun getMoviesBasedOnGenre(genre:String): NetworkResult<Movie> =
         safeApiCall {
             api.getMoviesBasedOnGenre(genres = genre)
         }

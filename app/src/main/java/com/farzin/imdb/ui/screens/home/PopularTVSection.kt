@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.PopularTVModelResult
+import com.farzin.imdb.models.home.TVModelResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
 import com.farzin.imdb.utils.MySpacerHeight
@@ -43,7 +43,7 @@ fun PopularTVSection(
 
 
     var popularTV by remember {
-        mutableStateOf<List<PopularTVModelResult>>(
+        mutableStateOf<List<TVModelResult>>(
             emptyList()
         )
     }

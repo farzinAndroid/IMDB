@@ -3,7 +3,7 @@ package com.farzin.imdb.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingMoviesForWeek
+import com.farzin.imdb.models.home.Movie
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
 import com.farzin.imdb.repository.SearchRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(private val repo: SearchRepo) : ViewModel() {
 
     val searchedMovies =
-        MutableStateFlow<NetworkResult<TrendingMoviesForWeek>>(NetworkResult.Loading())
+        MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
     val searchedTV = MutableStateFlow<NetworkResult<TrendingTVShowsForDay>>(NetworkResult.Loading())
 
     fun searchMovie(query: String) {
