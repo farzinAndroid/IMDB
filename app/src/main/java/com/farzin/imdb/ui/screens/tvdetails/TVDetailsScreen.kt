@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.database.FavoriteDBModel
@@ -146,13 +145,24 @@ fun TVDetailsScreen(
     }
 
     var isInWatchList by remember { mutableStateOf(false) }
-    val watchListTvPaging = homeViewModel.watchListTV.collectAsLazyPagingItems()
 
     // get if the TV is in watchlist
-    LaunchedEffect(watchListTvPaging.itemSnapshotList) {
-        isInWatchList = watchListTvPaging.itemSnapshotList.any {
-            it?.id == tvId
+    LaunchedEffect(tvId) {
+        homeViewModel.getWatchListTV()
+
+        homeViewModel.watchListTV.collectLatest { result ->
+            when (result) {
+                is NetworkResult.Success -> {
+                    isInWatchList = result.data?.results?.any {
+                        tvId == it.id
+                    } ?: false
+                }
+
+                is NetworkResult.Error -> {}
+                is NetworkResult.Loading -> {}
+            }
         }
+
     }
 
 

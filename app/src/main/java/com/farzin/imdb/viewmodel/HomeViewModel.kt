@@ -16,7 +16,7 @@ import com.farzin.imdb.models.home.MovieResult
 import com.farzin.imdb.models.home.NowPlayingModel
 import com.farzin.imdb.models.home.TVModelResult
 import com.farzin.imdb.models.home.TrendingTVShowsForDay
-import com.farzin.imdb.models.home.WatchListTVResult
+import com.farzin.imdb.models.home.WatchListTV
 import com.farzin.imdb.repository.HomeRepo
 import com.farzin.imdb.utils.SourceHelper.loadApi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,7 +39,7 @@ class HomeViewModel @Inject constructor(private val repo: HomeRepo) : ViewModel(
     var nowPlaying = MutableStateFlow<NetworkResult<NowPlayingModel>>(NetworkResult.Loading())
     var addToWatchList =
         MutableStateFlow<NetworkResult<AddToWatchListResult>>(NetworkResult.Loading())
-    var watchListTV : Flow<PagingData<WatchListTVResult>> = flow { emit(PagingData.empty()) }
+    var watchListTV = MutableStateFlow<NetworkResult<WatchListTV>>(NetworkResult.Loading())
     var watchListMovie =
         MutableStateFlow<NetworkResult<Movie>>(NetworkResult.Loading())
     var movieBasedOnGenre =
@@ -113,25 +113,7 @@ class HomeViewModel @Inject constructor(private val repo: HomeRepo) : ViewModel(
 
     fun getWatchListTV() {
         viewModelScope.launch {
-            watchListTV = Pager(
-                PagingConfig(20)
-            ) {
-                GenericPagingSource(loadPage = { loadParams ->
-                    loadApi(
-                        loadParams = loadParams,
-                        loadApiRequest = { nextPage ->
-                            val response =
-                                repo.getWatchListTV(page = nextPage).data?.results
-
-                            PagingSource.LoadResult.Page(
-                                data = response ?: emptyList(),
-                                prevKey = null,
-                                nextKey = nextPage + 1
-                            )
-                        }
-                    )
-                })
-            }.flow.cachedIn(viewModelScope)
+            watchListTV.emit(repo.getWatchListTV())
         }
     }
 

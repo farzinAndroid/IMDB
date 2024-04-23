@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import com.farzin.imdb.R
 import com.farzin.imdb.models.home.AddToWatchListRequest
 import com.farzin.imdb.navigation.Screens
@@ -109,7 +108,6 @@ fun PopularTVSection(
                 ) {
                     items(
                         count = popularTV.itemCount,
-                        key = popularTV.itemKey { it.id },
                         contentType = popularTV.itemContentType { "PopularTV" }
                     ) {itemInt->
                         val popularTvList = popularTV[itemInt]
