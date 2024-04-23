@@ -29,6 +29,7 @@ interface HomeApiInterface {
     suspend fun getPopularTV(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
+        @Query("page") page: Int = 1,
     ): Response<TVModel>
 
 
@@ -36,6 +37,7 @@ interface HomeApiInterface {
     suspend fun getTrendingMoviesForWeek(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
+        @Query("page") page: Int = 1,
     ): Response<Movie>
 
 
@@ -44,6 +46,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
         @Query("with_networks") withNetworks: Int,
+        @Query("page") page: Int = 1,
     ): Response<TVModel>
 
 
@@ -51,6 +54,7 @@ interface HomeApiInterface {
     suspend fun getNowPlaying(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
+        @Query("page") page: Int = 1,
     ): Response<NowPlayingModel>
 
 
@@ -77,6 +81,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Query("language") language: String = Constants.USER_LANG,
+        @Query("page") page: Int = 1,
     ): Response<WatchListTV>
 
 
@@ -90,6 +95,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("session_id") sessionId: String = Constants.SESSION_ID,
         @Query("language") language: String = Constants.USER_LANG,
+        @Query("page") page: Int = 1,
     ): Response<Movie>
 
 
@@ -99,6 +105,7 @@ interface HomeApiInterface {
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
         @Query("with_genres") genres: String,
+        @Query("page") page: Int = 1,
     ): Response<Movie>
 
 

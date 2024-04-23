@@ -2,21 +2,17 @@ package com.farzin.imdb.ui.screens.home
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,12 +20,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.farzin.imdb.R
-import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.home.AddToWatchListRequest
-import com.farzin.imdb.models.home.TVModelResult
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.ui.theme.sectionContainerBackground
+import com.farzin.imdb.utils.My3DotsLoading
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
@@ -42,20 +41,20 @@ fun PopularTVSection(
 ) {
 
 
-    var popularTV by remember {
+   /* var popularTV by remember {
         mutableStateOf<List<TVModelResult>>(
             emptyList()
         )
-    }
+    }*/
 
     val scope = rememberCoroutineScope()
     val ctx = LocalContext.current
 
 
-    var loading by remember { mutableStateOf(false) }
+    /*var loading by remember { mutableStateOf(false) }*/
 
-    val result by homeViewModel.popularTV.collectAsState()
-    when (result) {
+    val popularTV = homeViewModel.popularTV.collectAsLazyPagingItems()
+    /*when (result) {
         is NetworkResult.Success -> {
             popularTV = result.data?.results ?: emptyList()
             loading = false
@@ -68,7 +67,7 @@ fun PopularTVSection(
         is NetworkResult.Loading -> {
             loading = true
         }
-    }
+    }*/
 
 
     Column(
@@ -109,25 +108,26 @@ fun PopularTVSection(
                         .fillMaxSize()
                 ) {
                     items(
-                        popularTV,
-                        key = {it.id}
-                    ) {item->
-
+                        count = popularTV.itemCount,
+                        key = popularTV.itemKey { it.id },
+                        contentType = popularTV.itemContentType { "PopularTV" }
+                    ) {itemInt->
+                        val popularTvList = popularTV[itemInt]
 
                         MovieItem(
-                            posterPath = item.poster_path ?: "",
-                            voteAverage = item.vote_average,
-                            name = item.name,
-                            releaseDate = item.first_air_date,
+                            posterPath = popularTvList?.poster_path ?: "",
+                            voteAverage = popularTvList?.vote_average ?: 0.0,
+                            name = popularTvList?.name ?: "",
+                            releaseDate = popularTvList?.first_air_date ?: "",
                             onCardClicked = {
                                 navController.navigate(
-                                    Screens.TVDetails.route + "?id=${item.id}"
+                                    Screens.TVDetails.route + "?id=${popularTvList?.id}"
                                 )
                             },
                             onAddButtonClicked = {
                                 homeViewModel.addToWatchList(
                                     AddToWatchListRequest(
-                                        media_id = item.id,
+                                        media_id = popularTvList?.id ?: 0,
                                         media_type = "tv",
                                         watchlist = true
                                     )
@@ -141,6 +141,27 @@ fun PopularTVSection(
                             }
                         )
                     }
+
+                    popularTV.loadState.apply {
+                        when{
+                            refresh is LoadState.Loading->{
+                                item {
+                                    My3DotsLoading(modifier = Modifier
+                                        .fillMaxSize())
+                                }
+                            }
+
+                            append is LoadState.Loading->{
+                                item {
+                                        My3DotsLoading(modifier = Modifier
+                                            .fillMaxHeight()
+                                            .width(100.dp))
+
+                                }
+                            }
+                        }
+                    }
+
                 }
 
                 MySpacerHeight(height = 20.dp)

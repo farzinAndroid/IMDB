@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.farzin.imdb.R
 import com.farzin.imdb.data.remote.NetworkResult
 import com.farzin.imdb.models.database.FavoriteDBModel
@@ -106,6 +107,7 @@ fun TVDetailsScreen(
     //get media details
     LaunchedEffect(tvId) {
         tvDetailViewModel.getTVDetails(tvId)
+        homeViewModel.getWatchListTV()
 
         tvDetailViewModel.tvDetails.collectLatest { result ->
             when (result) {
@@ -144,24 +146,13 @@ fun TVDetailsScreen(
     }
 
     var isInWatchList by remember { mutableStateOf(false) }
+    val watchListTvPaging = homeViewModel.watchListTV.collectAsLazyPagingItems()
 
     // get if the TV is in watchlist
-    LaunchedEffect(tvId) {
-        homeViewModel.getWatchListTV()
-
-        homeViewModel.watchListTV.collectLatest { result ->
-            when (result) {
-                is NetworkResult.Success -> {
-                    isInWatchList = result.data?.results?.any {
-                        tvId == it.id
-                    } ?: false
-                }
-
-                is NetworkResult.Error -> {}
-                is NetworkResult.Loading -> {}
-            }
+    LaunchedEffect(watchListTvPaging.itemSnapshotList) {
+        isInWatchList = watchListTvPaging.itemSnapshotList.any {
+            it?.id == tvId
         }
-
     }
 
 
@@ -209,8 +200,8 @@ fun TVDetailsScreen(
                                     likeButtonOnClick = {
 
 
-                                        if (isLoggedIn){
-                                            if (isInFavorite){
+                                        if (isLoggedIn) {
+                                            if (isInFavorite) {
                                                 profileViewModel.removeFavorite(
                                                     FavoriteDBModel(
                                                         id = tvId,
@@ -223,7 +214,7 @@ fun TVDetailsScreen(
                                                 )
 
                                                 isInFavorite = false
-                                            }else{
+                                            } else {
                                                 profileViewModel.addFavorite(
                                                     FavoriteDBModel(
                                                         id = tvId,
@@ -236,8 +227,12 @@ fun TVDetailsScreen(
                                                 )
                                                 isInFavorite = true
                                             }
-                                        }else{
-                                            Toast.makeText(context,context.getString(R.string.please_login),Toast.LENGTH_SHORT)
+                                        } else {
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.please_login),
+                                                Toast.LENGTH_SHORT
+                                            )
                                                 .show()
                                         }
 

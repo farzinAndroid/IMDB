@@ -20,27 +20,27 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
         }
 
 
-    suspend fun getPopularTV(): NetworkResult<TVModel> =
+    suspend fun getPopularTV(page: Int = 1): NetworkResult<TVModel> =
         safeApiCall {
-            api.getPopularTV()
+            api.getPopularTV(page = page)
         }
 
 
-    suspend fun getTrendingMoviesForWeek(): NetworkResult<Movie> =
+    suspend fun getTrendingMoviesForWeek(page: Int = 1): NetworkResult<Movie> =
         safeApiCall {
-            api.getTrendingMoviesForWeek()
+            api.getTrendingMoviesForWeek(page = page)
         }
 
 
-    suspend fun getTVBasedOnNetwork(netWorkId:Int): NetworkResult<TVModel> =
+    suspend fun getTVBasedOnNetwork(netWorkId: Int, page: Int = 1): NetworkResult<TVModel> =
         safeApiCall {
-            api.getTVBasedOnNetwork(withNetworks = netWorkId)
+            api.getTVBasedOnNetwork(withNetworks = netWorkId, page = page)
         }
 
 
-    suspend fun getNowPlaying(): NetworkResult<NowPlayingModel> =
+    suspend fun getNowPlaying(page: Int = 1): NetworkResult<NowPlayingModel> =
         safeApiCall {
-            api.getNowPlaying()
+            api.getNowPlaying(page = page)
         }
 
 
@@ -49,22 +49,21 @@ class HomeRepo @Inject constructor(private val api: HomeApiInterface) : BaseApiR
             api.addToWatchList(watchListRequest)
         }
 
-    suspend fun getWatchListTV(): NetworkResult<WatchListTV> =
+    suspend fun getWatchListTV(page: Int = 1): NetworkResult<WatchListTV> =
         safeApiCall {
-            api.getWatchListTV()
+            api.getWatchListTV(page = page)
         }
 
 
-    suspend fun getWatchListMovie(): NetworkResult<Movie> =
+    suspend fun getWatchListMovie(page: Int = 1): NetworkResult<Movie> =
         safeApiCall {
-            api.getWatchListMovie()
+            api.getWatchListMovie(page = page)
         }
 
 
-
-    suspend fun getMoviesBasedOnGenre(genre:String): NetworkResult<Movie> =
+    suspend fun getMoviesBasedOnGenre(genre: String, page: Int = 1): NetworkResult<Movie> =
         safeApiCall {
-            api.getMoviesBasedOnGenre(genres = genre)
+            api.getMoviesBasedOnGenre(genres = genre, page = page)
         }
 
 }
