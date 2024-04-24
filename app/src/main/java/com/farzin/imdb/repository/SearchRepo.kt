@@ -10,16 +10,16 @@ import javax.inject.Inject
 class SearchRepo @Inject constructor(private val api: SearchApiInterface) : BaseApiResponse() {
 
 
-    suspend fun searchMovie(query: String) : NetworkResult<Movie> =
+    suspend fun searchMovie(query: String,page:Int = 1) : NetworkResult<Movie> =
         safeApiCall {
-            api.searchMovie(query = query)
+            api.searchMovie(query = query, page = page)
         }
 
 
 
-    suspend fun searchTV(query: String) : NetworkResult<TrendingTVShowsForDay> =
+    suspend fun searchTV(query: String,page:Int = 1) : NetworkResult<TrendingTVShowsForDay> =
         safeApiCall {
-            api.searchTV(query = query)
+            api.searchTV(query = query, page = page)
         }
 
 

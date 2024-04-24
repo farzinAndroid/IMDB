@@ -6,21 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.farzin.imdb.data.remote.NetworkResult
-import com.farzin.imdb.models.home.TrendingTVShowsForDayResult
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.farzin.imdb.navigation.Screens
 import com.farzin.imdb.utils.MySpacerHeight
 import com.farzin.imdb.viewmodel.SearchViewModel
@@ -38,24 +33,7 @@ fun SearchTVSection(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var loading by remember { mutableStateOf(false) }
-    var searchTVList by remember { mutableStateOf<List<TrendingTVShowsForDayResult>>(emptyList()) }
-
-    val result by searchViewModel.searchedTV.collectAsState()
-    when (result) {
-        is NetworkResult.Success -> {
-            loading = false
-            searchTVList = result.data?.results ?: emptyList()
-        }
-
-        is NetworkResult.Error -> {
-            loading = false
-        }
-
-        is NetworkResult.Loading -> {
-            loading = true
-        }
-    }
+    val searchTVList = searchViewModel.searchedTV.collectAsLazyPagingItems()
 
     Column {
 
@@ -68,10 +46,12 @@ fun SearchTVSection(
                 } else {
                     scope.launch {
                         searchViewModel.searchTV(searchValue)
+                        searchTVList.refresh()
                     }
                 }
             }
         )
+
 
         LazyColumn(
             modifier = Modifier
@@ -80,14 +60,20 @@ fun SearchTVSection(
         ) {
             item { MySpacerHeight(height = 10.dp) }
 
-            items(searchTVList){ item->
+            items(
+                searchTVList.itemCount,
+                searchTVList.itemKey { it.id },
+                searchTVList.itemContentType { "searchTVList" }
+            ) {
+                val list = searchTVList[it]
+
                 SearchMediaItem(
-                    title = item.name,
-                    poster = item.poster_path ?: "",
-                    startYear = item.first_air_date,
+                    title = list?.name ?: "",
+                    poster = list?.poster_path ?: "",
+                    startYear = list?.first_air_date ?: "",
                     isMovie = false,
                     onClick = {
-                        navController.navigate(Screens.TVDetails.route+"?id=${item.id}")
+                        navController.navigate(Screens.TVDetails.route+"?id=${list?.id}")
                     }
                 )
             }

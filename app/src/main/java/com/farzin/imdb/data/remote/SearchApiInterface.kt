@@ -13,7 +13,8 @@ interface SearchApiInterface {
     suspend fun searchMovie(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
-        @Query("query") query: String
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
     ):Response<Movie>
 
 
@@ -21,7 +22,8 @@ interface SearchApiInterface {
     suspend fun searchTV(
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.USER_LANG,
-        @Query("query") query: String
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
     ):Response<TrendingTVShowsForDay>
 
 }
