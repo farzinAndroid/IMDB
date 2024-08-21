@@ -120,7 +120,7 @@ fun WatchListMovieSection(
                 } else {
 
 
-                    if (watchListMovieList.isEmpty() && Constants.SESSION_ID.isNotEmpty()) {
+                    if (watchListMovieList.isEmpty() && Constants.SESSION_ID != "null") {
 
                         EmptySection(
                             onClick = {
@@ -131,7 +131,7 @@ fun WatchListMovieSection(
                             buttonText = stringResource(R.string.empty_watchlist_button_text)
                         )
 
-                    } else if (Constants.SESSION_ID == "" && watchListMovieList.isEmpty()) {
+                    } else if (Constants.SESSION_ID == "null" && watchListMovieList.isEmpty()) {
                         EmptySection(
                             onClick = { navController.navigate(Screens.Profile.route) },
                             title = stringResource(R.string.please_login_to_see_watchlist),

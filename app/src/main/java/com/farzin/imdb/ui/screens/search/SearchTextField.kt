@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,7 +21,7 @@ import com.farzin.imdb.ui.theme.darkText
 import com.farzin.imdb.ui.theme.imdbYellow
 import com.farzin.imdb.ui.theme.strongGray
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun SearchTextField(
     value:String,
@@ -61,17 +60,18 @@ fun SearchTextField(
                 onValueChanged(it)
             },
             modifier = Modifier.weight(0.8f),
-            colors = TextFieldDefaults.textFieldColors(
+            colors = TextFieldDefaults.colors(
                 cursorColor = MaterialTheme.colorScheme.imdbYellow,
                 focusedIndicatorColor = MaterialTheme.colorScheme.imdbYellow, // Remove the line when focused
                 unfocusedIndicatorColor = MaterialTheme.colorScheme.strongGray, // Remove the line when not focused
-                containerColor = Color.Transparent, // Make the background transparent
-                textColor = MaterialTheme.colorScheme.darkText
+                unfocusedContainerColor = Color.Transparent, // Make the background transparent
+                focusedContainerColor = Color.Transparent, // Make the background transparent,
+                focusedTextColor = MaterialTheme.colorScheme.darkText,
+                unfocusedTextColor = MaterialTheme.colorScheme.darkText,
             ),
             textStyle = MaterialTheme.typography.bodyLarge,
             singleLine = true
         )
-
 
     }
 

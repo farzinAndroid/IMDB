@@ -48,11 +48,11 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding = true
+//        viewBinding = true
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     packaging {
         resources {
@@ -63,18 +63,18 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.activity:activity-compose:1.9.1")
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -107,7 +107,7 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
     //datastore
-    implementation ("androidx.datastore:datastore-preferences:1.1.0")
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
     //pager
     implementation ("com.google.accompanist:accompanist-pager:0.29.0-alpha")
@@ -119,8 +119,8 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.1")
 
     // paging
-    implementation ("androidx.paging:paging-runtime-ktx:3.3.0-beta01")
-    implementation ("androidx.paging:paging-compose:3.3.0-beta01")
+    implementation ("androidx.paging:paging-runtime-ktx:3.3.2")
+    implementation ("androidx.paging:paging-compose:3.3.2")
 
     // youtube player
     implementation("io.github.ilyapavlovskii:youtubeplayer-compose:2023.11.16")
@@ -138,8 +138,10 @@ dependencies {
 
 
     //paging3
-    implementation ("androidx.paging:paging-compose:3.3.0-beta01")
+    implementation ("androidx.paging:paging-compose:3.3.2")
 
-
+    implementation("androidx.webkit:webkit:1.11.0")
+    implementation("androidx.tracing:tracing-ktx:1.2.0")
+    implementation("androidx.tracing:tracing:1.2.0")
 
 }
