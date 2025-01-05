@@ -40,11 +40,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "18"
     }
     buildFeatures {
         compose = true
@@ -140,8 +140,8 @@ dependencies {
     //paging3
     implementation ("androidx.paging:paging-compose:3.3.2")
 
-    implementation("androidx.webkit:webkit:1.11.0")
-    implementation("androidx.tracing:tracing-ktx:1.2.0")
-    implementation("androidx.tracing:tracing:1.2.0")
+//    implementation("androidx.webkit:webkit:1.11.0")
+//    implementation("androidx.tracing:tracing-ktx:1.2.0")
+//    implementation("androidx.tracing:tracing:1.2.0")
 
 }
